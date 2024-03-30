@@ -1,4 +1,4 @@
-// import connectDB from "../DB/connection.js";
+import connect from "../DB/connection.js";
 import authRouter from "./modules/auth/auth.router.js";
 import branRouter from "./modules/brand/brand.router.js";
 import cartRouter from "./modules/cart/cart.router.js";
@@ -36,8 +36,7 @@ const initApp = (app, express) => {
     res.send("In-valid Routing Plz check url  or  method");
   });
   app.use(globalErrorHandling);
-
-  // connectDB();
+  connect;
 };
 
 export default initApp;
