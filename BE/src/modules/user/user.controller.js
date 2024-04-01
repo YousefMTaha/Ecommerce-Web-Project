@@ -1,6 +1,10 @@
 import userModel from "../../../DB/model/User.model.js";
 import { asyncHandler } from "../../utils/errorHandling.js";
 
+export const getData = asyncHandler(async (req, res, next) => {
+  return res.json({ messaeg: "Done", user: req.user });
+});
+
 export const update = asyncHandler(async (req, res, next) => {
   // check if new email is taken by another user
   const isNewEmail = await userModel.findOne({
