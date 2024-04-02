@@ -19,14 +19,14 @@ router
   .get(categoryController.getData)
   .put(
     auth(),
-    isExist(categoryModel),
+    isExist({ model: categoryModel }),
     isOwner(categoryModel),
     isNotExist({ model: categoryModel, searchData: "name" }),
     categoryController.update
   )
   .delete(
     auth(),
-    isExist(categoryModel),
+    isExist({ model: categoryModel }),
     isOwner(categoryModel),
     categoryController.remove
   );

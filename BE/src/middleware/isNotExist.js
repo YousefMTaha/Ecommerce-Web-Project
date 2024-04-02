@@ -5,7 +5,7 @@ import { asyncHandler } from "../utils/errorHandling.js";
 export const isNotExist = ({ model, searchData }) => {
   return asyncHandler(async (req, res, next) => {
     const inputDB = {};
-    inputDB[`${searchData}`] = req.body[`${searchData}`];
+    inputDB[searchData] = req.body[searchData];
 
     const isExist = await model.findOne(inputDB);
 
