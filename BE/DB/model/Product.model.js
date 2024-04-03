@@ -23,6 +23,7 @@ const productSchema = new mongo.Schema(
             ref: "Category",
             required: [true, "Category is required"],
         },
+        quantity: { type: Number, default: 0 },
         createdAt: { type: Date, default: Date.now() },
         createdBy: { type: mongo.Types.ObjectId, ref: "User", required: true },
         updatedAt: { type: Date, default: Date.now(), },
