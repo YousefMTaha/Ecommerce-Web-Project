@@ -17,7 +17,7 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
     req.body.quantity = await validation.validateNumber('quantity', req.body.quantity);
     req.body.price = await validation.validateNumber('price', req.body.price);
     const product = await req.product.updateOne(req.body);
-    return res.json({ message: "Product Updated Successfully", product });
+    return res.json({ message: "Product Updated Successfully", modificationData: { acknowledged: product.acknowledged, productsFound: product.matchedCount, productsUpdated: product.modifiedCount } });
 });
 
 export const removeProduct = asyncHandler(async (req, res, next) => {
