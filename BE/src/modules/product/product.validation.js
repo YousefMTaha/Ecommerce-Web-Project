@@ -19,9 +19,9 @@ export const validateCategory = async (req) => {
     return cat._id;
 }
 
-export const validateQuantity = async (req) => {
+export const validateNumber = async (name, req) => {
     if (req.body.quantity < 0) {
-        return new ModifyError(`quantity must be >= 0`, StatusCodes.NOT_FOUND);
+        return new ModifyError(`${name} must be >= 0`, StatusCodes.NOT_FOUND);
     }
     return req.body.quantity;
 }
