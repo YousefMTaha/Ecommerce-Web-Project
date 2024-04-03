@@ -35,7 +35,7 @@ export const getProduct = asyncHandler(async (req, res, next) => {
     const modifiedProduct = product.toObject()
     modifiedProduct.createdBy = product.createdBy.name
     modifiedProduct.category = product.category.name
-    return res.json({ message: "Product Returned Successfully", modifiedProduct })
+    return res.json({ message: "Product Returned Successfully", product: modifiedProduct })
 });
 
 export const getAllProducts = asyncHandler(async (req, res, next) => {
@@ -45,5 +45,5 @@ export const getAllProducts = asyncHandler(async (req, res, next) => {
         createdBy: product.createdBy.name,
         category: product.category.name
     }));
-    return res.json({ message: "All Products Returned Successfully", modifiedProducts });
+    return res.json({ message: "All Products Returned Successfully", products: modifiedProducts });
 });
