@@ -1,9 +1,7 @@
-import { ObjectId } from "bson";
-import mongoose, { Schema, model } from "mongoose";
-import { stringify } from "qs";
+import * as mongo from "mongoose";
 
 
-const productSchema = new Schema(
+const productSchema = new mongo.Schema(
     {
         name: {
             type: String,
@@ -21,20 +19,20 @@ const productSchema = new Schema(
             required: [true, "Price is required"],
         },
         category: {
-            type: mongoose.Types.ObjectId,
+            type: mongo.Types.ObjectId,
             ref: "Category",
             required: [true, "Category is required"],
         },
         createdAt: { type: Date, default: Date.now() },
-        createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+        createdBy: { type: mongo.Types.ObjectId, ref: "User", required: true },
         updatedAt: { type: Date, default: Date.now(), },
-        updatedBy: { type: mongoose.Types.ObjectId, ref: "User" },
+        updatedBy: { type: mongo.Types.ObjectId, ref: "User" },
         brand: String,
         image: Object,
     }
 );
 
-const productModel = model("Product", productSchema);
+const productModel = mongo.model("Product", productSchema);
 export default productModel
 
 
