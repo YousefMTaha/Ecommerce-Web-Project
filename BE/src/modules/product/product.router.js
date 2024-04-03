@@ -10,15 +10,15 @@ const router = Router();
 
 router.get("/", auth(), productController.getAllProducts)
 
-router.get("/:id", auth(), productController.getProduct)
+router.get("/:id", auth(), isExist(productModel), isOwner(productModel), productController.getProduct)
 
 router.post("/", auth(), isNotExist({ model: productModel, searchData: "name" }), productController.addProduct)
 
-router.delete("/", auth(), (req, res, next) => req.body.createdBy ? isOwner(productModel) : next(), productController.removeAllProducts)
+router.delete("/", auth(), productController.removeAllProducts)
 
-router.delete("/:id", auth(), isExist(productModel), (req, res, next) => req.body.createdBy ? isOwner(productModel) : next(), productController.removeProduct)
+router.delete("/:id", auth(), isExist(productModel), isOwner(productModel), productController.removeProduct)
 
-router.put("/:id", auth(), isExist(productModel), (req, res, next) => req.body.createdBy ? isOwner(productModel) : next(), productController.updateProduct)
+router.put("/:id", auth(), isExist(productModel), isOwner(productModel), productController.updateProduct)
 
 
 export default router;

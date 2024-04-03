@@ -19,10 +19,10 @@ export const validateCategory = async (req) => {
     return cat._id;
 }
 
-export const validateNumber = async (name, req) => {
-    if (req.body.quantity < 0) {
-        return new ModifyError(`${name} must be >= 0`, StatusCodes.NOT_FOUND);
+export const validateNumber = async (attributeName, number) => {
+    if (number < 0) {
+        return new ModifyError(`${attributeName} must be >= 0`, StatusCodes.NOT_ACCEPTABLE);
     }
-    return req.body.quantity;
+    return number;
 }
 

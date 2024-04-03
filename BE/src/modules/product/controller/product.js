@@ -5,8 +5,8 @@ import * as validation from "../product.validation.js";
 export const addProduct = asyncHandler(async (req, res, next) => {
     req.body.createdBy = await validation.validateUser(req);
     req.body.category = await validation.validateCategory(req);
-    req.body.quantity = await validation.validateNumber('quantity', req);
-    req.body.price = await validation.validateNumber('price', req);
+    req.body.quantity = await validation.validateNumber('quantity', req.body.quantity);
+    req.body.price = await validation.validateNumber('price', req.body.price);
     const product = await productModel.create(req.body);
     return res.json({ message: "Product Added Successfully", product: product });
 });
@@ -14,8 +14,8 @@ export const addProduct = asyncHandler(async (req, res, next) => {
 export const updateProduct = asyncHandler(async (req, res, next) => {
     req.body.createdBy = await validation.validateUser(req);
     req.body.category = await validation.validateCategory(req);
-    req.body.quantity = await validation.validateNumber('quantity', req);
-    req.body.price = await validation.validateNumber('price', req);
+    req.body.quantity = await validation.validateNumber('quantity', req.body.quantity);
+    req.body.price = await validation.validateNumber('price', req.body.price);
     const product = await req.product.updateOne(req.body);
     return res.json({ message: "Product Updated Successfully", product });
 });
