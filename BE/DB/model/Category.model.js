@@ -5,6 +5,7 @@ const categorySchema = new Schema(
       type: String,
       unique: true,
       required: true,
+      lowercase: true,
     },
     createdBy: {
       type: Types.ObjectId,
