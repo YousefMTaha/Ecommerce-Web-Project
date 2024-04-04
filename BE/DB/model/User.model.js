@@ -6,7 +6,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "user name is required"],
       min: [2, "minimum length 2 char"],
-      max: [20, "max length 2 char"],
+      max: [20, "max length 20 char"],
     },
     email: {
       type: String,
@@ -32,7 +32,7 @@ const userSchema = new Schema(
     // },
     status: {
       type: String,
-      enum:  Object.values(userStatus),
+      enum: Object.values(userStatus),
       default: userStatus.Offline,
     },
     image: Object,
