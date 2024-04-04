@@ -17,14 +17,14 @@ const productSchema = new mongo.Schema(
       type: Number,
       required: [true, "Price is required"],
     },
-    subcategory: {
+    subcategoryId: {
       type: mongo.Types.ObjectId,
       ref: "Subcategory",
       required: [true, "subCategory is required"],
     },
     quantity: { type: Number, default: 0 },
     createdBy: { type: mongo.Types.ObjectId, ref: "User", required: true },
-    brand: {
+    brandId: {
       type: mongo.Types.ObjectId,
       ref: "Brand",
       required: [true, "Brand is required"],
