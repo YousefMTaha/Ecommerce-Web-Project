@@ -50,15 +50,15 @@ export const removeProduct = asyncHandler(async (req, res, next) => {
 
 export const getProduct = asyncHandler(async (req, res, next) => {
   const product = await productModel
-    .findById(req.params.id)
+    .findById(req.params._id)
     .populate("subcategoryId")
-    .populate("createdById");
-  const modifiedProduct = product.toObject();
-  modifiedProduct.createdById = product.createdById.name;
-  modifiedProduct.subcategoryId = product.subcategoryId.name;
+    .populate("createdBy");
+  // const modifiedProduct = product.toObject();
+  // modifiedProduct.createdById = product.createdById.name;
+  // modifiedProduct.subcategoryId = product.subcategoryId.name;
   return res.json({
     message: "Product Returned Successfully",
-    product: modifiedProduct,
+    product: product,
   });
 });
 

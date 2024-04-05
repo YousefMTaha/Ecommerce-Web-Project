@@ -26,8 +26,8 @@ export const uniqueFields = {
   categoryId: "categoryId",
   subcategoryId: "subcategoryId",
   brandId: "brandId",
-  productId: "productId",
   userId: "userId",
+  productId: "productId",
 };
 
 export const orderStatus = {
