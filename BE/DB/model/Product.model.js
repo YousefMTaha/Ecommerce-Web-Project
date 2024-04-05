@@ -22,7 +22,7 @@ const productSchema = new mongo.Schema(
       ref: "Subcategory",
       required: [true, "subCategory is required"],
     },
-    quantity: { type: Number, default: 0 },
+    stock: { type: Number, default: 0 },
     createdBy: { type: mongo.Types.ObjectId, ref: "User", required: true },
     brandId: {
       type: mongo.Types.ObjectId,
@@ -44,6 +44,10 @@ const productSchema = new mongo.Schema(
     timestamps: true,
   }
 );
+
+productSchema.method("check_Stock", function (quantity) {
+  return quantity <= this.stock;
+});
 
 const productModel = mongo.model("Product", productSchema);
 export default productModel;
