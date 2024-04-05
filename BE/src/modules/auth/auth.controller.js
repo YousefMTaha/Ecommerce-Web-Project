@@ -3,11 +3,17 @@ import userModel from "../../../DB/model/User.model.js";
 import jwt from "jsonwebtoken";
 import { asyncHandler } from "../../utils/errorHandling.js";
 import { userStatus } from "../../utils/systemConstants.js";
+import { ModifyError } from "../../utils/classError.js";
+import { StatusCodes } from "http-status-codes";
+import cartModel from "../../../DB/model/Cart.model.js";
 
 export const signup = asyncHandler(async (req, res, next) => {
   // Check if email is already exist
   const isEmail = await userModel.findOne({ email: req.body.email });
-  if (isEmail) return next(new Error("Email is already exist"));
+  if (isEmail)
+    return next(
+      new ModifyError("Email is already exist", StatusCodes.CONFLICT)
+    );
 
   // hashing user password
   req.body.password = bcryptjs.hashSync(
@@ -17,6 +23,9 @@ export const signup = asyncHandler(async (req, res, next) => {
 
   // Add user info to DB
   const user = await userModel.create(req.body);
+
+  // Generate cart for user
+  await cartModel.create({ userId: user._id });
 
   // return response with user info
   return res.json({ message: "Done", user });
@@ -28,11 +37,12 @@ export const login = asyncHandler(async (req, res, next) => {
 
   // check if user is exist
   const isEmail = await userModel.findOne({ email });
-  if (!isEmail) return next(new Error("invalid info"));
+  if (!isEmail)
+    return next(new ModifyError("invalid info", StatusCodes.BAD_REQUEST));
 
   // check if the password matching with hashed password in DB
   if (!bcryptjs.compareSync(password, isEmail.password))
-    return next(new Error("invalid info"));
+    return next(new ModifyError("invalid info", StatusCodes.BAD_REQUEST));
 
   // generate token to the login user
   const token = jwt.sign({ id: isEmail._id }, process.env.TOKEN_SIGNATURE);
