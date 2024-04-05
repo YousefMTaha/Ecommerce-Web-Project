@@ -1,6 +1,6 @@
 /*
-ALL SYS CONSTANTS
-*/
+ *********************************** ALL SYSTEM CONSTANTS ***********************************
+ */
 
 export const userRoles = {
   User: "User",
@@ -26,4 +26,12 @@ export const uniqueFields = {
   categoryId: "categoryId",
   subcategoryId: "subcategoryId",
   brandId: "brandId",
+  productId: "productId",
+  userId: "userId",
+};
+
+export const orderStatus = {
+  chipping: "chipping",
+  watting_for_payment: "waitting for   payment",
+  canceled: "canceled",
 };
