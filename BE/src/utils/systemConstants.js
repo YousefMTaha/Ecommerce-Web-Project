@@ -28,6 +28,7 @@ export const uniqueFields = {
   brandId: "brandId",
   userId: "userId",
   productId: "productId",
+  couponCode: "code"
 };
 
 export const orderStatus = {
