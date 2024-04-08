@@ -21,15 +21,14 @@ const CouponSchema = new mongo.Schema(
         },
         // usages of each user
         users: {
-            type: Map,
-            of: Number,
-            default: new Map(),
+            type: Object,
+            default: new Object(),
         },
         discountPercentage: {
             type: Number,
             required: [true, "discountPercentage is required"],
-            min: [0, "discountPercentage must be >= 0"],
-            max: [100, "discountPercentage must be <= 100"],
+            min: [0, "discountPercentage must be >= 0 and <= 100"],
+            max: [100, "discountPercentage must be >= 0 and <= 100"],
         },
         expireDate: {
             type: Date,
