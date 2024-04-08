@@ -9,8 +9,8 @@ export const addCoupon = asyncHandler(async (req, res, next) => {
 });
 
 export const getCoupon = asyncHandler(async (req, res, next) => {
-    const coupons = await couponModel.findById(req.params._id).populate("createdBy");
-    return res.json({ messgae: "Coupon Returned Successfully", coupons });
+    const coupon = await couponModel.findById(req.params._id).populate("createdBy");
+    return res.json({ messgae: "Coupon Returned Successfully", coupon });
 })
 
 export const getAllCoupons = asyncHandler(async (req, res, next) => {
@@ -18,8 +18,22 @@ export const getAllCoupons = asyncHandler(async (req, res, next) => {
     return res.json({ messgae: "All Coupons Returned Successfully", coupons });
 })
 
-// update usages
-export const useCoupon = asyncHandler(async (req, res, next) => { })
+// use coupon for one time
+export const useCoupon = asyncHandler(async (req, res, next) => {
+    req.coupon.usages -= 1;
+    req.coupon.users[req.user._id] += 1;
+    const ret = await req.coupon.updateOne(req.coupon);
+    return res.json({ messgae: "Coupon Updated Successfully", ret });
+})
 
-export const removeCoupon = asyncHandler(async (req, res, next) => { });
+// update coupon data
+export const updateCoupon = asyncHandler(async (req, res, next) => {
+    const ret = await req.coupon.updateOne(req.body);
+    return res.json({ messgae: "Coupon Updated Successfully", ret });
+})
+
+export const removeCoupon = asyncHandler(async (req, res, next) => {
+    await req.coupon.deleteOne();
+    return res.json({ messgae: "Coupon Deleted Successfully" });
+});
 
