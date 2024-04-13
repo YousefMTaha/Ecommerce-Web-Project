@@ -42,8 +42,17 @@ const productSchema = new mongo.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+productSchema.virtual("avgRating").get(function () {
+  // console.log(this);
+  if (this.noRating == 0)
+    return 0
+  return this.totalRating / this.noRating
+})
 
 productSchema.method("check_Stock", function (quantity) {
   return quantity <= this.stock;
