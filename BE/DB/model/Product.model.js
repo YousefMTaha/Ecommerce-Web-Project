@@ -38,7 +38,7 @@ const productSchema = new mongo.Schema(
       default: 0,
     },
 
-    image: [Object],
+    images: [Object],
   },
   {
     timestamps: true,
@@ -48,6 +48,8 @@ const productSchema = new mongo.Schema(
 productSchema.method("check_Stock", function (quantity) {
   return quantity <= this.stock;
 });
+
+productSchema.pre("deleteOne", async function () {});
 
 const productModel = mongo.model("Product", productSchema);
 export default productModel;
