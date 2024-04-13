@@ -6,8 +6,18 @@ import * as productController from "./controller/product.js";
 import { isExist } from "../../middleware/isExist.js";
 import { isOwner } from "../../middleware/isOwner.js";
 import subcategoryModel from "../../../DB/model/Subcategory.model.js";
-import { reqDataForms, uniqueFields } from "../../utils/systemConstants.js";
+import {
+  fileValidation,
+  reqDataForms,
+  uniqueFields,
+} from "../../utils/systemConstants.js";
 import brandModel from "../../../DB/model/Brand.model.js";
+import { fileUpload } from "../../utils/multer.js";
+import {
+  deleteImage,
+  updateImage,
+  uploadImage,
+} from "../../middleware/uploadImage.js";
 
 const router = Router();
 
@@ -24,6 +34,7 @@ router.get(
 router.post(
   "/",
   auth(),
+  fileUpload(fileValidation.image).array("imgs", 5),
   isExist({
     model: subcategoryModel,
     dataFrom: reqDataForms.body,
@@ -34,8 +45,9 @@ router.post(
     dataFrom: reqDataForms.body,
     searchData: uniqueFields.brandId,
   }),
-  isNotExist({ model: productModel, searchData: "name" }),
-  productController.addProduct
+  isNotExist({ model: productModel, searchData: uniqueFields.name }),
+  productController.addProduct,
+  uploadImage(productModel, true)
 );
 
 // router.delete("/", auth(), productController.removeAllProducts);
@@ -45,15 +57,17 @@ router.delete(
   auth(),
   isExist({ model: productModel }),
   isOwner(productModel),
+  deleteImage(productModel, true),
   productController.removeProduct
 );
 
 router.put(
   "/:_id",
   auth(),
+  fileUpload(fileValidation.image).array("imgs", 5),
   isExist({ model: productModel }),
   isOwner(productModel),
-  isNotExist({ model: productModel, searchData: "name" }),
+  isNotExist({ model: productModel, searchData: uniqueFields.name }),
   isExist({
     model: subcategoryModel,
     dataFrom: reqDataForms.body,
@@ -64,6 +78,7 @@ router.put(
     dataFrom: reqDataForms.body,
     searchData: uniqueFields.brandId,
   }),
+  updateImage(productModel, true),
   productController.updateProduct
 );
 
