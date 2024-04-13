@@ -29,7 +29,7 @@ export const add = asyncHandler(async (req, res, next) => {
         },
       });
 
-  return res.json({ message: "done" });
+  return res.status(200).json({ message: "done" });
 });
 
 export const update = asyncHandler(async (req, res, next) => {
@@ -42,7 +42,7 @@ export const update = asyncHandler(async (req, res, next) => {
       "products.$.quantity": req.body.quantity,
     }
   );
-  return res.json({ message: "done" });
+  return res.status(200).json({ message: "done" });
 });
 
 export const remove = asyncHandler(async (req, res, next) => {
@@ -57,9 +57,9 @@ export const remove = asyncHandler(async (req, res, next) => {
       $pull: { products: { id: req.product._id } },
     }
   );
-  return res.json({ message: "Done" });
+  return res.status(200).json({ message: "Done" });
 });
 
 export const get = asyncHandler(async (req, res, next) =>
-  res.json({ message: "done", cart: req.cart })
+  res.status(200).json({ message: "done", cart: req.cart })
 );

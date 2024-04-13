@@ -28,7 +28,7 @@ export const signup = asyncHandler(async (req, res, next) => {
   await cartModel.create({ userId: user._id });
 
   // return response with user info
-  return res.json({ message: "Done", user });
+  return res.status(200).json({ message: "Done", user });
 });
 
 export const login = asyncHandler(async (req, res, next) => {
@@ -51,5 +51,5 @@ export const login = asyncHandler(async (req, res, next) => {
   await isEmail.save(); // apply changes into DB
 
   // return response with token
-  return res.json({ message: "done", token });
+  return res.status(200).json({ message: "done", token });
 });

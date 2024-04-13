@@ -11,8 +11,8 @@ export const addProduct = asyncHandler(async (req, res, next) => {
     req.body.quantity
   );
   req.body.price = await validation.validateNumber("price", req.body.price);
-  const product = await productModel.create(req.body);
-  return res.json({ message: "Product Added Successfully", product: product });
+  req.product = await productModel.create(req.body);
+  return next();
 });
 
 export const updateProduct = asyncHandler(async (req, res, next) => {
@@ -28,7 +28,7 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
   // productModel.findOneAndUpdate({},{},{new:true})
   req.body.price = await validation.validateNumber("price", req.body.price);
   const product = await req.product.updateOne(req.body);
-  return res.json({
+  return res.status(200).json({
     message: "Product Updated Successfully",
     modificationData: {
       acknowledged: product.acknowledged,
@@ -40,12 +40,12 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
 
 export const removeProduct = asyncHandler(async (req, res, next) => {
   await req.product.deleteOne();
-  return res.json({ message: "Product Deleted Successfully" });
+  return res.status(200).json({ message: "Product Deleted Successfully" });
 });
 
 // export const removeAllProducts = asyncHandler(async (req, res, next) => {
 //   await productModel.deleteMany({});
-//   return res.json({ message: "All Products Deleted Successfully" });
+//   return res.status(200).json({ message: "All Products Deleted Successfully" });
 // });
 
 export const getProduct = asyncHandler(async (req, res, next) => {
@@ -56,7 +56,7 @@ export const getProduct = asyncHandler(async (req, res, next) => {
   const modifiedProduct = product.toObject();
   modifiedProduct.createdById = product.createdById.name;
   modifiedProduct.subcategoryId = product.subcategoryId.name;
-  return res.json({
+  return res.status(200).json({
     message: "Product Returned Successfully",
     product: modifiedProduct,
   });
@@ -72,7 +72,7 @@ export const getAllProducts = asyncHandler(async (req, res, next) => {
     createdBy: product.createdById.name,
     category: product.subcategoryId.name,
   }));
-  return res.json({
+  return res.status(200).json({
     message: "All Products Returned Successfully",
     products: modifiedProducts,
   });

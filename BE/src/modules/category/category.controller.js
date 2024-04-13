@@ -6,28 +6,28 @@ export const add = asyncHandler(async (req, res, next) => {
   req.body.createdBy = req.user._id;
 
   // create category collection
-  const category = await categoryModel.create(req.body);
-  return res.json({ message: "done", category });
+  req.category = await categoryModel.create(req.body);
+  return next();
 });
 
 export const update = asyncHandler(async (req, res, next) => {
   // update category
   await req.category.updateOne(req.body);
-  return res.json({ message: "done" });
+  return res.status(200).json({ message: "done" });
 });
 
 export const remove = asyncHandler(async (req, res, next) => {
   // remove category
   await req.category.deleteOne();
-  return res.json({ message: "done" });
+  return res.status(200).json({ message: "done" });
 });
 
 export const getData = asyncHandler(async (req, res, next) => {
   const category = await categoryModel.findById(req.parmas.id);
-  return res.json({ message: "done", category });
+  return res.status(200).json({ message: "done", category });
 });
 
 export const getAllData = asyncHandler(async (req, res, next) => {
   const categories = await categoryModel.find();
-  return res.json({ message: "done", categories });
+  return res.status(200).json({ message: "done", categories });
 });
