@@ -4,7 +4,7 @@ const brandSchema = new Schema(
   {
     name: { type: String, required: true, unique: true, lowercase: true },
     createdBy: { type: Types.ObjectId, ref: "User", required: true },
-    logo: Object,
+    image: Object,
   },
   { timestamps: true }
 );
