@@ -25,7 +25,7 @@ const initApp = (app, express) => {
   app.use(`/user`, userRouter);
   app.use(`/product`, productRouter);
   app.use(`/category`, categoryRouter);
-  app.use(`/subCategory`, subcategoryRouter);
+  app.use(`/subcategory`, subcategoryRouter);
   app.use(`/review`, reviewsRouter);
   app.use(`/coupon`, couponRouter);
   app.use(`/cart`, cartRouter);
