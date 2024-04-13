@@ -22,7 +22,7 @@ const productSchema = new mongo.Schema(
       ref: "Subcategory",
       required: [true, "subCategory is required"],
     },
-    quantity: { type: Number, default: 0 },
+    stock: { type: Number, default: 0 },
     createdBy: { type: mongo.Types.ObjectId, ref: "User", required: true },
     brandId: {
       type: mongo.Types.ObjectId,
@@ -38,7 +38,7 @@ const productSchema = new mongo.Schema(
       default: 0,
     },
 
-    image: [Object],
+    images: [Object],
   },
   {
     timestamps: true,
@@ -53,6 +53,12 @@ productSchema.virtual("avgRating").get(function () {
     return 0
   return this.totalRating / this.noRating
 })
+
+productSchema.method("check_Stock", function (quantity) {
+  return quantity <= this.stock;
+});
+
+productSchema.pre("deleteOne", async function () {});
 
 const productModel = mongo.model("Product", productSchema);
 export default productModel;

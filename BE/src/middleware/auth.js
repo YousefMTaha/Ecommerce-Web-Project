@@ -4,6 +4,7 @@ import { userRoles, userStatus } from "../utils/systemConstants.js";
 import { asyncHandler } from "../utils/errorHandling.js";
 import { ModifyError } from "../utils/classError.js";
 import { StatusCodes } from "http-status-codes";
+import cartModel from "../../DB/model/Cart.model.js";
 
 const auth = (roles = Object.values(userRoles)) => {
   return asyncHandler(async (req, res, next) => {
@@ -53,6 +54,15 @@ const auth = (roles = Object.values(userRoles)) => {
       return next(
         new ModifyError("You need to login again", StatusCodes.BAD_REQUEST)
       );
+
+    // Get user cart
+    let cart = await cartModel.findOne({ userId: user._id });
+
+    // if user doesn't have cart
+    if (!cart) cart = await cartModel.create({ userId: user._id });
+
+    // add the user cart object to the request object so it can be accessed throw the other middlewares
+    req.cart = cart;
 
     // add the user object to the request object so it can be accessed throw the other middlewares
     req.user = user;

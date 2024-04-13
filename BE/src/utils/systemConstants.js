@@ -32,6 +32,18 @@ export const uniqueFields = {
 
 export const orderStatus = {
   chipping: "chipping",
-  watting_for_payment: "waitting for   payment",
+  watting_for_payment: "waiting for payment",
   canceled: "canceled",
+  refunded:"refunded"
+};
+
+export const paymentMehods = {
+  cash: "Cash",
+  card: "Card",
+};
+
+export const fileValidation = {
+  image: ["image/jpeg", "image/png", "image/gif"],
+  file: ["application/pdf", "application/msword"],
+  video: ["video/mp4"],
 };
