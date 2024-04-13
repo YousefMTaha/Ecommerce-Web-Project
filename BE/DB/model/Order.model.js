@@ -1,10 +1,9 @@
 import { Schema, Types, model } from "mongoose";
-import { orderStatus } from "../../src/utils/systemConstants.js";
+import { orderStatus, paymentMehods } from "../../src/utils/systemConstants.js";
 const orderSchema = new Schema(
   {
     address: {
       type: String,
-      unique: true,
       required: true,
       lowercase: true,
     },
@@ -35,12 +34,40 @@ const orderSchema = new Schema(
       enum: Object.values(orderStatus),
       default: orderStatus.watting_for_payment,
     },
-
+    descount: {
+      type: Number,
+      default: 0,
+    },
+    paymentMehod: {
+      type: String,
+      enum: Object.values(paymentMehods),
+      default: paymentMehods.cash,
+    },
+    phone: String,
+    paymentIntent: String,
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
   }
 );
+
+orderSchema.virtual("totalPrice").get(function () {
+  let price = 0;
+  this.products.forEach((prod) => {
+    price += prod.quantity * prod.price;
+  });
+  return price;
+});
+
+orderSchema.virtual("totalPriceAfterDescount").get(function () {
+  return this.totalPrice - (this.totalPrice * this.descount) / 100;
+});
 
 const orderModel = model("Order", orderSchema);
 export default orderModel;
