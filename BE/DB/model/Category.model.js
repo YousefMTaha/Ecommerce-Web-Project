@@ -1,4 +1,5 @@
 import { Schema, Types, model } from "mongoose";
+import subcategoryModel from "./Subcategory.model.js";
 const categorySchema = new Schema(
   {
     name: {
@@ -18,6 +19,11 @@ const categorySchema = new Schema(
     timestamps: true,
   }
 );
+
+categorySchema.post("deleteOne", async function () {
+  console.log("category");
+  await subcategoryModel.deleteMany({ categoryId: this.getFilter()._id });
+});
 
 const categoryModel = model("Category", categorySchema);
 export default categoryModel;
