@@ -1,4 +1,5 @@
 import * as mongo from "mongoose";
+import reviewModel from "./Review.model.js";
 
 const productSchema = new mongo.Schema(
   {
@@ -49,16 +50,18 @@ const productSchema = new mongo.Schema(
 
 productSchema.virtual("avgRating").get(function () {
   // console.log(this);
-  if (this.noRating == 0)
-    return 0
-  return this.totalRating / this.noRating
-})
+  if (this.noRating == 0) return 0;
+  return this.totalRating / this.noRating;
+});
 
 productSchema.method("check_Stock", function (quantity) {
   return quantity <= this.stock;
 });
 
-productSchema.pre("deleteOne", async function () {});
+productSchema.post("deleteOne", async function () {
+  // delete the reviews realted to this product
+  await reviewModel.deleteMany({ productId: this.getFilter()._id });
+});
 
 const productModel = mongo.model("Product", productSchema);
 export default productModel;
