@@ -25,7 +25,7 @@ router
   );
 
 router
-  .route("/:id")
+  .route("/:_id")
   .get(categoryController.getData)
   .put(
     auth(),
