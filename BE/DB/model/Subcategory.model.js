@@ -1,4 +1,5 @@
 import { Schema, Types, model } from "mongoose";
+import cloudinary from "../../src/utils/cloudinary.js";
 const subcategorySchema = new Schema(
   {
     name: {
@@ -23,6 +24,18 @@ const subcategorySchema = new Schema(
     timestamps: true,
   }
 );
+
+subcategorySchema.pre("deleteMany", async function () {
+  const subcategories = await subcategoryModel.find({
+    categoryId: this.getFilter().categoryId,
+  });
+  for (const subcategory of subcategories) {
+    if (subcategory.image)
+      await cloudinary.api.delete_resources_by_prefix(
+        `web-project-ecommerce/subcategory/${subcategory._id}`
+      );
+  }
+});
 
 const subcategoryModel = model("Subcategory", subcategorySchema);
 export default subcategoryModel;
