@@ -10,12 +10,13 @@ export default function CartContextProvider(props) {
   function addToCart(productId) {
     return axios
       .post(
-        "https://ecommerce.routemisr.com/api/v1/cart",
+        "http://localhost:3000/cart/",
         { productId },
-        { headers: { token: localStorage.getItem("token") } }
+        { headers: { token: "yousef_" + localStorage.getItem("token") } }
       )
       .then((response) => {
         setCartNum(response.data.numOfCartItems);
+        console.log(response);
         return response;
       })
       .catch((error) => error);
@@ -23,12 +24,13 @@ export default function CartContextProvider(props) {
 
   function getLoggedUserCart() {
     return axios
-      .get("https://ecommerce.routemisr.com/api/v1/cart", {
-        headers: { token: localStorage.getItem("token") },
+      .get("http://localhost:3000/cart/", {
+        headers: { token: "yousef_" + localStorage.getItem("token") },
       })
+
       .then((response) => {
-        setCartNum(response.data.numOfCartItems);
-        setCartId(response.data.data._id);
+        setCartNum(response.data.cart.noProduct);
+        setCartId(response.data.cart._id);
         return response;
       })
       .catch((error) => error);
@@ -36,11 +38,11 @@ export default function CartContextProvider(props) {
 
   function removeItem(id) {
     return axios
-      .delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, {
-        headers: { token: localStorage.getItem("token") },
+      .delete(`http://localhost:3000/cart/${id}`, {
+        headers: { token: "yousef_" + localStorage.getItem("token") },
       })
       .then((response) => {
-        setCartNum(response.data.numOfCartItems);
+        setCartNum(response.data.noProduct);
         return response;
       })
       .catch((error) => error);
@@ -49,7 +51,7 @@ export default function CartContextProvider(props) {
   function clearCart() {
     return axios
       .delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
-        headers: { token: localStorage.getItem("token") },
+        headers: { token: "yousef_" + localStorage.getItem("token") },
       })
       .then((response) => {
         setCartNum(0);
@@ -58,25 +60,23 @@ export default function CartContextProvider(props) {
       .catch((error) => error);
   }
 
-  function updateQuantity(id, count) {
+  function updateQuantity(id, quantity) {
     return axios
       .put(
-        `https://ecommerce.routemisr.com/api/v1/cart/${id}`,
-        { count },
-        { headers: { token: localStorage.getItem("token") } }
+        `http://localhost:3000/cart/${id}`,
+        { quantity },
+        { headers: { token: "yousef_" + localStorage.getItem("token") } }
       )
       .then((response) => response)
       .catch((error) => error);
   }
 
   function payOnline(id, url, values) {
-    const body = {
-      shippingAddress: values,
-    };
-
-    return axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=${url}`,
-        { body },
-        { headers: { token: localStorage.getItem("token") } }
+    return axios
+      .post(
+        `http://localhost:3000/order/`,
+        { address: values.city, paymentMethod: "Card" },
+        { headers: { token: "yousef_" + localStorage.getItem("token") } }
       )
       .then((response) => response)
       .catch((error) => error);
@@ -99,7 +99,8 @@ export default function CartContextProvider(props) {
         clearCart,
         cartId,
         setCartId,
-      }}>
+      }}
+    >
       {props.children}
     </CartContext.Provider>
   );

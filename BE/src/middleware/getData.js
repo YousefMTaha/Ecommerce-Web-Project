@@ -10,9 +10,8 @@ const getAllData = async (req, res, next) => {
   const model = getModelFromUrl(req.originalUrl);
   let data = await model.find().populate("category");
 
-  console.log(data);
   data = data.map((ele) => {
-    ele = ele._doc
+    ele = ele._doc;
     return {
       ...ele,
       category: { id: ele.category._id, categoryName: ele.category.name },

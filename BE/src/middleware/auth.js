@@ -5,9 +5,10 @@ import { asyncHandler } from "../utils/errorHandling.js";
 import { ModifyError } from "../utils/classError.js";
 import { StatusCodes } from "http-status-codes";
 import cartModel from "../../DB/model/Cart.model.js";
+import productModel from "../../DB/model/Product.model.js";
 
 const auth = (roles = Object.values(userRoles)) => {
-  return asyncHandler(async (req, res, next) => {
+  return async (req, res, next) => {
     // constract token from headers
     let { token } = req.headers;
     if (!token)
@@ -61,6 +62,11 @@ const auth = (roles = Object.values(userRoles)) => {
     // if user doesn't have cart
     if (!cart) cart = await cartModel.create({ userId: user._id });
 
+    if (cart.products.length) {
+      for (const product of cart.products) {
+        product.id = await productModel.findById(product.id);
+      }
+    }
     // add the user cart object to the request object so it can be accessed throw the other middlewares
     req.cart = cart;
 
@@ -69,7 +75,7 @@ const auth = (roles = Object.values(userRoles)) => {
 
     // move to the next middleware
     return next();
-  });
+  };
 };
 
 export default auth;

@@ -92,14 +92,16 @@ export default function Checkout() {
           <button
             disabled={!(formik.isValid && formik.dirty)}
             type="submit"
-            className="btn bg-main text-white w-25 d-block mx-auto mt-4">
+            className="btn bg-main text-white w-25 d-block mx-auto mt-4"
+          >
             Continue
           </button>
         ) : (
           <button
             disabled={!(formik.isValid && formik.dirty)}
             type="submit"
-            className="btn bg-main text-white d-block mx-auto mt-4">
+            className="btn bg-main text-white d-block mx-auto mt-4"
+          >
             <i className="fa-solid fa-spinner fa-spin"></i>
           </button>
         )}

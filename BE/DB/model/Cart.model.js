@@ -8,21 +8,27 @@ const cartSchema = new Schema(
     },
     products: [
       {
-        type:Object,
+        type: Object,
         id: {
           type: Types.ObjectId,
           ref: "Product",
         },
         quantity: {
           type: Number,
+          default: 1,
         },
       },
     ],
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+cartSchema.virtual("noProduct").get(function () {
+  return this.products.length;
+});
 
 const cartModel = model("Cart", cartSchema);
 export default cartModel;

@@ -16,13 +16,13 @@ export default function Profile() {
         <title>Profile</title>
       </Helmet>
       <h3 className="my-4">
-        Name : <span className="text-main">{info.name}</span>
+        Name : <span className="text-main">{userData.name}</span>
       </h3>
       <h3 className="my-4">
         Email : <span className="text-main">{userData?.email}</span>
       </h3>
       <h3 className="my-4">
-        Role : <span className="text-main">{info.role}</span>
+        Role : <span className="text-main">{userData.role}</span>
       </h3>
     </div>
   );

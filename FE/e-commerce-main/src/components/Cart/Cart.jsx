@@ -26,7 +26,7 @@ export default function Cart() {
     const response = await removeItem(id);
     setLoading(false);
 
-    if (response.data.status === "success") {
+    if (response.data.message === "done") {
       refetch();
       toast.success("The item is removed.");
     } else {
@@ -52,14 +52,15 @@ export default function Cart() {
     const response = await updateQuantity(id, count);
     setLoading(false);
 
-    if (response.data.status === "success") {
+    if (response.data.message === "done") {
       refetch();
       toast.success("The item count is updated.");
-      
     } else {
       toast.error("The item count is not updated.");
     }
   }
+
+  console.log(data);
 
   return (
     <>
@@ -76,25 +77,27 @@ export default function Cart() {
         {data?.data !== undefined ? (
           <>
             <h4 className="text-main">
-              Number Of Items : {data?.data.numOfCartItems}
+              Number Of Items : {data?.data.noProduct}
             </h4>
-            <h5 className="text-main">
+            {/* <h5 className="text-main">
               Total Cart Price: {data?.data.data.totalCartPrice} EGP
-            </h5>
+            </h5> */}
             <div className="d-flex justify-content-between align-items-center">
               <button
                 onClick={() => clearAllCart()}
-                className="btn btn-sm bg-main text-white my-2">
+                className="btn btn-sm bg-main text-white my-2"
+              >
                 <i className="fas fa-trash me-2"></i>Clear Cart
               </button>
               <NavLink
-                to={'/checkout'}
-                className="btn btn-sm bg-main text-white my-2">
+                to={"/checkout"}
+                className="btn btn-sm bg-main text-white my-2"
+              >
                 <i className="fa-brands fa-cc-visa me-2"></i>Buy Online
               </NavLink>
             </div>
             <div className="items">
-              {data?.data.data.products.map((product) => {
+              {data?.data.cart.products.map((product) => {
                 return (
                   <div className="row py-3 border-bottom" key={product._id}>
                     <div className="col-9">
@@ -102,26 +105,22 @@ export default function Cart() {
                         <div className="col-2">
                           <img
                             className="w-100"
-                            src={product.product.imageCover}
-                            alt={product.product.id}
+                            src={product.id.imageCover.secure_url}
+                            alt={product.id._id}
                           />
                         </div>
                         <div className="col-10 d-flex justify-content-center flex-column">
-                          <h6 className="fw-bold">
-                            {product.product.title
-                              .split(" ")
-                              .slice(0, 4)
-                              .join(" ")}
-                          </h6>
+                          <h6 className="fw-bold">{product.id.name}</h6>
                           <p className="text-main fw-bold">
-                            Price : {product.price}
+                            Price : {product.id.price}
                           </p>
                           <button
                             onClick={() => {
-                              removeCartItem(product.product.id);
+                              removeCartItem(product.id._id);
                             }}
                             className="btn btn-sm bg-main text-white"
-                            style={{ width: 100 }}>
+                            style={{ width: 100 }}
+                          >
                             <i className="fas fa-trash me-2"></i>Remove
                           </button>
                         </div>
@@ -131,25 +130,27 @@ export default function Cart() {
                       <button
                         onClick={() => {
                           updateQuantityItem(
-                            product.product.id,
-                            product.count + 1
+                            product.id._id,
+                            product.quantity + 1
                           );
                         }}
-                        className="btn btn-sm bg-main text-white fw-bold fs-6">
+                        className="btn btn-sm bg-main text-white fw-bold fs-6"
+                      >
                         +
                       </button>
                       <span className="mx-2 d-inline-block">
-                        {product.count}
+                        {product.quantity}
                       </span>
                       <button
-                        disabled={product.count === 1}
+                        disabled={product.quantity === 1}
                         onClick={() => {
                           updateQuantityItem(
-                            product.product.id,
-                            product.count - 1
+                            product.id._id,
+                            product.quantity - 1
                           );
                         }}
-                        className="btn btn-sm bg-main text-white fw-bold fs-6">
+                        className="btn btn-sm bg-main text-white fw-bold fs-6"
+                      >
                         -
                       </button>
                     </div>

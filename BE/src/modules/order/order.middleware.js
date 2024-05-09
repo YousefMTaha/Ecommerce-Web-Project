@@ -15,7 +15,7 @@ export const isProductsOrder = asyncHandler(async (req, res, next) => {
 
   for (const prod of req.cart.products) {
     // search for product in DB
-    product = await productModel.findById(prod.id);
+    product = await productModel.findById(prod.id._id);
     if (!product)
       return next(
         new ModifyError("The product has been deleted", StatusCodes.NOT_FOUND)
@@ -115,7 +115,7 @@ export const orderCard = asyncHandler(async (req, res, next) => {
     customer_email: req.user.email,
     cancel_url: process.env.SUCCESS_URL,
     success_url: process.env.SUCCESS_URL,
-    discounts: [{ coupon: req.body.stripeCoupon.id }],
+    discounts: [{ coupon: req.body.stripeCoupon?.id }],
     metadata: {
       orderId: order._id.toString(),
       cartId: req.cart._id.toString(),

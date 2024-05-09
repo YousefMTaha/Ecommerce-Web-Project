@@ -33,6 +33,8 @@ export const isExist = ({
             StatusCodes.NOT_FOUND
           )
         );
+    } else {
+      return next(new Error("product id not given", StatusCodes.BAD_REQUEST));
     }
     // add model data to the request object to use it throw other middlewares
     req[modelName] = isModelExist;

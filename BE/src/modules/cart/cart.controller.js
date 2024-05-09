@@ -60,6 +60,5 @@ export const remove = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ message: "done" });
 });
 
-export const get = asyncHandler(async (req, res, next) =>
-  res.status(200).json({ message: "done", cart: req.cart })
-);
+export const get = async (req, res, next) =>
+  res.status(200).json({ message: "done", cart: req.cart });

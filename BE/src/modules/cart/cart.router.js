@@ -13,20 +13,26 @@ const router = Router();
 router.get("/", auth(), get);
 
 // Add product to cart
+
+// Add product to cart
 router.post(
-  "/:productId",
+  "/",
+  (req, res, next) => {
+    console.log({ body: req.body, params: req.params, headers: req.headers });
+    next();
+  },
+
   auth(),
-  validation(validator.add),
+  //validation(validator.add),
   isExist({
     model: productModel,
-    dataFrom: reqDataForms.parmas,
+    dataFrom: reqDataForms.body,
     searchData: uniqueFields.productId,
   }),
   isProductExistInCart,
   checkQuantity,
   add
 );
-
 // update product quantity
 router.put(
   "/:productId",

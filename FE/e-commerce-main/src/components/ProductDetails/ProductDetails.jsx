@@ -21,7 +21,7 @@ export default function ProductDetails() {
     const response = await addToCart(id);
     setLoading(false);
 
-    if (response.data.status === "success") {
+    if (response.data.message === "done") {
       toast.success(response.data.message, { position: "top-right" });
     } else {
       toast.error("Product not added successfully to your cart");
@@ -37,7 +37,7 @@ export default function ProductDetails() {
     const response = await removeProductWishlist(id);
     setLoading(false);
 
-    if (response.data.status === "success") {
+    if (response.data.message === "done") {
       toast.success("The item is removed from wishlist.");
     } else {
       toast.error("The item is not removed from wishlist.");
@@ -57,7 +57,7 @@ export default function ProductDetails() {
   }
 
   function getProductDetails(id) {
-    return axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
+    return axios.get(`http://localhost:3000/product/${id}`);
   }
 
   const { isLoading, isError, data, isFetching } = useQuery(
@@ -65,7 +65,9 @@ export default function ProductDetails() {
     () => getProductDetails(id)
   );
 
-  const details = data ? data.data.data : null;
+  const details = data ? data.data.Product : null;
+
+  console.log(data);
 
   const settings = {
     dots: true,
@@ -96,7 +98,7 @@ export default function ProductDetails() {
                 return (
                   <img
                     key={index}
-                    src={image}
+                    src={image.secure_url}
                     alt={details.title}
                     className="w-100"
                   />
@@ -104,32 +106,36 @@ export default function ProductDetails() {
               })}
             </Slider>
           </div>
+
           <div className="col-md-8 d-flex flex-column justify-content-center">
-            <h2 className="text-start text-black h3 mb-3">{details.title}</h2>
+            <h2 className="text-start text-black h3 mb-3">{details.name}</h2>
             <p style={{ color: "#9b9797" }}>{details.description}</p>
             <h6 className="text-main mt-4">{details.category.name}</h6>
             <div className="d-flex justify-content-between align-items-center">
               <span className="price">{details.price} EGP</span>
               <span className="rate">
                 <i className="fas fa-star rating-color"></i>
-                {details.ratingsAverage}
+                {details.avgRating}
               </span>
             </div>
             <div className="d-flex justify-content-between align-items-center my-3">
               <button
                 onClick={() => addProductToCart(id)}
-                className="btn btn-sm bg-main text-white">
+                className="btn btn-sm bg-main text-white"
+              >
                 Add To Cart
               </button>
               <button
                 onClick={() => {
                   addProductToWishlist(id);
                 }}
-                className="btn text-white bg-main btn-sm">
+                className="btn text-white bg-main btn-sm"
+              >
                 <i
                   className={`fa-${
                     wishlist.includes(id) ? "solid" : "regular"
-                  } fa-heart`}></i>
+                  } fa-heart`}
+                ></i>
               </button>
             </div>
           </div>
