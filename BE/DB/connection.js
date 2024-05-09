@@ -1,5 +1,5 @@
 import connection from "mongoose";
-import {config} from 'dotenv' ;
+import { config } from "dotenv";
 config();
 const connect = await connection
   .connect(process.env.DB_ATLAS)

@@ -1,24 +1,38 @@
-import { StatusCodes } from "http-status-codes";
-import { ModifyError } from "../../utils/classError.js";
-import { asyncHandler } from "../../utils/errorHandling.js";
+import Joi from "joi";
+import { generalFields } from "../../middleware/validation.js";
 
-export const couponValidity = () => {
-    return asyncHandler(async (req, res, next) => {
-        if (req.coupon.usages <= 0) {
-            return next(new ModifyError(`coupon is not active`, StatusCodes.FORBIDDEN))
-        }
-        next();
-    })
-}
+export const add = {
+  body: Joi.object({
+    code: Joi.string().lowercase().min(4).max(10).trim().required(),
+    usages: Joi.number().positive().min(0).required(),
+    limit: Joi.number().positive().min(0).required(),
+    discountPercentage: Joi.number().positive().min(1).max(100).required(),
+    expireDate: Joi.date()
+      .min(new Date(new Date().getDate() + 1))
+      .required(),
+  }).required(),
+  params: Joi.object({}).required(),
+  query: Joi.object({}).required(),
+};
 
-export const userValidity = () => {
-    return asyncHandler(async (req, res, next) => {
-        if (!req.coupon.users[req.user._id]) {
-            req.coupon.users[req.user._id] = 0
-        }
-        if (req.coupon.users[req.user._id] >= req.coupon.limit) {
-            return next(new ModifyError(`user reach his limit`, StatusCodes.FORBIDDEN))
-        }
-        next();
-    })
-}
+export const update = {
+  body: Joi.object({
+    code: Joi.string().lowercase().min(4).max(10).trim(),
+    usages: Joi.number().positive().min(0),
+    limit: Joi.number().positive().min(0),
+    discountPercentage: Joi.number().positive().min(1).max(100),
+    expireDate: Joi.date().min(new Date(new Date().getDate() + 1)),
+  }).required(),
+  params: Joi.object({
+    _id: generalFields._id.required(),
+  }).required(),
+  query: Joi.object({}).required(),
+};
+
+export const code = {
+  body: Joi.object({
+    code: Joi.string().lowercase().min(4).max(10).trim().required(),
+  }).required(),
+  params: Joi.object({}).required(),
+  query: Joi.object({}).required(),
+};

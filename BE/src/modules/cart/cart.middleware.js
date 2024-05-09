@@ -34,3 +34,10 @@ export const checkQuantity = asyncHandler(async (req, res, next) => {
   }
   next();
 });
+
+export const isCartEmpty = asyncHandler(async (req, res, next) => {
+  if (!req.cart.products.length) {
+    return next(new ModifyError("The cart is empty", StatusCodes.BAD_REQUEST));
+  }
+  return next();
+});

@@ -1,47 +1,59 @@
 import { Router } from "express";
 import * as subcategoryContoller from "./subcategory.controller.js";
+import * as validator from "./subcategory.validation.js";
 import { isExist } from "../../middleware/isExist.js";
 import categoryModel from "../../../DB/model/Category.model.js";
-import { fileValidation, uniqueFields } from "../../utils/systemConstants.js";
+import {
+  fileValidation,
+  uniqueFields,
+  userRoles,
+} from "../../utils/systemConstants.js";
 import { isNotExist } from "../../middleware/isNotExist.js";
 import subcategoryModel from "../../../DB/model/Subcategory.model.js";
 import auth from "../../middleware/auth.js";
-import { deleteImage, updateImage, uploadImage } from "../../middleware/uploadImage.js";
+import {
+  deleteImage,
+  updateImage,
+  uploadImage,
+} from "../../middleware/uploadImage.js";
 import { fileUpload } from "../../utils/multer.js";
 import { isOwner } from "../../middleware/isOwner.js";
+import { IdValidator, validation } from "../../middleware/validation.js";
+import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
 
-router.get("/", (req, res) =>
-  res.status(200).json({ mesasge: `${req.originalUrl} Page` })
-);
+router.get("/", getAllData);
 
 router.post(
   "/:categoryId",
-  auth(),
+  auth([userRoles.Seller]),
   fileUpload(fileValidation.image).single("img"),
+  validation(validator.add),
   isExist({ model: categoryModel, searchData: uniqueFields.categoryId }),
   isNotExist({ model: subcategoryModel, searchData: uniqueFields.name }),
   subcategoryContoller.add,
-  uploadImage(subcategoryModel)
+  uploadImage({ model: subcategoryModel })
 );
 
-router.put(
-  "/_id",
-  auth(),
-  fileUpload(fileValidation.image).single("img"),
-  isExist({ model: subcategoryModel }),
-  isNotExist({model:subcategoryModel,searchData:uniqueFields.name}),
-  updateImage(subcategoryModel),
-  subcategoryContoller.update
-);
-
-router.delete(
-  "/:_id",
-  auth(),
-  isExist({ model: subcategoryModel }),
-  isOwner(subcategoryModel),
-  deleteImage(subcategoryModel),
-  subcategoryContoller.remove
-);
+router
+  .route("/:_id")
+  .put(
+    auth([userRoles.Seller]),
+    fileUpload(fileValidation.image).single("img"),
+    validation(validator.update),
+    isExist({ model: subcategoryModel }),
+    isNotExist({ model: subcategoryModel, searchData: uniqueFields.name }),
+    updateImage({ model: subcategoryModel }),
+    subcategoryContoller.update
+  )
+  .delete(
+    auth([userRoles.Seller]),
+    validation(IdValidator),
+    isExist({ model: subcategoryModel }),
+    isOwner(subcategoryModel),
+    deleteImage(subcategoryModel),
+    subcategoryContoller.remove
+  )
+  .get(validation(IdValidator), getDataById);
 
 export default router;

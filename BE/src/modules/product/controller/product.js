@@ -1,6 +1,6 @@
 import productModel from "../../../../DB/model/Product.model.js";
 import { asyncHandler } from "../../../utils/errorHandling.js";
-import * as validation from "../product.validation.js";
+import * as validation from "../product.middleware.js";
 
 export const addProduct = asyncHandler(async (req, res, next) => {
   req.body.createdBy = req.user._id;

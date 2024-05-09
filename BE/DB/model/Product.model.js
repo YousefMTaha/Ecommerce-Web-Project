@@ -1,4 +1,5 @@
 import * as mongo from "mongoose";
+import reviewModel from "./Review.model.js";
 
 const productSchema = new mongo.Schema(
   {
@@ -22,7 +23,12 @@ const productSchema = new mongo.Schema(
       ref: "Subcategory",
       required: [true, "subCategory is required"],
     },
-    stock: { type: Number, default: 0 },
+    category: {
+      type: mongo.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    stock: { type: Number, default: 1 },
     createdBy: { type: mongo.Types.ObjectId, ref: "User", required: true },
     brandId: {
       type: mongo.Types.ObjectId,
@@ -37,8 +43,10 @@ const productSchema = new mongo.Schema(
       type: Number,
       default: 0,
     },
-
+    color: [String],
+    size: [String],
     images: [Object],
+    imageCover: Object,
   },
   {
     timestamps: true,
@@ -49,16 +57,18 @@ const productSchema = new mongo.Schema(
 
 productSchema.virtual("avgRating").get(function () {
   // console.log(this);
-  if (this.noRating == 0)
-    return 0
-  return this.totalRating / this.noRating
-})
+  if (this.noRating == 0) return 0;
+  return this.totalRating / this.noRating;
+});
 
 productSchema.method("check_Stock", function (quantity) {
   return quantity <= this.stock;
 });
 
-productSchema.pre("deleteOne", async function () {});
+productSchema.post("deleteOne", async function () {
+  // delete the reviews related to this product
+  await reviewModel.deleteMany({ productId: this.getFilter()._id });
+});
 
 const productModel = mongo.model("Product", productSchema);
 export default productModel;

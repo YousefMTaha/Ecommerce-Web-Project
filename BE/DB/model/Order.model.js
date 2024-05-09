@@ -43,8 +43,9 @@ const orderSchema = new Schema(
       enum: Object.values(paymentMehods),
       default: paymentMehods.cash,
     },
-    phone: String,
+    phone: { type: String, required: true },
     paymentIntent: String,
+    couponId: { type: Types.ObjectId, ref: "Coupon" },
   },
   {
     timestamps: true,

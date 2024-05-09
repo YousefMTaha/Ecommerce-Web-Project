@@ -5,6 +5,7 @@
 export const userRoles = {
   User: "User",
   Admin: "Admin",
+  Seller: "Seller",
 };
 
 export const userStatus = {
@@ -28,14 +29,16 @@ export const uniqueFields = {
   brandId: "brandId",
   userId: "userId",
   productId: "productId",
-  couponCode: "code"
+  couponId: "couponId",
+  couponCode: "code",
+  category: "category",
 };
 
 export const orderStatus = {
   chipping: "chipping",
   watting_for_payment: "waiting for payment",
   canceled: "canceled",
-  refunded:"refunded"
+  refunded: "refunded",
 };
 
 export const paymentMehods = {

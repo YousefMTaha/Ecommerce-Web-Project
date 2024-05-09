@@ -57,7 +57,7 @@ export const remove = asyncHandler(async (req, res, next) => {
       $pull: { products: { id: req.product._id } },
     }
   );
-  return res.status(200).json({ message: "Done" });
+  return res.status(200).json({ message: "done" });
 });
 
 export const get = asyncHandler(async (req, res, next) =>

@@ -1,62 +1,63 @@
 import { Router } from "express";
-import * as couponContoller from "./controller/coupon.js"
+import * as couponContoller from "./controller/coupon.js";
+import * as validator from "./coupon.validation.js";
 import couponModel from "../../../DB/model/Coupon.model.js";
 import auth from "../../middleware/auth.js";
 import { isNotExist } from "../../middleware/isNotExist.js";
 import { isExist } from "../../middleware/isExist.js";
-import { isOwner } from '../../middleware/isOwner.js';
+import { isOwner } from "../../middleware/isOwner.js";
 import { reqDataForms, uniqueFields } from "../../utils/systemConstants.js";
-import { couponValidity, userValidity } from "./coupon.validation.js";
+import { IdValidator, validation } from "../../middleware/validation.js";
 
 const router = Router();
 
 router.get(
-    "/",
-    auth(),
-    couponContoller.getAllCoupons,
+  "/getByCode",
+  auth(),
+  validation(validator.code),
+  isExist({
+    model: couponModel,
+    dataFrom: reqDataForms.body,
+    searchData: uniqueFields.couponCode,
+  }),
+  couponContoller.getCoupon
 );
 
-router.get(
-    "/:_id",
+router
+  .route("/")
+  .get( auth(), couponContoller.getAllCoupons)
+  .post(
+    
     auth(),
-    isExist({ model: couponModel, dataFrom: reqDataForms.body, searchData: uniqueFields.couponCode }),
-    couponContoller.getCoupon,
-);
+    validation(validator.add),
+    isNotExist({ model: couponModel, searchData: uniqueFields.couponCode }),
+    couponContoller.addCoupon
+  );
 
-router.post(
-    "/",
+router
+  .route("/:_id")
+  .put(
     auth(),
-    isNotExist({ model: couponModel, searchData: "code" }),
-    couponContoller.addCoupon,
-);
-
-// use coupon for one time
-router.put(
-    "/use/:_id",
-    auth(),
-    isExist({ model: couponModel, dataFrom: reqDataForms.parmas, searchData: uniqueFields.id }),
-    couponValidity(),
-    userValidity(),
-    couponContoller.useCoupon,
-);
-
-// update coupon data
-router.put(
-    "/:_id",
-    auth(),
-    isExist({ model: couponModel, dataFrom: reqDataForms.parmas, searchData: uniqueFields.id }),
+    validation(validator.update),
+    isExist({
+      model: couponModel,
+      dataFrom: reqDataForms.parmas,
+      searchData: uniqueFields.id,
+    }),
     isOwner(couponModel),
-    couponContoller.updateCoupon,
-);
-
-router.delete(
-    "/:_id",
+    isNotExist({ model: couponModel, searchData: uniqueFields.couponCode }),
+    couponContoller.updateCoupon
+  )
+  .delete(
     auth(),
-    isExist({ model: couponModel, dataFrom: reqDataForms.parmas, searchData: uniqueFields.id }),
+    validation(IdValidator),
+    isExist({
+      model: couponModel,
+      dataFrom: reqDataForms.parmas,
+      searchData: uniqueFields.id,
+    }),
     isOwner(couponModel),
-    couponContoller.removeCoupon,
-);
-
-
+    couponContoller.removeCoupon
+  );
 
 export default router;

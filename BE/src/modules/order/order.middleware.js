@@ -69,6 +69,8 @@ export const orderCash = asyncHandler(async (req, res, next) => {
     products: req.orderProductsDB,
     status: orderStatus.chipping,
     phone: req.body.phone || req.user.phone,
+    descount: req.coupon?.discountPercentage,
+    couponId: req.coupon?._id,
   });
 
   req.order = order;
@@ -86,7 +88,17 @@ export const orderCard = asyncHandler(async (req, res, next) => {
     status: orderStatus.watting_for_payment,
     phone: req.body.phone || req.user.phone,
     paymentMehod: paymentMehods.card,
+    descount: req.coupon?.discountPercentage,
   });
+
+  if (req.coupon) {
+    const stripeCoupon = await stripe.coupons.create({
+      name: req.coupon.code,
+      percent_off: req.coupon.discountPercentage,
+    });
+
+    req.body.stripeCoupon = stripeCoupon;
+  }
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -103,13 +115,15 @@ export const orderCard = asyncHandler(async (req, res, next) => {
     customer_email: req.user.email,
     cancel_url: process.env.SUCCESS_URL,
     success_url: process.env.SUCCESS_URL,
+    discounts: [{ coupon: req.body.stripeCoupon.id }],
     metadata: {
       orderId: order._id.toString(),
       cartId: req.cart._id.toString(),
     },
   });
 
-  req.order = session.url;
+  req.order = order._doc;
+  req.order.paymentUrl = session.url;
   next();
 });
 

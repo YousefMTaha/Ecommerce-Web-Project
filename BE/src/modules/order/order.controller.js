@@ -5,7 +5,13 @@ import { orderStatus } from "../../utils/systemConstants.js";
 import productModel from "../../../DB/model/Product.model.js";
 import { sendEmail } from "../../utils/email.js";
 export const create = asyncHandler(async (req, res, next) => {
-  return res.status(200).json({ message: "Done", order: req.order });
+  // if user use coupon (update info in DB)
+  if (req.coupon) {
+    req.coupon.usages -= 1;
+    req.coupon.users[req.user._id] += 1;
+    await req.coupon.updateOne(req.coupon);
+  }
+  return res.status(200).json({ message: "done", order: req.order });
 });
 
 export const cancel = asyncHandler(async (req, res, next) => {
