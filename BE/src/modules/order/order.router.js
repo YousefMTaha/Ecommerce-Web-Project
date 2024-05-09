@@ -20,12 +20,13 @@ const router = Router();
 
 router.get(
   "/",
-  (req, res, next) => {
-    console.log({ body: req.body, params: req.params, headers: req.headers });
-    next();
-  },
+  // (req, res, next) => {
+  //   console.log({ body: req.body, params: req.params, headers: req.headers });
+  //   next();
+  // },
   auth(),
   async (req, res, next) => {
+   res.he
     const orders = await orderModel
       .find({ createdBy: req.user._id })
       .populate("products.id");
@@ -48,10 +49,10 @@ router.get(
 */
 router.post(
   "/",
-  (req, res, next) => {
-    console.log({ body: req.body, params: req.params, headers: req.headers });
-    next();
-  },
+  // (req, res, next) => {
+  //   console.log({ body: req.body, params: req.params, headers: req.headers });
+  //   next();
+  // },
   auth(),
   isCartEmpty,
   // isExist({

@@ -88,6 +88,7 @@ export default function FeaturedProducts() {
       <div className="row g-3">
         <h2 className="mt-5 mb-2">All Products</h2>
         {data?.data.Product.map((product) => {
+          console.log(product);
           return (
             <div key={product._id} className="col-lg-2 col-md-4 col-sm-6">
               <div className="product p-2 position-relative">

@@ -11,7 +11,7 @@ two conditions:
 export const isProductExistInCart = asyncHandler(async (req, res, next) => {
   // check if the product is already in the cart
   req.cart.products.forEach((ele) => {
-    if (ele.id._id.toString() == req.params.productId) {
+    if (ele.id._id.toString() == req.body.productId) {
       req.body.quantity += ele.quantity;
       req.body.productExist = true;
       return;
@@ -37,7 +37,10 @@ export const checkQuantity = asyncHandler(async (req, res, next) => {
 
 export const isCartEmpty = asyncHandler(async (req, res, next) => {
   if (!req.cart.products.length) {
+    console.log(req.cart);
+    console.log("isCartinsideIf");
     return next(new ModifyError("The cart is empty", StatusCodes.BAD_REQUEST));
   }
+  console.log("isCartoutsideIf");
   return next();
 });

@@ -56,13 +56,13 @@ export const isProductsOrder = asyncHandler(async (req, res, next) => {
   // pass the order product to req
   req.orderProductsDB = orderProductsDB;
   req.orderProductsStripe = orderProductsStripe;
-
+  console.log("isProductsOrder");
   next();
 });
 
 export const orderCash = asyncHandler(async (req, res, next) => {
   if (!(req.body.paymentMethod == paymentMehods.cash)) return next();
-
+  
   const order = await orderModel.create({
     address: req.body.address,
     createdBy: req.user._id,
@@ -72,13 +72,14 @@ export const orderCash = asyncHandler(async (req, res, next) => {
     descount: req.coupon?.discountPercentage,
     couponId: req.coupon?._id,
   });
-
+  
   req.order = order;
-
+  
   next();
 });
 
 export const orderCard = asyncHandler(async (req, res, next) => {
+  console.log("isorderCard");
   if (!(req.body.paymentMethod == paymentMehods.card)) return next();
 
   const order = await orderModel.create({

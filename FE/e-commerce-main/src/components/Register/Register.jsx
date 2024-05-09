@@ -13,14 +13,17 @@ export default function Register() {
 
   async function registerSubmit(values) {
     setIsLoading(true);
-    const { data } = await axios
-      .post("https://ecommerce.routemisr.com/api/v1/auth/signup", values)
+    const  {data}  = await axios
+      .post("http://localhost:3000/auth/signup", values)
       .catch((err) => {
+        console.log(err);
         setIsLoading(false);
-        setError(err.response.data.message);
+        setError(err.response.msgError);
       });
 
-    if (data.message === "success") {
+      console.log(data);
+
+    if (data.message === "done") {
       navigate("/login");
     }
   }

@@ -98,6 +98,7 @@ export default function Cart() {
             </div>
             <div className="items">
               {data?.data.cart.products.map((product) => {
+                console.log({product});
                 return (
                   <div className="row py-3 border-bottom" key={product._id}>
                     <div className="col-9">

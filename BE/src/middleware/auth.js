@@ -8,7 +8,7 @@ import cartModel from "../../DB/model/Cart.model.js";
 import productModel from "../../DB/model/Product.model.js";
 
 const auth = (roles = Object.values(userRoles)) => {
-  return async (req, res, next) => {
+  return asyncHandler(async (req, res, next) => {
     // constract token from headers
     let { token } = req.headers;
     if (!token)
@@ -73,9 +73,10 @@ const auth = (roles = Object.values(userRoles)) => {
     // add the user object to the request object so it can be accessed throw the other middlewares
     req.user = user;
 
+    console.log("auth");
     // move to the next middleware
     return next();
-  };
+  });
 };
 
 export default auth;

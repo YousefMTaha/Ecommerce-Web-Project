@@ -29,6 +29,7 @@ export default function CartContextProvider(props) {
       })
 
       .then((response) => {
+        console.log(response);
         setCartNum(response.data.cart.noProduct);
         setCartId(response.data.cart._id);
         return response;
@@ -71,7 +72,7 @@ export default function CartContextProvider(props) {
       .catch((error) => error);
   }
 
-  function payOnline(id, url, values) {
+  function payOnline( values) {
     return axios
       .post(
         `http://localhost:3000/order/`,

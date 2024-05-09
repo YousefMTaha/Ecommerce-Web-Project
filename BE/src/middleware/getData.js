@@ -9,18 +9,21 @@ import { ModifyError } from "../utils/classError.js";
 const getAllData = async (req, res, next) => {
   const model = getModelFromUrl(req.originalUrl);
   let data = await model.find().populate("category");
-
-  data = data.map((ele) => {
-    ele = ele._doc;
-    return {
-      ...ele,
-      category: { id: ele.category._id, categoryName: ele.category.name },
-    };
-  });
+  // console.log(data);
+  // data = data.map((ele) => {
+  //   // console.log({...ele});
+  //   ele = ele._doc;
+  //   return {
+  //     ...ele,
+  //     category: { id: ele.category._id, categoryName: ele.category.name },
+  //   };
+  // });
   const resObj = {};
   resObj.message = "done";
 
   resObj[model.modelName] = data;
+
+  // console.log(data);
 
   return data.length
     ? res.status(StatusCodes.OK).json(resObj)

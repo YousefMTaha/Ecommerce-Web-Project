@@ -7,21 +7,18 @@ import { CartContext } from "../../Context/CartContext";
 
 export default function Checkout() {
   const [isLoading, setIsLoading] = useState(false);
-  const { payOnline, cartId } = useContext(CartContext);
+  const { payOnline } = useContext(CartContext);
 
   async function handleSubmit(values) {
     setIsLoading(true);
-    const { data } = await payOnline(
-      cartId,
-      window.location.hostname === "localhost"
-        ? "http://" + window.location.hostname + ":3000"
-        : "http://" + window.location.hostname,
+    const  data  = await payOnline(
       values
     );
+    // console.log({data});
     setIsLoading(false);
-
-    if (data.status === "success") {
-      window.location.href = data.session.url;
+    const paymentUrl = data.data.order.paymentUrl;
+    if (data.data.message == "done") {
+      window.location.href = paymentUrl;
     }
   }
 

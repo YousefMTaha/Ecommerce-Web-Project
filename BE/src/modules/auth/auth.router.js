@@ -6,6 +6,11 @@ const router = Router();
 
 router.get("/", (req, res) => res.json({ mesasge: `${req.originalUrl} Page` }));
 
-router.post("/signup", validation(validator.signup), userController.signup);
+router.post(
+  "/signup",
+
+  //   validation(validator.signup),
+  userController.signup
+);
 router.post("/login", validation(validator.login), userController.login);
 export default router;
