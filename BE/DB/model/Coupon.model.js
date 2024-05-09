@@ -6,6 +6,8 @@ const CouponSchema = new mongo.Schema(
             type: String,
             uniqe: [true, "code must be unique"],
             required: [true, "code is required"],
+            lowercase:true,
+            trim:true
         },
         // usages of the coupon
         usages: {

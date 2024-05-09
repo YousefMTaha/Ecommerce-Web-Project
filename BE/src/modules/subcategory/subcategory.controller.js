@@ -10,10 +10,10 @@ export const add = asyncHandler(async (req, res, next) => {
 
 export const remove = asyncHandler(async (req, res, next) => {
   await req.subcategory.deleteOne();
-  return res.status(200).json({ message: "Done" });
+  return res.status(200).json({ message: "done" });
 });
 
 export const update = asyncHandler(async (req, res, next) => {
   await req.subcategory.updateOne(req.body);
-  return res.status(200).json({ message: "Done" });
+  return res.status(200).json({ message: "done" });
 });

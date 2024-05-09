@@ -23,7 +23,12 @@ const productSchema = new mongo.Schema(
       ref: "Subcategory",
       required: [true, "subCategory is required"],
     },
-    stock: { type: Number, default: 0 },
+    category: {
+      type: mongo.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    stock: { type: Number, default: 1 },
     createdBy: { type: mongo.Types.ObjectId, ref: "User", required: true },
     brandId: {
       type: mongo.Types.ObjectId,
@@ -38,8 +43,10 @@ const productSchema = new mongo.Schema(
       type: Number,
       default: 0,
     },
-
+    color: [String],
+    size: [String],
     images: [Object],
+    imageCover: Object,
   },
   {
     timestamps: true,
@@ -59,7 +66,7 @@ productSchema.method("check_Stock", function (quantity) {
 });
 
 productSchema.post("deleteOne", async function () {
-  // delete the reviews realted to this product
+  // delete the reviews related to this product
   await reviewModel.deleteMany({ productId: this.getFilter()._id });
 });
 

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as categoryController from "./category.controller.js";
+import * as validator from "./category.validation.js";
 import auth from "../../middleware/auth.js";
 import categoryModel from "../../../DB/model/Category.model.js";
 import { isNotExist } from "../../middleware/isNotExist.js";
@@ -12,32 +13,37 @@ import {
   uploadImage,
 } from "../../middleware/uploadImage.js";
 import { fileValidation, uniqueFields } from "../../utils/systemConstants.js";
+import { IdValidator, validation } from "../../middleware/validation.js";
+import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
 router
   .route("/")
-  .get(categoryController.getAllData)
+  .get(getAllData)
   .post(
     auth(),
     fileUpload(fileValidation.image).single("img"),
+    validation(validator.add),
     isNotExist({ model: categoryModel, searchData: uniqueFields.name }),
     categoryController.add,
-    uploadImage(categoryModel)
+    uploadImage({model:categoryModel})
   );
 
 router
   .route("/:_id")
-  .get(categoryController.getData)
+  .get(validation(IdValidator), getDataById)
   .put(
     auth(),
     fileUpload(fileValidation.image).single("img"),
+    validation(validator.update),
     isExist({ model: categoryModel }),
     isOwner(categoryModel),
     isNotExist({ model: categoryModel, searchData: uniqueFields.name }),
-    updateImage(categoryModel),
+    updateImage({model:categoryModel}),
     categoryController.update
   )
   .delete(
     auth(),
+    validation(IdValidator),
     isExist({ model: categoryModel }),
     isOwner(categoryModel),
     deleteImage(categoryModel),

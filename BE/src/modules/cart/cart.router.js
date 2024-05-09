@@ -5,7 +5,8 @@ import { isExist } from "../../middleware/isExist.js";
 import productModel from "../../../DB/model/Product.model.js";
 import { reqDataForms, uniqueFields } from "../../utils/systemConstants.js";
 import { checkQuantity, isProductExistInCart } from "./cart.middleware.js";
-
+import { validation } from "../../middleware/validation.js";
+import * as validator from "./cart.validation.js";
 const router = Router();
 
 // Get cart info
@@ -15,6 +16,7 @@ router.get("/", auth(), get);
 router.post(
   "/:productId",
   auth(),
+  validation(validator.add),
   isExist({
     model: productModel,
     dataFrom: reqDataForms.parmas,
@@ -29,6 +31,7 @@ router.post(
 router.put(
   "/:productId",
   auth(),
+  validation(validator.update),
   isExist({
     model: productModel,
     dataFrom: reqDataForms.parmas,
@@ -42,6 +45,7 @@ router.put(
 router.delete(
   "/:productId",
   auth(),
+  validation(validator.remove),
   isExist({
     model: productModel,
     dataFrom: reqDataForms.parmas,
