@@ -25,7 +25,6 @@ export default function Login() {
         setIsLoading(false);
         setError(err.response.data.message);
       });
-      console.log(data);
     if (data.message === "done") {
       localStorage.setItem("token", data.token);
       localStorage.setItem("hostname", window.location.hostname);

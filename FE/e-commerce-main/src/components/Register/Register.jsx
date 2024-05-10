@@ -18,7 +18,7 @@ export default function Register() {
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
-        setError(err.response.msgError);
+        setError(err.response.data.message);
       });
 
       console.log(data);

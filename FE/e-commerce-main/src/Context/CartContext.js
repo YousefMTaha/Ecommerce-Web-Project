@@ -39,7 +39,8 @@ export default function CartContextProvider(props) {
 
   function removeItem(id) {
     return axios
-      .delete(`http://localhost:3000/cart/${id}`, {
+      .delete(`http://localhost:3000/cart`, {
+        data: { productId: id },
         headers: { token: "yousef_" + localStorage.getItem("token") },
       })
       .then((response) => {
@@ -72,7 +73,7 @@ export default function CartContextProvider(props) {
       .catch((error) => error);
   }
 
-  function payOnline( values) {
+  function payOnline(values) {
     return axios
       .post(
         `http://localhost:3000/order/`,

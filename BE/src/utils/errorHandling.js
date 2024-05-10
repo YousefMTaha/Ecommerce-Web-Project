@@ -11,5 +11,5 @@ export const asyncHandler = (fn) => {
 }
 
 export const globalErrorHandling = (error, req, res, next) => {
-    return res.status(error.status || 400).json({ msgError: error.message,status:error.status })
+    return res.status(error.status || 400).json({ message: error.message,status:error.status })
 }

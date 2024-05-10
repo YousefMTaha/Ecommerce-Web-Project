@@ -60,7 +60,7 @@ export default function Cart() {
     }
   }
 
-  console.log(data);
+  console.log({dataFrom:data});
 
   return (
     <>
@@ -77,7 +77,7 @@ export default function Cart() {
         {data?.data !== undefined ? (
           <>
             <h4 className="text-main">
-              Number Of Items : {data?.data.noProduct}
+              Number Of Items : {data?.data.cart.noProduct}
             </h4>
             {/* <h5 className="text-main">
               Total Cart Price: {data?.data.data.totalCartPrice} EGP
@@ -117,6 +117,7 @@ export default function Cart() {
                           </p>
                           <button
                             onClick={() => {
+                              console.log({idFromReomve:product.id._id});
                               removeCartItem(product.id._id);
                             }}
                             className="btn btn-sm bg-main text-white"
@@ -140,10 +141,10 @@ export default function Cart() {
                         +
                       </button>
                       <span className="mx-2 d-inline-block">
-                        {product.quantity}
+                        {product.quantity }
                       </span>
                       <button
-                        disabled={product.quantity === 1}
+                        disabled={product.quantity <= 1}
                         onClick={() => {
                           updateQuantityItem(
                             product.id._id,

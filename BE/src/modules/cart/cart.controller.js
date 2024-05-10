@@ -25,7 +25,7 @@ export const add = asyncHandler(async (req, res, next) => {
     : // add the product info to the user cart
       await req.cart.updateOne({
         $push: {
-          products: { id: req.product._id, quantity: req.body.quantity },
+          products: { id: req.product._id, quantity: req.body.quantity || 1 },
         },
       });
 

@@ -49,12 +49,12 @@ router.put(
 
 // delete product from cart
 router.delete(
-  "/:productId",
+  "/",
   auth(),
-  validation(validator.remove),
+  // validation(validator.remove),
   isExist({
     model: productModel,
-    dataFrom: reqDataForms.parmas,
+    dataFrom: reqDataForms.body,
     searchData: uniqueFields.productId,
   }),
   isProductExistInCart,

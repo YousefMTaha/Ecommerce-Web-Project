@@ -4,7 +4,7 @@ import Stripe from "stripe";
 import { orderStatus } from "../../utils/systemConstants.js";
 import productModel from "../../../DB/model/Product.model.js";
 import { sendEmail } from "../../utils/email.js";
-// import axios from "axios";
+
 export const create = asyncHandler(async (req, res, next) => {
   // if user use coupon (update info in DB)
   if (req.coupon) {
@@ -13,12 +13,6 @@ export const create = asyncHandler(async (req, res, next) => {
     await req.coupon.updateOne(req.coupon);
   }
 
-  // if (req.order.paymentUrl) {
-  //   const response = await axios.get(req.order.paymentUrl);
-
-  //   // Redirect the user to the Stripe URL
-  //   return res.setHeader("Access-Control-Allow-Origin", "*").redirect(response.request.res.responseUrl);
-  // }
   return res.status(200).json({ message: "done", order: req.order });
 });
 

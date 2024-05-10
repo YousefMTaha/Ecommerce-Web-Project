@@ -20,10 +20,6 @@ const router = Router();
 
 router.get(
   "/",
-  // (req, res, next) => {
-  //   console.log({ body: req.body, params: req.params, headers: req.headers });
-  //   next();
-  // },
   auth(),
   async (req, res, next) => {
    res.he
@@ -48,21 +44,17 @@ router.get(
 6- return response to user with information about order (cash) or payment link (card)
 */
 router.post(
-  "/",
-  // (req, res, next) => {
-  //   console.log({ body: req.body, params: req.params, headers: req.headers });
-  //   next();
-  // },
+
   auth(),
   isCartEmpty,
-  // isExist({
-  //   model: couponModel,
-  //   dataFrom: reqDataForms.body,
-  //   searchData: uniqueFields.couponCode,
-  //   isId: false,
-  // }),
-  // couponMiddleware.couponValidity,
-  // couponMiddleware.userValidity,
+  isExist({
+    model: couponModel,
+    dataFrom: reqDataForms.body,
+    searchData: uniqueFields.couponCode,
+    isId: false,
+  }),
+  couponMiddleware.couponValidity,
+  couponMiddleware.userValidity,
   orderMiddleware.isProductsOrder,
   orderMiddleware.orderCard,
   orderMiddleware.orderCash,
