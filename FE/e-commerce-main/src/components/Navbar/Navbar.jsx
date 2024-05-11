@@ -71,7 +71,7 @@ export default function Navbar() {
               </li>
               {userData.role === "Admin" ? (
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/allorders">
+                  <NavLink className="nav-link" to="/Dashboard">
                     Dashboard
                   </NavLink>
                 </li>

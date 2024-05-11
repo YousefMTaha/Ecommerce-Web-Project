@@ -62,6 +62,9 @@ export default function Orders() {
                             <p className="text-main fw-bold">
                               Item Price : {item.price} EGP
                             </p>
+                            <p className="text-main fw-bold">
+                              Status : {order.status}
+                            </p>
                           </div>
                         </div>
                         <button className="btn btn-danger m-3 ">Refund</button>
