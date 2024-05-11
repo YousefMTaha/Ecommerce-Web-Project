@@ -1,6 +1,6 @@
 import React from "react";
 import "./Footer.css";
-import footerLogo from "../../Assets/images/freshcart-logo.svg";
+import footerLogo from "../../Assets/images/logo.png";
 import instaIcon from "../../Assets/images/instagram_icon.png";
 import pintIcon from "../../Assets/images/pintester_icon.png";
 import whatsIcon from "../../Assets/images/whatsapp_icon.png";

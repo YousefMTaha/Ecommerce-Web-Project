@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Style from "./Navbar.module.scss";
 import { NavLink, useNavigate } from "react-router-dom";
-import Logo from "../../Assets/images/freshcart-logo.svg";
+import Logo from "../../Assets/images/logo.png";
 import { UserContext } from "../../Context/UserContext";
 import { CartContext } from "../../Context/CartContext";
 import jwtDecode from "jwt-decode";
