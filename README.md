@@ -131,7 +131,7 @@ To run this project, you will need to add the following environment variables to
 
 ## DB Schema
 
-[DB-Schema](https://drive.google.com/file/d/1tcNN5gK4y1PgbogETmNPvimCI652Fq3X/view?usp=sharing)
+[DB-Schema](https://drive.google.com/file/d/1tcNN5gK4y1PgbogETmNPvimCI652Fq3X/view?usp=sharing) (Download it for better resolution)
 
 
 
