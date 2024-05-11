@@ -8,18 +8,34 @@ import { CartContext } from "../../Context/CartContext";
 export default function Checkout() {
   const [isLoading, setIsLoading] = useState(false);
   const { payOnline } = useContext(CartContext);
+  const [error, setError] = useState(null);
 
   async function handleSubmit(values) {
     setIsLoading(true);
-    const  data  = await payOnline(
+    let data
+    if(values.coupon!==""){
+      values.code = values.coupon
+     data  = await payOnline(
       values
     );
+    }
+    else{
+      const { coupon, ...paymentValues } = values;
+      data = await payOnline(paymentValues);
+    }
+   
     // console.log({data});
-    setIsLoading(false);
-    const paymentUrl = data.data.order.paymentUrl;
-    if (data.data.message == "done") {
+    // setIsLoading(false);
+
+    if (data.data?.message === "done") {
+      const paymentUrl = data.data.order.paymentUrl;
       window.location.href = paymentUrl;
     }
+    else{
+      setIsLoading(false);
+      setError(data);
+    }
+    
   }
 
   const validationSchema = Yup.object({
@@ -27,6 +43,7 @@ export default function Checkout() {
       .required("This field is required")
       .matches(/^01[0125][0-9]{8}$/i, "Enter a valid phone number"),
     city: Yup.string().required("This field is required"),
+    coupon: Yup.string(),
   });
 
   const formik = useFormik({
@@ -34,6 +51,7 @@ export default function Checkout() {
       details: "details",
       phone: "",
       city: "",
+      coupon:"",
     },
     validationSchema,
     onSubmit: handleSubmit,
@@ -45,6 +63,9 @@ export default function Checkout() {
         <meta charSet="utf-8" />
         <title>Checkout Data</title>
       </Helmet>
+      {error ? (
+        <div className="alert alert-danger mb-3 p-2 text-center">{error}</div>
+      ) : null}
       <h2 className="mb-4">Checkout Data</h2>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group mb-2">
@@ -82,6 +103,25 @@ export default function Checkout() {
           {formik.errors.city && formik.touched.city ? (
             <div className="alert alert-danger mt-2 p-2">
               {formik.errors.city}
+            </div>
+          ) : null}
+        </div>
+        <div className="form-group mb-2">
+          <label htmlFor="coupon" className="mb-1">
+          Coupon:
+          </label>
+          <input
+            className="form-control"
+            type="tel"
+            id="coupon"
+            name="coupon"
+            value={formik.values.coupon}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.errors.coupon && formik.touched.coupon ? (
+            <div className="alert alert-danger mt-2 p-2">
+              {formik.errors.coupon}
             </div>
           ) : null}
         </div>
