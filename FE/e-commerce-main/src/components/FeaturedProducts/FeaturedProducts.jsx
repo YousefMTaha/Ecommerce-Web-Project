@@ -117,19 +117,6 @@ export default function FeaturedProducts() {
                   >
                     Add To Cart
                   </button>
-
-                  <button
-                    onClick={() => {
-                      addProductToWishlist(product._id);
-                    }}
-                    className="btn text-white bg-main mx-auto btn-sm"
-                  >
-                    <i
-                      className={`fa-${
-                        wishlist.includes(product._id) ? "solid" : "regular"
-                      } fa-heart`}
-                    ></i>
-                  </button>
                 </div>
               </div>
             </div>
