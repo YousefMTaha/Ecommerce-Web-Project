@@ -19,6 +19,13 @@ export default function Orders() {
   const { isLoading, isError, data, isFetching } = useQuery("getOrders", () =>
     getOrders(id)
   );
+  const refundOrder =(id)=>{
+    return axios
+      .put(`http://localhost:3000/order/${id}`,{},{
+        headers: { token: "yousef_" + localStorage.getItem("token") },
+      })
+      .catch((error) =>{console.log( error.response.data.message)});
+  };
   // console.log(useQuery("getOrders", () => getOrders(id)).data);
   // console.log(useQuery("getOrders", () =>getOrders(id)));
   // console.log(data);
@@ -64,7 +71,7 @@ export default function Orders() {
                             </p>
                           </div>
                         </div>
-                        <button className="btn btn-danger m-3 ">Refund</button>
+                        <button className="btn btn-danger m-3 " onClick={()=>refundOrder(item.id)}>Refund</button>
                       </div>
                     );
                   })}
