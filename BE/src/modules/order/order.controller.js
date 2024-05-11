@@ -18,6 +18,7 @@ export const create = asyncHandler(async (req, res, next) => {
 
 export const cancel = asyncHandler(async (req, res, next) => {
   // return the products to stock
+  console.log(req.order);
   for (const product of req.order.products) {
     await productModel.updateOne(
       {

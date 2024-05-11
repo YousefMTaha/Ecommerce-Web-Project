@@ -64,8 +64,8 @@ router.post("/webhook", orderController.webhook);
 // if user want to cancel the order
 router.put(
   "/:_id",
-  auth([userRoles.User]),
-  isExist({ model: orderModel }),
+  auth(),
+  isExist({ model: orderModel,dataFrom : reqDataForms.parmas,searchData : uniqueFields.id }),
   isOwner(orderModel),
   orderMiddleware.refund,
   orderController.cancel
