@@ -8,6 +8,7 @@ import { CartContext } from "../../Context/CartContext";
 export default function Checkout() {
   const [isLoading, setIsLoading] = useState(false);
   const { payOnline } = useContext(CartContext);
+  const [error, setError] = useState(null);
 
   async function handleSubmit(values) {
     setIsLoading(true);
@@ -23,12 +24,18 @@ export default function Checkout() {
       data = await payOnline(paymentValues);
     }
    
-    console.log({data});
-    setIsLoading(false);
-    const paymentUrl = data.data.order.paymentUrl;
-    if (data.data.message === "done") {
+    // console.log({data});
+    // setIsLoading(false);
+
+    if (data.data?.message === "done") {
+      const paymentUrl = data.data.order.paymentUrl;
       window.location.href = paymentUrl;
     }
+    else{
+      setIsLoading(false);
+      setError(data);
+    }
+    
   }
 
   const validationSchema = Yup.object({
@@ -56,6 +63,9 @@ export default function Checkout() {
         <meta charSet="utf-8" />
         <title>Checkout Data</title>
       </Helmet>
+      {error ? (
+        <div className="alert alert-danger mb-3 p-2 text-center">{error}</div>
+      ) : null}
       <h2 className="mb-4">Checkout Data</h2>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group mb-2">

@@ -74,15 +74,17 @@ export default function CartContextProvider(props) {
   }
 
   function payOnline(values) {
+    const object = values.code
+      ? { address: values.city, paymentMethod: "Card", code: values.code }
+      : { address: values.city, paymentMethod: "Card" };
     return axios
-      .post(
-        `http://localhost:3000/order/`,
-        { address: values.city, paymentMethod: "Card" },
-        { headers: { token: "yousef_" + localStorage.getItem("token") } }
-      )
+      .post(`http://localhost:3000/order/`, object, {
+        headers: { token: "yousef_" + localStorage.getItem("token") },
+      })
       .then((response) => response)
-      .catch((error) => error);
+      .catch((error) => error.response.data.message);
   }
+
 
   useEffect(() => {
     getLoggedUserCart();
