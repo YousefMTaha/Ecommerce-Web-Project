@@ -13,7 +13,7 @@ export default function Register() {
 
   async function registerSubmit(values) {
     setIsLoading(true);
-    const  {data}  = await axios
+    const { data } = await axios
       .post("http://localhost:3000/auth/signup", values)
       .catch((err) => {
         console.log(err);
@@ -21,7 +21,7 @@ export default function Register() {
         setError(err.response.data.message);
       });
 
-      console.log(data);
+    console.log(data);
 
     if (data.message === "done") {
       navigate("/login");
@@ -169,14 +169,16 @@ export default function Register() {
           <button
             disabled={!(formik.isValid && formik.dirty)}
             type="submit"
-            className="btn bg-main text-white w-25 d-block mx-auto mt-4">
+            className="btn bg-main text-white w-25 d-block mx-auto mt-4"
+          >
             Register
           </button>
         ) : (
           <button
             disabled={!(formik.isValid && formik.dirty)}
             type="submit"
-            className="btn bg-main text-white d-block mx-auto mt-4">
+            className="btn bg-main text-white d-block mx-auto mt-4"
+          >
             <i className="fa-solid fa-spinner fa-spin"></i>
           </button>
         )}

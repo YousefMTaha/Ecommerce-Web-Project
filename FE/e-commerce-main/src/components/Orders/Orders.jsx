@@ -19,7 +19,7 @@ export default function Orders() {
   const { isLoading, isError, data, isFetching } = useQuery("getOrders", () =>
     getOrders(id)
   );
-  console.log(useQuery("getOrders", () => getOrders(id)).data);
+  console.log(data);
   return (
     <>
       <Helmet>
