@@ -30,8 +30,8 @@ export const cancel = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // change the status to canceled
-  req.order.status = orderStatus.canceled;
+  // change the status to refunded
+  req.order.status = orderStatus.Refunded;
   await req.order.save();
 
   return res.status(200).json({ message: "done", refund: req.order.refund });

@@ -1,5 +1,9 @@
 import "./App.scss";
-import { RouterProvider, createBrowserRouter, createHashRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createHashRouter,
+} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./components/Home/Home";
 import Cart from "./components/Cart/Cart";
@@ -25,7 +29,7 @@ import { Toaster } from "react-hot-toast";
 import Checkout from "./components/Checkout/Checkout";
 import Profile from "./components/Profile/Profile";
 import EditProfile from "./components/Profile/EditProfile";
-
+import Dashboard from "./components/Dashboard/Dashboard.jsx";
 
 const queryClient = new QueryClient();
 
@@ -111,6 +115,14 @@ const routes = createHashRouter([
         element: (
           <ProtectedRoute>
             <Checkout />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Dashboard",
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
           </ProtectedRoute>
         ),
       },

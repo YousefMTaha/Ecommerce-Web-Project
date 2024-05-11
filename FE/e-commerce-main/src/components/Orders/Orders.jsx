@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import jwtDecode from "jwt-decode";
 import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
+
 export default function Orders() {
   const { id } = jwtDecode(localStorage.getItem("token"));
 
@@ -19,22 +20,21 @@ export default function Orders() {
   const { isLoading, isError, data, isFetching } = useQuery("getOrders", () =>
     getOrders(id)
   );
-  const refundOrder = async (id)=>{
-    console.log(id)
-    
-    const  res  = await axios
-    .put(
-     `http://localhost:3000/order/${id}`,
-     {},
-     {headers: { token: "yousef_" + localStorage.getItem("token") }},
-     ).then((response)=> {
-      toast.success("the order has been refunded successfully");
-     })
-    .catch((err) => {   
-      toast.error(" failed to refund order");
-    });
-      
-      
+  const refundOrder = async (id) => {
+    console.log(id);
+
+    const res = await axios
+      .put(
+        `http://localhost:3000/order/${id}`,
+        {},
+        { headers: { token: "yousef_" + localStorage.getItem("token") } }
+      )
+      .then((response) => {
+        toast.success("the order has been refunded successfully");
+      })
+      .catch((err) => {
+        toast.error(" failed to refund order");
+      });
   };
   // console.log(useQuery("getOrders", () => getOrders(id)).data);
   // console.log(useQuery("getOrders", () =>getOrders(id)));
@@ -79,9 +79,21 @@ export default function Orders() {
                             <p className="text-main fw-bold">
                               Item Price : {item.price} EGP
                             </p>
+                            <p className="text-main fw-bold">
+                              Status : {order.status}
+                            </p>
                           </div>
-                        </div>                
-                        <button className="btn btn-danger m-3 " onClick={()=>refundOrder(order._id)}>Refund</button>
+                        </div>
+                        {order.status !== "Refunded" ? (
+                          <button
+                            className="btn btn-danger m-3 "
+                            onClick={() => refundOrder(order._id)}
+                          >
+                            Refund
+                          </button>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     );
                   })}

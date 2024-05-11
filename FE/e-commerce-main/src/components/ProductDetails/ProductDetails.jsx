@@ -108,15 +108,20 @@ export default function ProductDetails() {
           </div>
 
           <div className="col-md-8 d-flex flex-column justify-content-center">
-            <h2 className="text-start text-black h3 mb-3">{details.name}</h2>
+            <h2 className="text-start text-black h3 mb-3">
+              {details.name}
+              <span className="rate mx-5">
+                {details.avgRating}
+                <i className="fas fa-star rating-color"></i>
+              </span>
+            </h2>
             <p style={{ color: "#9b9797" }}>{details.description}</p>
             <h6 className="text-main mt-4">{details.category.name}</h6>
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="price">{details.price} EGP</span>
-              <span className="rate">
-                <i className="fas fa-star rating-color"></i>
-                {details.avgRating}
-              </span>
+
+            <div className="d-flex flex-sm-column justify-content-between ">
+              <h4 className="price ">{details.price} EGP</h4>
+
+              <h5 className="font-weight-bolder">Stock : {details.stock}</h5>
             </div>
             <div className="d-flex justify-content-between align-items-center my-3">
               <button
