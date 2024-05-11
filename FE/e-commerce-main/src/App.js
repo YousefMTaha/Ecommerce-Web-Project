@@ -24,7 +24,7 @@ import SubCategories from "./components/SubCategories/SubCategories";
 import { Toaster } from "react-hot-toast";
 import Checkout from "./components/Checkout/Checkout";
 import Profile from "./components/Profile/Profile";
-
+import EditProfile from "./components/Profile/EditProfile";
 
 
 const queryClient = new QueryClient();
@@ -79,6 +79,14 @@ const routes = createHashRouter([
         element: (
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "EditProfile",
+        element: (
+          <ProtectedRoute>
+            <EditProfile />
           </ProtectedRoute>
         ),
       },
