@@ -19,11 +19,11 @@ export const update = asyncHandler(async (req, res, next) => {
       new ModifyError("Email is already taken", StatusCodes.CONFLICT)
     );
 
-  await req.user.updateOne(req.body); // update data into DB
-  return res.status(200).json({ messaeg: "done" });
+    const user  = await userModel.findOneAndUpdate({_id:req.user._id},req.body,{new:true}); // update data into DB
+    return res.status(200).json({ message: "done",user });
 });
 
 export const remove = asyncHandler(async (req, res, next) => {
   await req.user.deleteOne();
-  return res.status(200).json({ messaeg: "done" });
+  return res.status(200).json({ message: "done" });
 });

@@ -13,29 +13,29 @@ export default function Profile() {
   console.log(userData);
 
   return (
-    <section class="vh-100">
-      <div class="container py-5 h-80">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-md-12 col-xl-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <div class="mt-3 mb-4">
+    <section className="vh-100">
+      <div className="container py-5 h-80">
+        <div className="row d-flex justify-content-center align-items-center h-100">
+          <div className="col-md-12 col-xl-4">
+            <div className="card">
+              <div className="card-body text-center">
+                <div className="mt-3 mb-4">
                   <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                    class="rounded-circle img-fluid"
+                    className="rounded-circle img-fluid"
                     alt=""
                   />
                 </div>
-                <h3 class="mb-2 font-weight-bold">{userData.name}</h3>
-                <h6 class="mb-4 fst-italic">
-                  {userData.role} <span class="mx-auto"></span>
+                <h3 className="mb-2 font-weight-bold">{userData.name}</h3>
+                <h6 className="mb-4 fst-italic">
+                  {userData.role} <span className="mx-auto"></span>
                 </h6>
-                <h4 class="text-dark mb-4">{userData?.email}</h4>
+                <h4 className="text-dark mb-4">{userData?.email}</h4>
 
-                <Link to={"./EditProfile.jsx"}>
+                <Link to={"/EditProfile"}>
                   <button
                     type="button"
-                    class="btn btn-success btn-rounded btn-lg"
+                    className="btn btn-success btn-rounded btn-lg"
                   >
                     Edit Profile
                   </button>
