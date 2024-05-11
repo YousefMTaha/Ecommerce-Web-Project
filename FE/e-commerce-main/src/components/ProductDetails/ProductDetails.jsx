@@ -121,21 +121,9 @@ export default function ProductDetails() {
             <div className="d-flex justify-content-between align-items-center my-3">
               <button
                 onClick={() => addProductToCart(id)}
-                className="btn btn-sm bg-main text-white"
+                className="btn btn-success btn-lg btn-block"
               >
                 Add To Cart
-              </button>
-              <button
-                onClick={() => {
-                  addProductToWishlist(id);
-                }}
-                className="btn text-white bg-main btn-sm"
-              >
-                <i
-                  className={`fa-${
-                    wishlist.includes(id) ? "solid" : "regular"
-                  } fa-heart`}
-                ></i>
               </button>
             </div>
           </div>

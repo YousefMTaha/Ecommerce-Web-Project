@@ -4,11 +4,21 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../Assets/images/freshcart-logo.svg";
 import { UserContext } from "../../Context/UserContext";
 import { CartContext } from "../../Context/CartContext";
+import jwtDecode from "jwt-decode";
 
 export default function Navbar() {
-  const { userToken, setUserToken, setUserData } = useContext(UserContext);
+  const { userToken, setUserToken, setUserData, userData } =
+    useContext(UserContext);
   const { cartNum } = useContext(CartContext);
+
   const navigate = useNavigate();
+
+  let isAdmin = false;
+  let info = null;
+
+  if (userToken !== null) {
+    info = jwtDecode(localStorage.getItem("token"));
+  }
 
   function logout() {
     localStorage.removeItem("token");
@@ -32,7 +42,8 @@ export default function Navbar() {
           data-bs-target="#collapsibleNavId"
           aria-controls="collapsibleNavId"
           aria-expanded="false"
-          aria-label="Toggle navigation">
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="collapsibleNavId">
@@ -54,15 +65,19 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/wishlist">
-                  Wishlist
-                </NavLink>
-              </li>
-              <li className="nav-item">
                 <NavLink className="nav-link" to="/allorders">
                   Orders
                 </NavLink>
               </li>
+              {userData.role === "Admin" ? (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/allorders">
+                    Dashboard
+                  </NavLink>
+                </li>
+              ) : (
+                ""
+              )}
             </ul>
           ) : (
             ""
@@ -74,7 +89,8 @@ export default function Navbar() {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link d-flex align-items-center position-relative"
-                    to="/cart">
+                    to="/cart"
+                  >
                     <span className="badge position-absolute end-0 top-0 bg-main text-white">
                       {cartNum}
                     </span>

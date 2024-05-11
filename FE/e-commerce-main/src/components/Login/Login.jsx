@@ -35,9 +35,8 @@ export default function Login() {
       await getLoggedUserCart();
     }
   }
-{
-
-}
+  {
+  }
   const validationSchema = Yup.object({
     email: Yup.string()
       .required("This field is required")
@@ -110,14 +109,16 @@ export default function Login() {
             <button
               disabled={!(formik.isValid && formik.dirty)}
               type="submit"
-              className="btn bg-main text-white w-25">
+              className="btn bg-main text-white w-25"
+            >
               Login
             </button>
           ) : (
             <button
               disabled={!(formik.isValid && formik.dirty)}
               type="submit"
-              className="btn bg-main text-white">
+              className="btn bg-main text-white"
+            >
               <i className="fa-solid fa-spinner fa-spin"></i>
             </button>
           )}

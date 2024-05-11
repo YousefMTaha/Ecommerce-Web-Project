@@ -33,7 +33,7 @@ export default function Orders() {
           <i className="fa-solid fa-spinner fa-spin fs-1 text-main"></i>
         </div>
       ) : null}
-      {data != "no orders found" ? (
+      {data !== "no orders found" ? (
         <div className="py-5">
           {data?.data.orders.map((order) => {
             return (
@@ -64,6 +64,7 @@ export default function Orders() {
                             </p>
                           </div>
                         </div>
+                        <button className="btn btn-danger m-3 ">Refund</button>
                       </div>
                     );
                   })}
