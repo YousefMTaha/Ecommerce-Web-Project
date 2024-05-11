@@ -54,6 +54,7 @@ export default function Register() {
       phone: "",
       password: "",
       rePassword: "",
+      role: "",
     },
     validationSchema,
     onSubmit: registerSubmit,
@@ -164,6 +165,22 @@ export default function Register() {
               {formik.errors.rePassword}
             </div>
           ) : null}
+        </div>
+        <div className="form-group mb-2">
+          <label htmlFor="role" className="mb-1">
+            Role:
+          </label>
+          <select
+            className="form-control"
+            id="role"
+            name="role"
+            value={formik.values.role}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
         </div>
         {!isLoading ? (
           <button
