@@ -13,13 +13,15 @@ export default function Orders() {
       .get(`http://localhost:3000/order/`, {
         headers: { token: "yousef_" + localStorage.getItem("token") },
       })
-      .catch((error) => error);
+      .catch((error) =>error.response.data.message);
   }
 
   const { isLoading, isError, data, isFetching } = useQuery("getOrders", () =>
     getOrders(id)
   );
-  console.log(useQuery("getOrders", () => getOrders(id)).data);
+  // console.log(useQuery("getOrders", () => getOrders(id)).data);
+  // console.log(useQuery("getOrders", () =>getOrders(id)));
+  // console.log(data);
   return (
     <>
       <Helmet>
@@ -31,7 +33,7 @@ export default function Orders() {
           <i className="fa-solid fa-spinner fa-spin fs-1 text-main"></i>
         </div>
       ) : null}
-      {data?.data.orders.length !== 0 ? (
+      {data != 'no orders found' ? (
         <div className="py-5">
           {data?.data.orders.map((order) => {
             return (
