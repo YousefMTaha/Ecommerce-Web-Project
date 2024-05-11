@@ -45,7 +45,10 @@ export const login = asyncHandler(async (req, res, next) => {
     return next(new ModifyError("invalid info", StatusCodes.BAD_REQUEST));
 
   // generate token to the login user
-  const token = jwt.sign({ id: isEmail._id }, process.env.TOKEN_SIGNATURE);
+  const token = jwt.sign(
+    { id: isEmail._id, role: isEmail.role },
+    process.env.TOKEN_SIGNATURE
+  );
 
   isEmail.status = userStatus.Online; // Change status of user to online
   await isEmail.save(); // apply changes into DB
