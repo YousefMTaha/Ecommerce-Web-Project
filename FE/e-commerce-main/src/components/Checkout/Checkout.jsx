@@ -11,13 +11,22 @@ export default function Checkout() {
 
   async function handleSubmit(values) {
     setIsLoading(true);
-    const  data  = await payOnline(
+    let data
+    if(values.coupon!==""){
+      values.code = values.coupon
+     data  = await payOnline(
       values
     );
-    // console.log({data});
+    }
+    else{
+      const { coupon, ...paymentValues } = values;
+      data = await payOnline(paymentValues);
+    }
+   
+    console.log({data});
     setIsLoading(false);
     const paymentUrl = data.data.order.paymentUrl;
-    if (data.data.message == "done") {
+    if (data.data.message === "done") {
       window.location.href = paymentUrl;
     }
   }
@@ -27,6 +36,7 @@ export default function Checkout() {
       .required("This field is required")
       .matches(/^01[0125][0-9]{8}$/i, "Enter a valid phone number"),
     city: Yup.string().required("This field is required"),
+    coupon: Yup.string(),
   });
 
   const formik = useFormik({
@@ -34,6 +44,7 @@ export default function Checkout() {
       details: "details",
       phone: "",
       city: "",
+      coupon:"",
     },
     validationSchema,
     onSubmit: handleSubmit,
@@ -82,6 +93,25 @@ export default function Checkout() {
           {formik.errors.city && formik.touched.city ? (
             <div className="alert alert-danger mt-2 p-2">
               {formik.errors.city}
+            </div>
+          ) : null}
+        </div>
+        <div className="form-group mb-2">
+          <label htmlFor="coupon" className="mb-1">
+          Coupon:
+          </label>
+          <input
+            className="form-control"
+            type="tel"
+            id="coupon"
+            name="coupon"
+            value={formik.values.coupon}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.errors.coupon && formik.touched.coupon ? (
+            <div className="alert alert-danger mt-2 p-2">
+              {formik.errors.coupon}
             </div>
           ) : null}
         </div>
