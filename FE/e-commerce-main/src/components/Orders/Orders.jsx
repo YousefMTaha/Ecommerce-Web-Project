@@ -20,6 +20,7 @@ export default function Orders() {
     getOrders(id)
   );
   const refundOrder =(id)=>{
+    console.log(id)
     return axios
       .put(`http://localhost:3000/order/${id}`,{},{
         headers: { token: "yousef_" + localStorage.getItem("token") },
@@ -70,8 +71,8 @@ export default function Orders() {
                               Item Price : {item.price} EGP
                             </p>
                           </div>
-                        </div>
-                        <button className="btn btn-danger m-3 " onClick={()=>refundOrder(item.id)}>Refund</button>
+                        </div>                
+                        <button className="btn btn-danger m-3 " onClick={()=>refundOrder(order._id)}>Refund</button>
                       </div>
                     );
                   })}
