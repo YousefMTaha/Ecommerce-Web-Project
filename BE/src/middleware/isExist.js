@@ -15,6 +15,10 @@ export const isExist = ({
 
     let isModelExist;
 
+    if (searchData == uniqueFields.couponCode && !req[dataFrom][searchData]) {
+      return next();
+    }
+
     if (req[dataFrom][searchData]) {
       // check the id exist ?
 
@@ -34,7 +38,9 @@ export const isExist = ({
           )
         );
     } else {
-      return next(new Error("product id not given", StatusCodes.BAD_REQUEST));
+      return next(
+        new Error(`${searchData} not given`, StatusCodes.BAD_REQUEST)
+      );
     }
     // add model data to the request object to use it throw other middlewares
     req[modelName] = isModelExist;

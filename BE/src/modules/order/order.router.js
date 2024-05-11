@@ -18,19 +18,16 @@ import { StatusCodes } from "http-status-codes";
 
 const router = Router();
 
-router.get(
-  "/",
-  auth(),
-  async (req, res, next) => {
-   res.he
-    const orders = await orderModel
-      .find({ createdBy: req.user._id })
-      .populate("products.id");
-    return orders.length
-      ? res.status(200).json({ message: "done", orders })
-      : next(new ModifyError("no orders found", StatusCodes.NOT_FOUND));
-  }
-);
+router.get("/", auth(), async (req, res, next) => {
+  console.log(req.user);
+  const orders = await orderModel
+  .find({ createdBy: req.user._id })
+  .populate("products.id");
+  console.log(orders);
+  return orders.length
+    ? res.status(200).json({ message: "done", orders })
+    : next(new ModifyError("no orders found", StatusCodes.NOT_FOUND));
+});
 
 // Generate order
 
@@ -44,7 +41,7 @@ router.get(
 6- return response to user with information about order (cash) or payment link (card)
 */
 router.post(
-
+  '/',
   auth(),
   isCartEmpty,
   isExist({
