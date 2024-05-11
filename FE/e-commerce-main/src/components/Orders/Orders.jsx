@@ -4,7 +4,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import jwtDecode from "jwt-decode";
 import { Helmet } from "react-helmet";
-
+import toast from "react-hot-toast";
 export default function Orders() {
   const { id } = jwtDecode(localStorage.getItem("token"));
 
@@ -19,13 +19,22 @@ export default function Orders() {
   const { isLoading, isError, data, isFetching } = useQuery("getOrders", () =>
     getOrders(id)
   );
-  const refundOrder =(id)=>{
+  const refundOrder = async (id)=>{
     console.log(id)
-    return axios
-      .put(`http://localhost:3000/order/${id}`,{},{
-        headers: { token: "yousef_" + localStorage.getItem("token") },
-      })
-      .catch((error) =>{console.log( error.response.data.message)});
+    
+    const  res  = await axios
+    .put(
+     `http://localhost:3000/order/${id}`,
+     {},
+     {headers: { token: "yousef_" + localStorage.getItem("token") }},
+     ).then((response)=> {
+      toast.success("the order has been refunded successfully");
+     })
+    .catch((err) => {   
+      toast.error(" failed to refund order");
+    });
+      
+      
   };
   // console.log(useQuery("getOrders", () => getOrders(id)).data);
   // console.log(useQuery("getOrders", () =>getOrders(id)));
