@@ -72,6 +72,7 @@ const Dashboard = () => {
                     </span>
                   </div>
                 </NavLink>
+                <NavLink to ={`/editproduct/${product.id}`}>
                 <div className="d-flex gap-3">
                   <button
                     onClick={() => addProductToCart(product._id)}
@@ -79,7 +80,9 @@ const Dashboard = () => {
                   >
                     Add To Cart
                   </button>
+                  
                 </div>
+                </NavLink>
               </div>
             </div>
           );

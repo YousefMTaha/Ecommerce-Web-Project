@@ -309,7 +309,13 @@ export default function Addproduct() {
             </div>
           ) : null}
         </div> */}
-        {!isLoading ? (
+        
+      </form>
+      }
+    </div>
+
+  )}
+  {!isLoading ? (
           <button
             disabled={!(formik.isValid && formik.dirty)}
             type="submit"
@@ -326,11 +332,6 @@ export default function Addproduct() {
             <i className="fa-solid fa-spinner fa-spin"></i>
           </button>
         )}
-      </form>
-      }
-    </div>
-
-  )}
   </div>)
   }
 
