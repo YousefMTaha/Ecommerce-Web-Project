@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import Style from "./Checkout.module.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Helmet } from "react-helmet";
