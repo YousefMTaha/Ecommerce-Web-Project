@@ -18,7 +18,6 @@ export const addProduct = asyncHandler(async (req, res, next) => {
 });
 
 export const updateProduct = asyncHandler(async (req, res, next) => {
-  // productModel.findOneAndUpdate({},{},{new:true})
   const product = await productModel.findOneAndUpdate(
     { _id: req.product._id },
     req.body,
@@ -37,19 +36,11 @@ export const removeProduct = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ message: "done" });
 });
 
-// export const removeAllProducts = asyncHandler(async (req, res, next) => {
-//   await productModel.deleteMany({});
-//   return res.status(200).json({ message: "All Products Deleted Successfully" });
-// });
-
 export const getProduct = asyncHandler(async (req, res, next) => {
   const product = await productModel
     .findById(req.params._id)
     .populate("subcategoryId")
     .populate("createdBy");
-  // const modifiedProduct = product.toObject();
-  // modifiedProduct.createdById = product.createdById.name;
-  // modifiedProduct.subcategoryId = product.subcategoryId.name;
   return res.status(200).json({
     message: "done",
     product: product,
