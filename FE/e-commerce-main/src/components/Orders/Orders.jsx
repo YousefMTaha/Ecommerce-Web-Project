@@ -33,18 +33,17 @@ export default function Orders() {
       )
       .then((response) => {
         setIsLoading(false);
-        toast.success("the order has been refunded successfully . please check your email ");
+        toast.success(
+          "the order has been refunded successfully . please check your email "
+        );
       })
       .catch((err) => {
         toast.error(" failed to refund order");
       });
-      
-    await new Promise(resolve => setTimeout(resolve, 1500));
-     window.location.reload();
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    window.location.reload();
   };
-  // console.log(useQuery("getOrders", () => getOrders(id)).data);
-  // console.log(useQuery("getOrders", () =>getOrders(id)));
-  // console.log(data);
   return (
     <>
       <Helmet>

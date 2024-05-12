@@ -8,7 +8,7 @@ import Layout from "./components/Layout/Layout";
 import Home from "./components/Home/Home";
 import Cart from "./components/Cart/Cart";
 import Categories from "./components/Categories/Categories";
-import WishList from "./components/WishList/WishList";
+
 import Brands from "./components/Brands/Brands";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
@@ -16,13 +16,11 @@ import NotFound from "./components/NotFound/NotFound";
 import Orders from "./components/Orders/Orders";
 import UserContextProvider from "./Context/UserContext";
 import CartContextProvider from "./Context/CartContext";
-import WishlistContextProvider from "./Context/WishlistContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import ProtectedAuth from "./components/ProtectedAuth/ProtectedAuth";
-import ForgetPassword from "./components/ForgetPassword/ForgetPassword.jsx";
+
 import { QueryClient, QueryClientProvider } from "react-query";
-import VerificationCode from "./components/VerificationCode/VerificationCode";
-import ResetPassword from "./components/ResetPassword/ResetPassword";
+
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import SubCategories from "./components/SubCategories/SubCategories";
 import { Toaster } from "react-hot-toast";
@@ -80,14 +78,6 @@ const routes = createHashRouter([
         ),
       },
 
-      {
-        path: "wishlist",
-        element: (
-          <ProtectedRoute>
-            <WishList />
-          </ProtectedRoute>
-        ),
-      },
       {
         path: "categories",
         element: (
@@ -168,30 +158,7 @@ const routes = createHashRouter([
           </ProtectedAuth>
         ),
       },
-      {
-        path: "forgetpassword",
-        element: (
-          <ProtectedAuth>
-            <ForgetPassword />
-          </ProtectedAuth>
-        ),
-      },
-      {
-        path: "verificationcode",
-        element: (
-          <ProtectedAuth>
-            <VerificationCode />
-          </ProtectedAuth>
-        ),
-      },
-      {
-        path: "resetpassword",
-        element: (
-          <ProtectedAuth>
-            <ResetPassword />
-          </ProtectedAuth>
-        ),
-      },
+
       {
         path: "*",
         element: <NotFound />,
@@ -205,10 +172,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
         <CartContextProvider>
-          <WishlistContextProvider>
-            <RouterProvider router={routes}></RouterProvider>
-            <Toaster />
-          </WishlistContextProvider>
+          <RouterProvider router={routes}></RouterProvider>
+          <Toaster />
         </CartContextProvider>
       </UserContextProvider>
     </QueryClientProvider>

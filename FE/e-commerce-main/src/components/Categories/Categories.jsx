@@ -14,7 +14,7 @@ export default function Categories() {
     "categoriesImages",
     getCategories
   );
-console.log(data);
+  console.log(data);
   const categories = data ? data.data.Category : null;
   return (
     <div className="brands py-5">
@@ -37,7 +37,11 @@ console.log(data);
                       <img
                         className="w-100"
                         height={300}
-                        src={category.image?category.image.secure_url:"https://cdn.discordapp.com/attachments/724206735350431763/1239191116579078236/no-image-available-icon-vector.png?ex=66420629&is=6640b4a9&hm=050cbbdf7a67532d60393443bc239d5566037b26866f2d44af1f5b8726943306&"}
+                        src={
+                          category.image
+                            ? category.image.secure_url
+                            : "https://cdn.discordapp.com/attachments/724206735350431763/1239191116579078236/no-image-available-icon-vector.png?ex=66420629&is=6640b4a9&hm=050cbbdf7a67532d60393443bc239d5566037b26866f2d44af1f5b8726943306&"
+                        }
                         alt={category.name}
                       />
                       <h3 className="text-center text-main py-2">
