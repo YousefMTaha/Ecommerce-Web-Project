@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { CartContext } from "../../Context/CartContext";
 import { WishlistContext } from "../../Context/WishlistContext";
 import toast from "react-hot-toast";
+import { UserContext } from "../../Context/UserContext";
 
 export default function FeaturedProducts() {
   const { addToCart } = useContext(CartContext);
@@ -14,6 +15,7 @@ export default function FeaturedProducts() {
     getLoggedUserWishlist,
     removeProductWishlist,
   } = useContext(WishlistContext);
+  const { userData } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -100,14 +102,18 @@ export default function FeaturedProducts() {
                     </span>
                   </div>
                 </NavLink>
-                <div className="d-flex gap-3">
-                  <button
-                    onClick={() => addProductToCart(product._id)}
-                    className="btn bg-main text-white btn-sm"
-                  >
-                    Add To Cart
-                  </button>
-                </div>
+                {userData.role !== "Admin" ? (
+                  <div className="d-flex gap-3">
+                    <button
+                      onClick={() => addProductToCart(product._id)}
+                      className="btn bg-main text-white btn-sm"
+                    >
+                      Add To Cart
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           );
