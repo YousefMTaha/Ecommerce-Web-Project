@@ -5,6 +5,7 @@ import { isExist } from "../../middleware/isExist.js";
 import categoryModel from "../../../DB/model/Category.model.js";
 import {
   fileValidation,
+  reqDataForms,
   uniqueFields,
   userRoles,
 } from "../../utils/systemConstants.js";
@@ -23,7 +24,15 @@ import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
 
 router.get("/", getAllData(uniqueFields.categoryId));
-
+router.get(
+  "/category/:_id",
+  isExist({
+    model: categoryModel,
+    dataFrom: reqDataForms.parmas,
+    searchData: uniqueFields.id,
+  }),
+  subcategoryContoller.getCategorySubcategory
+);
 router.post(
   "/:categoryId",
   auth(),
