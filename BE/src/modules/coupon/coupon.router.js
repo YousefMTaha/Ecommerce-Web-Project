@@ -19,15 +19,15 @@ router.get(
     model: couponModel,
     dataFrom: reqDataForms.body,
     searchData: uniqueFields.couponCode,
+    isId: false,
   }),
   couponContoller.getCoupon
 );
 
 router
   .route("/")
-  .get( auth(), couponContoller.getAllCoupons)
+  .get(auth(), couponContoller.getAllCoupons)
   .post(
-    
     auth(),
     validation(validator.add),
     isNotExist({ model: couponModel, searchData: uniqueFields.couponCode }),

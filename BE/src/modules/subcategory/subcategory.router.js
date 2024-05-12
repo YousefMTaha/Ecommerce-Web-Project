@@ -26,7 +26,7 @@ router.get("/", getAllData(uniqueFields.categoryId));
 
 router.post(
   "/:categoryId",
-  auth([userRoles.Seller]),
+  auth(),
   fileUpload(fileValidation.image).single("img"),
   validation(validator.add),
   isExist({ model: categoryModel, searchData: uniqueFields.categoryId }),
@@ -38,7 +38,7 @@ router.post(
 router
   .route("/:_id")
   .put(
-    auth([userRoles.Seller]),
+    auth(),
     fileUpload(fileValidation.image).single("img"),
     validation(validator.update),
     isExist({ model: subcategoryModel }),
@@ -47,7 +47,7 @@ router
     subcategoryContoller.update
   )
   .delete(
-    auth([userRoles.Seller]),
+    auth(),
     validation(IdValidator),
     isExist({ model: subcategoryModel }),
     isOwner(subcategoryModel),
