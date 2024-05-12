@@ -56,11 +56,13 @@ export default function EditProduct() {
     fetchData();
   }, []);
   async function editProduct(values) {
-    console.log(values)
-    const {id,...edited}=values
+    
+    const newobject={"images":image,"imageCover":imageCover,...values}
+    const {id,...edited}=newobject
+    console.log(edited)
     const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => {
-      formData.append(key, value);
+    Object.entries(newobject).forEach(([key, newobject]) => {
+      formData.append(key, newobject);
     });
     setIsLoading(true);
     const { data } = await axios
@@ -90,8 +92,8 @@ export default function EditProduct() {
    const details = data ? data.data.Product : null;
    
    const [initialValues, setInitialValues] = useState({});
- 
-
+  
+  let image=null,imageCover=null;
    useEffect(() => {
      if (data) {
        const details = data.data.Product;
@@ -104,27 +106,22 @@ export default function EditProduct() {
             price:details.price,
             stock:details.stock,
             category:details.category,
-            subcategory:details.subcategory,
-            brand:details.brand,
-            imageCover:details.imageCover,
-            images:details.images,
+            subcategoryId:details.subcategoryId,
+            brandId:details.brandId,
         }
        )
      }
    }, [data]);
+   
    const formik = useFormik({
      initialValues: {},
      validationSchema,
      onSubmit: editProduct,
    });
-   const handleImagesChange = (event) => {
+   const handleImageChange = (event) => {
+    
     const { name, files } = event.target;
-    formik.setFieldValue(name, files); // Set files directly for multiple files
-  };
-  
-  const handleImageCoverChange = (event) => {
-    const { name, files } = event.target;
-    formik.setFieldValue(name, files[0]); // Set only the first file for imageCover
+    formik.setFieldValue(name, files[0]);
   };
   return (
     <div className="register py-5">
@@ -286,16 +283,21 @@ export default function EditProduct() {
         </div>
         ) : null}
     </div>
-    <div className="form-group mb-2">
+    {/* <div className="form-group mb-2">
         <label htmlFor="images" className="mb-1">
           images:
         </label>
         <input
           className="form-control"
-          type="file" // Change type to "file" for image input
+          type="file" 
           id="images"
           name="images"
-          onChange={handleImagesChange} 
+          onChange={(e) => {
+            const file = e.target.files[0];
+            image=file
+            formik.setFieldValue("imageCover", file);
+            
+          }}
           onBlur={formik.handleBlur}
         />
         {formik.errors.images && formik.touched.images ? (
@@ -313,7 +315,12 @@ export default function EditProduct() {
           type="file" // Change type to "file" for image input
           id="imageCover"
           name="imageCover"
-          onChange={handleImageCoverChange} // Add onChange event handler
+          onChange={(e) => {
+            const file = e.target.files[0];
+            imageCover=file
+            formik.setFieldValue("imageCover", file);
+            
+          }}
           onBlur={formik.handleBlur}
         />
         {formik.errors.imageCover && formik.touched.imageCover ? (
@@ -321,7 +328,7 @@ export default function EditProduct() {
             {formik.errors.imageCover}
           </div>
         ) : null}
-      </div>
+      </div> */}
         {!isLoading ? (
           <button
             disabled={!(formik.isValid && formik.dirty)}
