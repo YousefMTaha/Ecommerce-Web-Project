@@ -79,6 +79,7 @@ const routes = createHashRouter([
           </ProtectedRoute>
         ),
       },
+
       {
         path: "wishlist",
         element: (
