@@ -19,11 +19,11 @@ import { StatusCodes } from "http-status-codes";
 const router = Router();
 
 router.get("/", auth(), async (req, res, next) => {
-  console.log(req.user);
+  
   const orders = await orderModel
   .find({ createdBy: req.user._id })
   .populate("products.id");
-  console.log(orders);
+
   return orders.length
     ? res.status(200).json({ message: "done", orders })
     : next(new ModifyError("no orders found", StatusCodes.NOT_FOUND));

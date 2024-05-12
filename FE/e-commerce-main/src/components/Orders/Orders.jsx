@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Style from "./Orders.module.scss";
 import axios from "axios";
 import { useQuery } from "react-query";
 import jwtDecode from "jwt-decode";
 import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Orders() {
   const { id } = jwtDecode(localStorage.getItem("token"));
-
+  const navigate = useNavigate();
+  const [Loading, setIsLoading] = useState(false);
   async function getOrders(id) {
     return axios
       .get(`http://localhost:3000/order/`, {
@@ -22,7 +24,7 @@ export default function Orders() {
   );
   const refundOrder = async (id) => {
     console.log(id);
-
+    setIsLoading(true);
     const res = await axios
       .put(
         `http://localhost:3000/order/${id}`,
@@ -30,11 +32,15 @@ export default function Orders() {
         { headers: { token: "yousef_" + localStorage.getItem("token") } }
       )
       .then((response) => {
-        toast.success("the order has been refunded successfully");
+        setIsLoading(false);
+        toast.success("the order has been refunded successfully . please check your email ");
       })
       .catch((err) => {
         toast.error(" failed to refund order");
       });
+      
+    await new Promise(resolve => setTimeout(resolve, 1500));
+     window.location.reload();
   };
   // console.log(useQuery("getOrders", () => getOrders(id)).data);
   // console.log(useQuery("getOrders", () =>getOrders(id)));
@@ -45,7 +51,7 @@ export default function Orders() {
         <meta charSet="utf-8" />
         <title>Orders</title>
       </Helmet>
-      {isLoading ? (
+      {isLoading || Loading ? (
         <div className="position-fixed top-0 start-0  bg-black bg-opacity-75 w-100 h-100 z-2 d-flex justify-content-center align-items-center">
           <i className="fa-solid fa-spinner fa-spin fs-1 text-main"></i>
         </div>
