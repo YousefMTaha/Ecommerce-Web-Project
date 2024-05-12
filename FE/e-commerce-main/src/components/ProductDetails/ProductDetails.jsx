@@ -8,12 +8,15 @@ import { CartContext } from "../../Context/CartContext";
 import toast from "react-hot-toast";
 import { WishlistContext } from "../../Context/WishlistContext";
 import { Helmet } from "react-helmet";
+import { UserContext } from "../../Context/UserContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
   const { addToWishlist, wishlist, removeProductWishlist } =
     useContext(WishlistContext);
+  const { userData } = useContext(UserContext);
+
   const [loading, setLoading] = useState(false);
 
   async function addProductToCart(id) {
@@ -124,12 +127,18 @@ export default function ProductDetails() {
               <h5 className="font-weight-bolder">Stock : {details.stock}</h5>
             </div>
             <div className="d-flex justify-content-between align-items-center my-3">
-              <button
-                onClick={() => addProductToCart(id)}
-                className="btn bg-main btn-lg text-white btn-block"
-              >
-                Add To Cart
-              </button>
+              {userData.role !== "Admin" ? (
+                <div className="d-flex gap-3">
+                  <button
+                    onClick={() => addProductToCart(id)}
+                    className="btn bg-main text-white btn-sm"
+                  >
+                    Add To Cart
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
