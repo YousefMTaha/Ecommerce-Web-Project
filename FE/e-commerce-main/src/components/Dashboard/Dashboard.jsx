@@ -26,7 +26,7 @@ const Dashboard = () => {
     queryFn: () => getFeaturedProducts(page),
     
   });
-
+console.log(data);
   async function addProductToCart(id) {
     setLoading(true);
     const response = await addToCart(id);
@@ -41,7 +41,7 @@ const Dashboard = () => {
   }
   return (
     <>
-      {isLoading || loading ? (
+      {isLoading  ? (
         <div className="position-fixed top-0 start-0 bg-black bg-opacity-75 w-100 h-100 z-2 d-flex justify-content-center align-items-center">
           <i className="fa-solid fa-spinner fa-spin fs-1 text-main"></i>
         </div>
