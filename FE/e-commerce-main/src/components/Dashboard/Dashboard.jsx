@@ -52,7 +52,7 @@ const Dashboard = () => {
           <i className="fa-solid fa-spinner fa-spin fs-1 text-main"></i>
         </div>
       ) : null}{" "} */}
-      {data.length ? (
+      {data ? (
         <div className="row g-3">
           <h2 className="mt-5 mb-4">Your Products</h2>
           <div className="">
