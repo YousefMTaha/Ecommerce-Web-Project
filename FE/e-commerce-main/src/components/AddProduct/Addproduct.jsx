@@ -88,6 +88,7 @@ export default function Addproduct() {
       color: "",
       size: "",
       images: "",
+      imageCover:"",
       stock:""
     },
     validationSchema,
@@ -300,20 +301,38 @@ export default function Addproduct() {
           ) : null}
         </div>
         <div className="form-group mb-2">
-        <label htmlFor="image" className="mb-1">
-          image:
+        <label htmlFor="images" className="mb-1">
+          images:
         </label>
         <input
           className="form-control"
           type="file" // Change type to "file" for image input
           id="images"
           name="images"
-          onChange={handleImageChange} // Add onChange event handler
+          onChange={handleImageChange} 
           onBlur={formik.handleBlur}
         />
         {formik.errors.images && formik.touched.images ? (
           <div className="alert alert-danger mt-2 p-2">
             {formik.errors.images}
+          </div>
+        ) : null}
+      </div>
+      <div className="form-group mb-2">
+        <label htmlFor="imageCover" className="mb-1">
+        imageCover:
+        </label>
+        <input
+          className="form-control"
+          type="file" // Change type to "file" for image input
+          id="imageCover"
+          name="imageCover"
+          onChange={handleImageChange} // Add onChange event handler
+          onBlur={formik.handleBlur}
+        />
+        {formik.errors.imageCover && formik.touched.imageCover ? (
+          <div className="alert alert-danger mt-2 p-2">
+            {formik.errors.imageCover}
           </div>
         ) : null}
       </div>

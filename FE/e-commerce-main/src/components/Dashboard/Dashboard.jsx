@@ -47,12 +47,12 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* {isLoading || loading ? (
+      {/* {isLoading ? (
         <div className="position-fixed top-0 start-0 bg-black bg-opacity-75 w-100 h-100 z-2 d-flex justify-content-center align-items-center">
           <i className="fa-solid fa-spinner fa-spin fs-1 text-main"></i>
         </div>
-      ) : null} */}
-      {data ? (
+      ) : null}{" "} */}
+      {data.length ? (
         <div className="row g-3">
           <h2 className="mt-5 mb-4">Your Products</h2>
           <div className="">
