@@ -10,7 +10,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   function getFeaturedProducts(page) {
-    return axios.get(`http://localhost:3000/product`);
+    return axios.get(
+      `http://localhost:3000/product/getUserProducts`, 
+     {headers: { token: "yousef_" + localStorage.getItem("token") }});
+  
   }
   function reFetch(num) {
     setPage(num);
@@ -19,7 +22,7 @@ const Dashboard = () => {
 
 
   const { isLoading, isError, data, isFetching, refetch } = useQuery({
-    queryKey: ["featuredProducts", page],
+    queryKey: ["SellerProducts", page],
     queryFn: () => getFeaturedProducts(page),
     
   });
@@ -46,7 +49,7 @@ const Dashboard = () => {
       ) : null}
       <div className="row g-3">
         <h2 className="mt-5 mb-2">All Products</h2>
-        {data?.data.Product.map((product) => {
+        {data?.data.products.map((product) => {
           console.log(product);
           return (
             <div key={product._id} className="col-lg-2 col-md-4 col-sm-6">
