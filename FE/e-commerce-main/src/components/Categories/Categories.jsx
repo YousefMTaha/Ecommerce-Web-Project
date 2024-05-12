@@ -32,7 +32,7 @@ console.log(data);
           ? categories.map((category) => {
               return (
                 <div className="col-md-3" key={category.name}>
-                  <NavLink to={`/${category._id}/subcategories`}>
+                  <NavLink to={`/subcategories/${category._id}`}>
                     <div className="brand h-100 border rounded-3 overflow-hidden">
                       <img
                         className="w-100"
