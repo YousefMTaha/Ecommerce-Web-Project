@@ -35,7 +35,7 @@ export default function Profile() {
                 <Link to={"/EditProfile"}>
                   <button
                     type="button"
-                    className="btn btn-success btn-rounded btn-lg"
+                    className="btn bg-main btn-rounded btn-lg text-white"
                   >
                     Edit Profile
                   </button>

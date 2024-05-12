@@ -2,10 +2,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap");
 
-$bgColor: #0aad0a;
+$bgColor: #f58504;
 $lightBgColor: #f0f3f2;
-$shadow:
-  rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
+$shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
   rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
   rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
 $fontFamily: "Encode Sans Expanded", sans-serif;
@@ -33,9 +32,7 @@ h2 {
 
   .btn {
     opacity: 0 !important;
-    transition:
-      transform 0.5s,
-      opacity 1s !important;
+    transition: transform 0.5s, opacity 1s !important;
     transform: translateY(100%) !important;
   }
 
@@ -87,12 +84,14 @@ nav {
   }
 }
 
-.big-img{
+.big-img {
   height: 400px;
 }
 
-.small-img{
+.small-img {
   height: 200px;
 }
 
-.nav{box-shadow: none;}
+.nav {
+  box-shadow: none;
+}

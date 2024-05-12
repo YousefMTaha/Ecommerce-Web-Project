@@ -126,7 +126,7 @@ export default function ProductDetails() {
             <div className="d-flex justify-content-between align-items-center my-3">
               <button
                 onClick={() => addProductToCart(id)}
-                className="btn btn-success btn-lg btn-block"
+                className="btn bg-main btn-lg text-white btn-block"
               >
                 Add To Cart
               </button>
