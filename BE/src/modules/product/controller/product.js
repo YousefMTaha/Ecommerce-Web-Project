@@ -1,4 +1,6 @@
+import { StatusCodes } from "http-status-codes";
 import productModel from "../../../../DB/model/Product.model.js";
+import { ModifyError } from "../../../utils/classError.js";
 import { asyncHandler } from "../../../utils/errorHandling.js";
 import * as validation from "../product.middleware.js";
 
@@ -76,4 +78,11 @@ export const getAllProducts = asyncHandler(async (req, res, next) => {
     message: "All Products Returned Successfully",
     products: modifiedProducts,
   });
+});
+
+export const getUserProducts = asyncHandler(async (req, res, next) => {
+  const products = await productModel.find({ createdAt: req.user._id });
+  return products.length
+    ? res.status(200).json({ message: "done", products })
+    : next(new ModifyError("no products found", StatusCodes.NOT_FOUND));
 });

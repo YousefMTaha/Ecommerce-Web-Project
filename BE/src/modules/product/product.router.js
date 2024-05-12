@@ -29,8 +29,7 @@ const router = Router();
 router
   .route("/")
   .post(
-    auth([userRoles.Admin]),
-    
+    auth(),
     fileUpload(fileValidation.image).fields([
       { name: "images", maxCount: 5 },
       { name: "imageCover", maxCount: 1 },
@@ -90,5 +89,7 @@ router
     updateImage({ model: productModel, isFields: true }),
     productController.updateProduct
   );
+
+  router.get("/getUserProducts",auth(),productController.getUserProducts)
 
 export default router;
