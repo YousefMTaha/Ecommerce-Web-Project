@@ -67,28 +67,27 @@ const Dashboard = () => {
             return (
               <div key={product._id} className="col-lg-2 col-md-4 col-sm-6">
                 <div className="product p-2 position-relative">
-                  <NavLink to={`/productdetails/${product._id}`}>
-                    <img
-                      className="w-100"
-                      src={
-                        product.imageCover
-                          ? product.imageCover.secure_url
-                          : "https://cdn.discordapp.com/attachments/724206735350431763/1239191116579078236/no-image-available-icon-vector.png?ex=66420629&is=6640b4a9&hm=050cbbdf7a67532d60393443bc239d5566037b26866f2d44af1f5b8726943306&"
-                      }
-                      alt={product.name}
-                    />
-                    <span className="text-main font-sm fw-bolder my-1 d-block">
-                      {product.category.name}
+                  <img
+                    className="w-100"
+                    src={
+                      product.imageCover
+                        ? product.imageCover.secure_url
+                        : "https://cdn.discordapp.com/attachments/724206735350431763/1239191116579078236/no-image-available-icon-vector.png?ex=66420629&is=6640b4a9&hm=050cbbdf7a67532d60393443bc239d5566037b26866f2d44af1f5b8726943306&"
+                    }
+                    alt={product.name}
+                  />
+                  <span className="text-main font-sm fw-bolder my-1 d-block">
+                    {product.category.name}
+                  </span>
+                  <h3 className="h6 fw-bolder">{product.name}</h3>
+                  <div className="my-3 d-flex justify-content-between align-items-center">
+                    <span className="price">{product.price} EGP</span>
+                    <span className="rate">
+                      <i className="fas fa-star rating-color"></i>{" "}
+                      {product.avgRating}
                     </span>
-                    <h3 className="h6 fw-bolder">{product.name}</h3>
-                    <div className="my-3 d-flex justify-content-between align-items-center">
-                      <span className="price">{product.price} EGP</span>
-                      <span className="rate">
-                        <i className="fas fa-star rating-color"></i>{" "}
-                        {product.avgRating}
-                      </span>
-                    </div>
-                  </NavLink>
+                  </div>
+
                   <div className="d-flex gap-5">
                     <NavLink to={`/editproduct/${product.id}`}>
                       <button className="btn bg-main text-white btn-sm">
