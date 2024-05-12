@@ -19,7 +19,7 @@ const router = Router();
 
 router
   .route("/")
-  .get(getAllData)
+  .get(getAllData())
   .post(
     auth(),
     fileUpload(fileValidation.image).single("img"),

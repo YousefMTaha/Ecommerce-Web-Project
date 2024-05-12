@@ -18,7 +18,7 @@ import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
 router
   .route("/")
-  .get(getAllData)
+  .get(getAllData())
   .post(
     auth(),
     fileUpload(fileValidation.image).single("img"),

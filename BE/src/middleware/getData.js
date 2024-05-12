@@ -5,34 +5,31 @@ import productModel from "../../DB/model/Product.model.js";
 import subcategoryModel from "../../DB/model/Subcategory.model.js";
 import userModel from "../../DB/model/User.model.js";
 import { ModifyError } from "../utils/classError.js";
+import { asyncHandler } from "../utils/errorHandling.js";
 
-const getAllData = async (req, res, next) => {
-  const model = getModelFromUrl(req.originalUrl);
-  let data = await model.find().populate("category");
-  // console.log(data);
-  // data = data.map((ele) => {
-  //   // console.log({...ele});
-  //   ele = ele._doc;
-  //   return {
-  //     ...ele,
-  //     category: { id: ele.category._id, categoryName: ele.category.name },
-  //   };
-  // });
-  const resObj = {};
-  resObj.message = "done";
+const getAllData = (populateData = "") => {
+  return asyncHandler(async (req, res, next) => {
+    const model = getModelFromUrl(req.originalUrl);
 
-  resObj[model.modelName] = data;
+    let data;
 
-  // console.log(data);
+    if (populateData) data = await model.find().populate(populateData);
+    else data = await model.find();
 
-  return data.length
-    ? res.status(StatusCodes.OK).json(resObj)
-    : next(
-        new ModifyError(`No ${model.modelName} found`, StatusCodes.NOT_FOUND)
-      );
+    const resObj = {};
+    resObj.message = "done";
+
+    resObj[model.modelName] = data;
+
+    return data.length
+      ? res.status(StatusCodes.OK).json(resObj)
+      : next(
+          new ModifyError(`No ${model.modelName} found`, StatusCodes.NOT_FOUND)
+        );
+  });
 };
 
-export const getDataById = async (req, res, next) => {
+export const getDataById = asyncHandler(async (req, res, next) => {
   const model = getModelFromUrl(req.originalUrl);
   const data = await model.findById(req.params._id);
   const resObj = {};
@@ -43,7 +40,7 @@ export const getDataById = async (req, res, next) => {
     : next(
         new ModifyError(`No ${model.modelName} found`, StatusCodes.NOT_FOUND)
       );
-};
+});
 
 export const getModelFromUrl = (url) => {
   if (url.includes("user")) return userModel;

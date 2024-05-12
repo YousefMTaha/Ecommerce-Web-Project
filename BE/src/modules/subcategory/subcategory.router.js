@@ -22,7 +22,7 @@ import { IdValidator, validation } from "../../middleware/validation.js";
 import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
 
-router.get("/", getAllData);
+router.get("/", getAllData(uniqueFields.categoryId));
 
 router.post(
   "/:categoryId",
