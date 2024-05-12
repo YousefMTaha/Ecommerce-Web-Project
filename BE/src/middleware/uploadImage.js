@@ -2,9 +2,9 @@ import cloudinary from "../utils/cloudinary.js";
 import { asyncHandler } from "../utils/errorHandling.js";
 
 export const uploadImage = ({ model, isArray = false, isFields = false }) => {
-  return async (req, res, next) => {
+  return asyncHandler( async (req, res, next) => {
     const modelName = model.modelName.toLowerCase();
-    if (req.file || req.files?.length || Object.keys(req.files).length) {
+    if (req.file || req.files?.length || Object.keys(req.files||{}).length) {
       if (isArray) {
         const images = [];
 
@@ -59,7 +59,7 @@ export const uploadImage = ({ model, isArray = false, isFields = false }) => {
     }
 
     return res.status(200).json({ message: "done", model: req[modelName] });
-  };
+  });
 };
 
 export const updateImage = ({model, isArray = false, isFields = false}) => {

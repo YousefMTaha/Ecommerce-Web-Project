@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Style from "./FeaturedProducts.module.scss";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { NavLink } from "react-router-dom";
@@ -48,17 +47,6 @@ export default function FeaturedProducts() {
     }
   }
 
-  async function addProductToWishlist(id) {
-    setLoading(true);
-    const response = await addToWishlist(id);
-    setLoading(false);
-
-    if (response.data.status === "success") {
-      toast.success(response.data.message);
-    } else {
-      toast.error("Product not added successfully to your wishlist");
-    }
-  }
 
   function getFeaturedProducts(page) {
     return axios.get(`http://localhost:3000/product`);
@@ -95,7 +83,7 @@ export default function FeaturedProducts() {
                 <NavLink to={`/productdetails/${product._id}`}>
                   <img
                     className="w-100"
-                    src={product.imageCover.secure_url}
+                    src={product.imageCover?product.imageCover.secure_url:"https://cdn.discordapp.com/attachments/724206735350431763/1239191116579078236/no-image-available-icon-vector.png?ex=66420629&is=6640b4a9&hm=050cbbdf7a67532d60393443bc239d5566037b26866f2d44af1f5b8726943306&"}
                     alt={product.name}
                   />
                   <span className="text-main font-sm fw-bolder my-1 d-block">
