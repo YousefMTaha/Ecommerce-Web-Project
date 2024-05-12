@@ -5,6 +5,7 @@ import { isExist } from "../../middleware/isExist.js";
 import categoryModel from "../../../DB/model/Category.model.js";
 import {
   fileValidation,
+  reqDataForms,
   uniqueFields,
   userRoles,
 } from "../../utils/systemConstants.js";
@@ -23,10 +24,18 @@ import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
 
 router.get("/", getAllData(uniqueFields.categoryId));
-
+router.get(
+  "/category/:_id",
+  isExist({
+    model: categoryModel,
+    dataFrom: reqDataForms.parmas,
+    searchData: uniqueFields.id,
+  }),
+  subcategoryContoller.getCategorySubcategory
+);
 router.post(
   "/:categoryId",
-  auth([userRoles.Seller]),
+  auth(),
   fileUpload(fileValidation.image).single("img"),
   validation(validator.add),
   isExist({ model: categoryModel, searchData: uniqueFields.categoryId }),
@@ -38,7 +47,7 @@ router.post(
 router
   .route("/:_id")
   .put(
-    auth([userRoles.Seller]),
+    auth(),
     fileUpload(fileValidation.image).single("img"),
     validation(validator.update),
     isExist({ model: subcategoryModel }),
@@ -47,7 +56,7 @@ router
     subcategoryContoller.update
   )
   .delete(
-    auth([userRoles.Seller]),
+    auth(),
     validation(IdValidator),
     isExist({ model: subcategoryModel }),
     isOwner(subcategoryModel),

@@ -22,8 +22,8 @@ router.get(
   auth(),
   isExist({
     model: productModel,
-    dataFrom: reqDataForms.body,
-    searchData: uniqueFields.productId,
+    dataFrom: reqDataForms.parmas,
+    searchData: uniqueFields.id,
   }),
   reviewsController.getReviewsOfProduct
 );

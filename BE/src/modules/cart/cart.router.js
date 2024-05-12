@@ -13,15 +13,7 @@ const router = Router();
 router.get("/", auth(), get);
 
 // Add product to cart
-
-// Add product to cart
 router.post(
-  "/",
-  (req, res, next) => {
-    console.log({ body: req.body, params: req.params, headers: req.headers });
-    next();
-  },
-
   auth(),
   //validation(validator.add),
   isExist({

@@ -79,6 +79,7 @@ Start the server
 - Promotions and Discounts: Ability to run promotional campaigns, apply discounts, offer coupons, and track their effectiveness.
 
 
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -121,6 +122,8 @@ To run this project, you will need to add the following environment variables to
 
 `ENDPOINT_SECRET ='whsec_bMewvPkLENhPOB59Ix5jq6Vis3TaPNYV'`
 
+## Technical Requirements Document (TRD)
+![TRD](https://cdn.discordapp.com/attachments/1166867937186037834/1239249206107963442/Technical_Requirements.jpg?ex=66423c42&is=6640eac2&hm=89db8f14de6d094ec5c24ce9995f2432064c9cff3fa900a7bc3a81db87f54402&)
 
 
 
@@ -132,6 +135,4 @@ To run this project, you will need to add the following environment variables to
 ## DB Schema
 
 [DB-Schema](https://drive.google.com/file/d/11ZOzy5yzcDbpqIv3HzjLu3N8TzRDy5nb/view?usp=sharing) (Download it for better resolution)
-
-
 
