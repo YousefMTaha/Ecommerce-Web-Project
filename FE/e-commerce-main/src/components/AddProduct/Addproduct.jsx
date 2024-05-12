@@ -87,6 +87,10 @@ export default function Addproduct() {
     validationSchema,
     onSubmit: addproduct,
   });
+  const handleImageChange = (event) => {
+    const { name, files } = event.target;
+    formik.setFieldValue(name, files[0]);
+  };
 
   return (
     <div className="register py-5">
@@ -290,6 +294,15 @@ export default function Addproduct() {
             </div>
           ) : null}
         </div>
+        <input
+        id="images"
+        name="images"
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        multiple
+      />
+      
         {/* <div className="form-group mb-2">
           <label htmlFor="image" className="mb-1">
             image:
