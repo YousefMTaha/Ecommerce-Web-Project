@@ -25,7 +25,7 @@ import getAllData, { getDataById } from "../../middleware/getData.js";
 import categoryModel from "../../../DB/model/Category.model.js";
 
 const router = Router();
-router.get("/getUserProducts",auth(),productController.getUserProducts)
+router.get("/getUserProducts", auth(), productController.getUserProducts);
 router
   .route("/")
   .post(
@@ -34,11 +34,7 @@ router
       { name: "images", maxCount: 5 },
       { name: "imageCover", maxCount: 1 },
     ]),
-    (req,res)=>{
-      console.log(req.body);
-      console.log(req.file);
-      console.log(req.files);
-    },
+
     isExist({
       model: subcategoryModel,
       dataFrom: reqDataForms.body,
@@ -84,7 +80,5 @@ router
     updateImage({ model: productModel, isFields: true }),
     productController.updateProduct
   );
-
-
 
 export default router;

@@ -2,9 +2,9 @@ import cloudinary from "../utils/cloudinary.js";
 import { asyncHandler } from "../utils/errorHandling.js";
 
 export const uploadImage = ({ model, isArray = false, isFields = false }) => {
-  return asyncHandler( async (req, res, next) => {
+  return asyncHandler(async (req, res, next) => {
     const modelName = model.modelName.toLowerCase();
-    if (req.file || req.files?.length || Object.keys(req.files||{}).length) {
+    if (req.file || req.files?.length || Object.keys(req.files || {}).length) {
       if (isArray) {
         const images = [];
 
@@ -40,7 +40,8 @@ export const uploadImage = ({ model, isArray = false, isFields = false }) => {
             req[modelName][field].push({ public_id, secure_url });
           }
         }
-        req[modelName].imageCover = req[modelName].imageCover[0];
+        if (Object.keys(req.files).includes("imageCover"))
+          req[modelName].imageCover = req[modelName].imageCover[0];
       } else {
         const { public_id, secure_url } = await cloudinary.uploader.upload(
           req.file.path,
@@ -62,7 +63,7 @@ export const uploadImage = ({ model, isArray = false, isFields = false }) => {
   });
 };
 
-export const updateImage = ({model, isArray = false, isFields = false}) => {
+export const updateImage = ({ model, isArray = false, isFields = false }) => {
   return asyncHandler(async (req, res, next) => {
     // check if file is send
     if (!(req.file || req.files?.length)) return next();
@@ -144,7 +145,8 @@ export const deleteImage = (model, isArray = false) => {
     const modelData = req[modelName];
 
     // if the model doesn't have image
-    if (!(modelData.image || modelData.images || modelData.imageCover)) return next();
+    if (!(modelData.image || modelData.images || modelData.imageCover))
+      return next();
 
     if (isArray) {
       await cloudinary.api.delete_resources_by_prefix(
@@ -152,11 +154,8 @@ export const deleteImage = (model, isArray = false) => {
       );
       modelData.images = [];
       await modelData.save();
-    }
-    else if (isFields){
-
-    }
-    else {
+    } else if (isFields) {
+    } else {
       await cloudinary.uploader.destroy(modelData.image.public_id);
       await modelData.updateOne({
         $unset: { image: "" },
