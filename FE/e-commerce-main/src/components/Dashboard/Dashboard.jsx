@@ -10,21 +10,18 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   function getFeaturedProducts(page) {
-    return axios.get(
-      `http://localhost:3000/product/getUserProducts`, 
-     {headers: { token: "yousef_" + localStorage.getItem("token") }});
-  
+    return axios.get(`http://localhost:3000/product/getUserProducts`, {
+      headers: { token: "yousef_" + localStorage.getItem("token") },
+    });
   }
   function reFetch(num) {
     setPage(num);
     refetch();
   }
 
-
   const { isLoading, isError, data, isFetching, refetch } = useQuery({
     queryKey: ["SellerProducts", page],
     queryFn: () => getFeaturedProducts(page),
-    
   });
 
   async function addProductToCart(id) {
@@ -48,7 +45,7 @@ const Dashboard = () => {
         </div>
       ) : null}
       <div className="row g-3">
-        <h2 className="mt-5 mb-2">All Products</h2>
+        <h2 className="mt-5 mb-4">Your Products</h2>
         {data?.data.products.map((product) => {
           console.log(product);
           return (
@@ -57,7 +54,11 @@ const Dashboard = () => {
                 <NavLink to={`/productdetails/${product._id}`}>
                   <img
                     className="w-100"
-                    src={product.imageCover?product.imageCover.secure_url:"https://cdn.discordapp.com/attachments/724206735350431763/1239191116579078236/no-image-available-icon-vector.png?ex=66420629&is=6640b4a9&hm=050cbbdf7a67532d60393443bc239d5566037b26866f2d44af1f5b8726943306&"}
+                    src={
+                      product.imageCover
+                        ? product.imageCover.secure_url
+                        : "https://cdn.discordapp.com/attachments/724206735350431763/1239191116579078236/no-image-available-icon-vector.png?ex=66420629&is=6640b4a9&hm=050cbbdf7a67532d60393443bc239d5566037b26866f2d44af1f5b8726943306&"
+                    }
                     alt={product.name}
                   />
                   <span className="text-main font-sm fw-bolder my-1 d-block">
@@ -84,13 +85,10 @@ const Dashboard = () => {
             </div>
           );
         })}
-        
       </div>
       <div className="d-flex gap-3">
-      <Link to={"/addproduct"}>
-        <button className="btn bg-main text-white btn-sm">
-          Add product
-        </button>
+        <Link to={"/addproduct"}>
+          <button className="btn bg-main text-white btn-sm">Add product</button>
         </Link>
       </div>
       <nav
