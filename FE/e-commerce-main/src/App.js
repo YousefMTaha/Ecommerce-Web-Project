@@ -113,7 +113,7 @@ const routes = createHashRouter([
         ),
       },
       {
-        path: ":id/subcategories",
+        path: "subcategories/:id",
         element: (
           <ProtectedRoute>
             <SubCategories />

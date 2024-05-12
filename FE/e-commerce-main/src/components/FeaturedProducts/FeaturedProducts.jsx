@@ -33,13 +33,12 @@ export default function FeaturedProducts() {
     setLoading(true);
     const response = await addToCart(id);
     setLoading(false);
-
     console.log(response);
 
     if (response.data.message === "done") {
       toast.success(response.data.message);
     } else {
-      toast.error("Product not added successfully to your cart");
+      toast.error("Product not added to your cart");
     }
 
     if (wishlist.includes(id)) {

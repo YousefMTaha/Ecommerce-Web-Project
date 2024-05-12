@@ -44,9 +44,15 @@ export default function Addproduct() {
     fetchData();
   }, []);
   async function addproduct(values) {
+    const formData = new FormData();
+
+    // Append each key-value pair from the values object to the FormData
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
     setIsLoading(true);
     const { data } = await axios
-      .post("http://localhost:3000/product", values,
+      .post("http://localhost:3000/product", formData,
       {headers: { token: "yousef_" + localStorage.getItem("token") }}
       )
       .catch((err) => {
@@ -81,12 +87,16 @@ export default function Addproduct() {
       brandId: brands?brands[0].id:"",
       color: "",
       size: "",
-      image: "",
+      images: "",
       stock:""
     },
     validationSchema,
     onSubmit: addproduct,
   });
+  const handleImageChange = (event) => {
+    const { name, files } = event.target;
+    formik.setFieldValue(name, files[0]);
+  };
 
   return (
     <div className="register py-5">
@@ -261,13 +271,12 @@ export default function Addproduct() {
             type="text"
             id="size"
             name="size"
-            value={formik.values.size}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.size && formik.touched.size ? (
+          {formik.errors.images && formik.touched.images ? (
             <div className="alert alert-danger mt-2 p-2">
-              {formik.errors.size}
+              {formik.errors.images}
             </div>
           ) : null}
         </div>
@@ -290,6 +299,24 @@ export default function Addproduct() {
             </div>
           ) : null}
         </div>
+        <div className="form-group mb-2">
+        <label htmlFor="image" className="mb-1">
+          image:
+        </label>
+        <input
+          className="form-control"
+          type="file" // Change type to "file" for image input
+          id="images"
+          name="images"
+          onChange={handleImageChange} // Add onChange event handler
+          onBlur={formik.handleBlur}
+        />
+        {formik.errors.images && formik.touched.images ? (
+          <div className="alert alert-danger mt-2 p-2">
+            {formik.errors.images}
+          </div>
+        ) : null}
+      </div>
         {/* <div className="form-group mb-2">
           <label htmlFor="image" className="mb-1">
             image:
