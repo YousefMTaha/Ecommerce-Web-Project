@@ -45,18 +45,6 @@ const Dashboard = () => {
     queryFn: () => getFeaturedProducts(page),
   });
 
-  async function addProductToCart(id) {
-    setLoading(true);
-    const response = await addToCart(id);
-    setLoading(false);
-    console.log(response);
-
-    if (response.data.message === "done") {
-      toast.success(response.data.message);
-    } else {
-      toast.error("Product not added successfully to your cart");
-    }
-  }
   return (
     <>
       {/* {isLoading || loading ? (
