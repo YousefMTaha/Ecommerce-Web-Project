@@ -1,29 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet";
-
+import toast from "react-hot-toast";
 export default function Addproduct() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+   function  getCategories () {
+    return  axios
+      .get(`http://localhost:3000/category`)
+      .then((response) => response);
+  }
+  function  getSubCategories () {
+    return  axios
+      .get(`http://localhost:3000/subcategory`)
+      .then((response) => response);
+  }
+  function  getBrands () {
+    return  axios
+      .get(`http://localhost:3000/brand`)
+      .then((response) => response);
+  }
+  const [categories, setCategories] = useState(null);
+  const [subCategories, setSubCategories] = useState(null);
+  const [brands, setBrands] = useState(null);
+  useEffect( () => {
+    
+    const fetchData = async () => {
+      
+      setIsLoading(true);
+      const dataCategory = await getCategories();
+      const dataSubCategory = await getSubCategories();
+      const dataBrand = await getBrands();
+      setCategories(dataCategory.data.Category);
+      setSubCategories(dataSubCategory.data.Subcategory);
+      setBrands(dataBrand.data.Brand);
+      setIsLoading(false);
+     
+    };
+    fetchData();
+  }, []);
   async function addproduct(values) {
     setIsLoading(true);
     const { data } = await axios
-      .post("http://localhost:3000/auth/signup", values)
+      .post("http://localhost:3000/product", values,
+      {headers: { token: "yousef_" + localStorage.getItem("token") }}
+      )
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
-        setError(err.response.data.message);
-      });
-
-    console.log(data);
-
+        toast.error(err.response.data.message);
+      })
     if (data.message === "done") {
-      navigate("/login");
+      navigate("/Dashboard");
     }
   }
 
@@ -32,8 +64,11 @@ export default function Addproduct() {
       .min(3, "Min length is 3 chars")
       .max(20, "Max length is 16 chars")
       .required("This field is required"),
-    description: Yup.string()
-      .required("This field is required")
+    description: Yup.string().required("This field is required"),
+    price:Yup.string().required("This field is required"),
+    color:Yup.string().required("This field is required"),
+    size:Yup.string().required("This field is required"),
+    stock:Yup.string().required("This field is required"),
   });
 
   const formik = useFormik({
@@ -41,11 +76,13 @@ export default function Addproduct() {
       name: "",
       description: "",
       price: "",
-      subcategoryId: "",
-      brandId: "",
-      color:"",
-      size:"",
-      image:""
+      category:categories?categories[0].id:"",
+      subcategoryId: subCategories?subCategories[0].id:"",
+      brandId: brands?brands[0].id:"",
+      color: "",
+      size: "",
+      image: "",
+      stock:""
     },
     validationSchema,
     onSubmit: addproduct,
@@ -60,7 +97,11 @@ export default function Addproduct() {
       {error ? (
         <div className="alert alert-danger mb-3 p-2 text-center">{error}</div>
       ) : null}
-      <h2 className="mb-4">Add product</h2>
+
+{categories && subCategories && brands && (
+  <div>
+    <h2 className="mb-4">Add product</h2>
+    {
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group mb-2">
           <label htmlFor="name" className="mb-1">
@@ -113,72 +154,107 @@ export default function Addproduct() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.description && formik.touched.description ? (
+          {formik.errors.price && formik.touched.price ? (
             <div className="alert alert-danger mt-2 p-2">
-              {formik.errors.description}
+              {formik.errors.price}
             </div>
           ) : null}
         </div>
         <div className="form-group mb-2">
-          <label htmlFor="subcategoryId" className="mb-1">
-          subcategoryId:
+          <label htmlFor="category" className="mb-1">
+            category:
           </label>
-          <input
+          <select
             className="form-control"
-            type="text"
+            id="category"
+            name="category"
+            value={formik.values.category}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            {categories.map((category) => (
+              <option key={category._id} value={category._id  }>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          {formik.errors.category && formik.touched.category ? (
+            <div className="alert alert-danger mt-2 p-2">
+              {formik.errors.category}
+            </div>
+          ) : null}
+        </div>
+        <div className="form-group mb-2">
+          <label htmlFor="subcategory" className="mb-1">
+            subcategory:
+          </label>
+          <select
+            className="form-control"
             id="subcategoryId"
             name="subcategoryId"
             value={formik.values.subcategoryId}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-          />
-          {formik.errors.description && formik.touched.description ? (
+          >
+            {subCategories.map((subcategory) => (
+              <option key={subcategory._id} value={subcategory._id}>
+                {subcategory.name}
+              </option>
+            ))}
+          </select>
+          {formik.errors.subcategoryId && formik.touched.subcategoryId ? (
             <div className="alert alert-danger mt-2 p-2">
-              {formik.errors.description}
+              {formik.errors.subcategoryId}
             </div>
           ) : null}
         </div>
         <div className="form-group mb-2">
-          <label htmlFor="brandId" className="mb-1">
-          brandId:
+          <label htmlFor="brand" className="mb-1">
+          brand:
           </label>
-          <input
+          <select
             className="form-control"
-            type="text"
             id="brandId"
             name="brandId"
             value={formik.values.brandId}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-          />
-          {formik.errors.description && formik.touched.description ? (
+          >
+            {brands.map((brand) => (
+              <option key={brand._id} value={brand._id}>
+                {brand.name}
+              </option>
+            ))}
+          
+          </select>
+          {formik.errors.brandId && formik.touched.brandId ? (
             <div className="alert alert-danger mt-2 p-2">
-              {formik.errors.description}
+              {formik.errors.brandId}
             </div>
           ) : null}
         </div>
         <div className="form-group mb-2">
           <label htmlFor="color" className="mb-1">
-          color:
+            color:
           </label>
           <input
             className="form-control"
             type="text"
             id="color"
-            name="brandId"
+            name="color"
             value={formik.values.color}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.description && formik.touched.description ? (
+          {formik.errors.color && formik.touched.color ? (
             <div className="alert alert-danger mt-2 p-2">
-              {formik.errors.description}
+              {formik.errors.color}
             </div>
           ) : null}
         </div>
         <div className="form-group mb-2">
           <label htmlFor="size" className="mb-1">
-          size:
+            size:
           </label>
           <input
             className="form-control"
@@ -189,15 +265,34 @@ export default function Addproduct() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.description && formik.touched.description ? (
+          {formik.errors.size && formik.touched.size ? (
             <div className="alert alert-danger mt-2 p-2">
-              {formik.errors.description}
+              {formik.errors.size}
             </div>
           ) : null}
         </div>
         <div className="form-group mb-2">
+          <label htmlFor="stock" className="mb-1">
+            stock:
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            id="stock"
+            name="stock"
+            value={formik.values.stock}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.errors.stock && formik.touched.stock ? (
+            <div className="alert alert-danger mt-2 p-2">
+              {formik.errors.stock}
+            </div>
+          ) : null}
+        </div>
+        {/* <div className="form-group mb-2">
           <label htmlFor="image" className="mb-1">
-          image:
+            image:
           </label>
           <input
             className="form-control"
@@ -213,14 +308,14 @@ export default function Addproduct() {
               {formik.errors.description}
             </div>
           ) : null}
-        </div>
+        </div> */}
         {!isLoading ? (
           <button
             disabled={!(formik.isValid && formik.dirty)}
             type="submit"
             className="btn bg-main text-white w-25 d-block mx-auto mt-4"
           >
-            Register
+            Add Product
           </button>
         ) : (
           <button
@@ -232,6 +327,10 @@ export default function Addproduct() {
           </button>
         )}
       </form>
+      }
     </div>
-  );
-}
+
+  )}
+  </div>)
+  }
+

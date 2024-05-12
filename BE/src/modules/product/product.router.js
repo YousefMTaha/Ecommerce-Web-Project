@@ -29,7 +29,8 @@ const router = Router();
 router
   .route("/")
   .post(
-    auth([userRoles.Seller]),
+    auth([userRoles.Admin]),
+    
     fileUpload(fileValidation.image).fields([
       { name: "images", maxCount: 5 },
       { name: "imageCover", maxCount: 1 },
