@@ -56,7 +56,14 @@ export default function EditProduct() {
     fetchData();
   }, []);
   async function editProduct(values) {
-    const {id,...edited}=values
+    
+    const newobject={"images":image,"imageCover":imageCover,...values}
+    const {id,...edited}=newobject
+    console.log(edited)
+    const formData = new FormData();
+    Object.entries(newobject).forEach(([key, newobject]) => {
+      formData.append(key, newobject);
+    });
     setIsLoading(true);
     const { data } = await axios
       .put(`http://localhost:3000/product/${id}`, edited,
@@ -85,7 +92,8 @@ export default function EditProduct() {
    const details = data ? data.data.Product : null;
    
    const [initialValues, setInitialValues] = useState({});
-
+  
+  let image=null,imageCover=null;
    useEffect(() => {
      if (data) {
        const details = data.data.Product;
@@ -98,20 +106,23 @@ export default function EditProduct() {
             price:details.price,
             stock:details.stock,
             category:details.category,
-            subcategory:details.subcategory,
-            brand:details.brand,
+            subcategoryId:details.subcategoryId,
+            brandId:details.brandId,
         }
        )
      }
    }, [data]);
    
- 
    const formik = useFormik({
      initialValues: {},
      validationSchema,
      onSubmit: editProduct,
    });
- 
+   const handleImageChange = (event) => {
+    
+    const { name, files } = event.target;
+    formik.setFieldValue(name, files[0]);
+  };
   return (
     <div className="register py-5">
       <Helmet>
@@ -253,44 +264,6 @@ export default function EditProduct() {
         </div>
         ) : null}
     </div>
-    {/* <div className="form-group mb-2">
-        <label htmlFor="color" className="mb-1">
-        color:
-        </label>
-        <input
-        className="form-control"
-        type="text"
-        id="color"
-        name="color"
-        value={formik.values.color}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        />
-        {formik.errors.color && formik.touched.color ? (
-        <div className="alert alert-danger mt-2 p-2">
-            {formik.errors.color}
-        </div>
-        ) : null}
-    </div>
-    <div className="form-group mb-2">
-        <label htmlFor="size" className="mb-1">
-        size:
-        </label>
-        <input
-        className="form-control"
-        type="text"
-        id="size"
-        name="size"
-        value={formik.values.size}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        />
-        {formik.errors.size && formik.touched.size ? (
-        <div className="alert alert-danger mt-2 p-2">
-            {formik.errors.size}
-        </div>
-        ) : null}
-    </div> */}
     <div className="form-group mb-2">
         <label htmlFor="stock" className="mb-1">
         stock:
@@ -311,24 +284,51 @@ export default function EditProduct() {
         ) : null}
     </div>
     {/* <div className="form-group mb-2">
-        <label htmlFor="image" className="mb-1">
-        image:
+        <label htmlFor="images" className="mb-1">
+          images:
         </label>
         <input
-        className="form-control"
-        type="text"
-        id="image"
-        name="image"
-        value={formik.values.image}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+          className="form-control"
+          type="file" 
+          id="images"
+          name="images"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            image=file
+            formik.setFieldValue("imageCover", file);
+            
+          }}
+          onBlur={formik.handleBlur}
         />
-        {formik.errors.description && formik.touched.description ? (
-        <div className="alert alert-danger mt-2 p-2">
-            {formik.errors.description}
-        </div>
+        {formik.errors.images && formik.touched.images ? (
+          <div className="alert alert-danger mt-2 p-2">
+            {formik.errors.images}
+          </div>
         ) : null}
-    </div> */}
+      </div>
+      <div className="form-group mb-2">
+        <label htmlFor="imageCover" className="mb-1">
+        imageCover:
+        </label>
+        <input
+          className="form-control"
+          type="file" // Change type to "file" for image input
+          id="imageCover"
+          name="imageCover"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            imageCover=file
+            formik.setFieldValue("imageCover", file);
+            
+          }}
+          onBlur={formik.handleBlur}
+        />
+        {formik.errors.imageCover && formik.touched.imageCover ? (
+          <div className="alert alert-danger mt-2 p-2">
+            {formik.errors.imageCover}
+          </div>
+        ) : null}
+      </div> */}
         {!isLoading ? (
           <button
             disabled={!(formik.isValid && formik.dirty)}

@@ -46,7 +46,6 @@ export default function Addproduct() {
   async function addproduct(values) {
     const formData = new FormData();
 
-    // Append each key-value pair from the values object to the FormData
     Object.entries(values).forEach(([key, value]) => {
       formData.append(key, value);
     });
