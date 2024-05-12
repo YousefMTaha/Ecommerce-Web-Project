@@ -78,7 +78,7 @@ const Dashboard = () => {
                     onClick={() => addProductToCart(product._id)}
                     className="btn bg-main text-white btn-sm"
                   >
-                    Add To Cart
+                    Edit Product
                   </button>
                   
                 </div>

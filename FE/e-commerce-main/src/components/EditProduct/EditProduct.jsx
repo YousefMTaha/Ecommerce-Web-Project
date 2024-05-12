@@ -55,18 +55,20 @@ export default function EditProduct() {
     
     fetchData();
   }, []);
-  async function addproduct(values) {
+  async function editProduct(values) {
+    const {id,...edited}=values
     setIsLoading(true);
     const { data } = await axios
-      .put("http://localhost:3000/product/", values,
+      .put(`http://localhost:3000/product/${id}`, edited,
       {headers: { token: "yousef_" + localStorage.getItem("token") }}
       )
       .catch((err) => {
         console.log(err);
-        setIsLoading(false);
         toast.error(err.response.data.message);
-      })
+      }).finally(() => {setIsLoading(false);})
+      console.log(data)
     if (data.message === "done") {
+        toast.success("Product updated successfully");
       navigate("/Dashboard");
     }
   }
@@ -78,8 +80,6 @@ export default function EditProduct() {
       .required("This field is required"),
     description: Yup.string().required("This field is required"),
     price:Yup.string().required("This field is required"),
-    color:Yup.string().required("This field is required"),
-    size:Yup.string().required("This field is required"),
     stock:Yup.string().required("This field is required"),
   });
    const details = data ? data.data.Product : null;
@@ -90,7 +90,18 @@ export default function EditProduct() {
      if (data) {
        const details = data.data.Product;
      
-       formik.setValues(details)
+       formik.setValues(
+        {
+            id:details._id,
+            name:details.name,
+            description:details.description,
+            price:details.price,
+            stock:details.stock,
+            category:details.category,
+            subcategory:details.subcategory,
+            brand:details.brand,
+        }
+       )
      }
    }, [data]);
    
@@ -98,7 +109,7 @@ export default function EditProduct() {
    const formik = useFormik({
      initialValues: {},
      validationSchema,
-     onSubmit: addproduct,
+     onSubmit: editProduct,
    });
  
   return (
@@ -242,7 +253,7 @@ export default function EditProduct() {
         </div>
         ) : null}
     </div>
-    <div className="form-group mb-2">
+    {/* <div className="form-group mb-2">
         <label htmlFor="color" className="mb-1">
         color:
         </label>
@@ -279,7 +290,7 @@ export default function EditProduct() {
             {formik.errors.size}
         </div>
         ) : null}
-    </div>
+    </div> */}
     <div className="form-group mb-2">
         <label htmlFor="stock" className="mb-1">
         stock:
@@ -318,19 +329,13 @@ export default function EditProduct() {
         </div>
         ) : null}
     </div> */}
-
-    </form>
-    }
-    </div>
-
-    )}
-  {!isLoading ? (
+        {!isLoading ? (
           <button
             disabled={!(formik.isValid && formik.dirty)}
             type="submit"
             className="btn bg-main text-white w-25 d-block mx-auto mt-4"
           >
-            Add Product
+            Edit Product
           </button>
         ) : (
           <button
@@ -341,6 +346,12 @@ export default function EditProduct() {
             <i className="fa-solid fa-spinner fa-spin"></i>
           </button>
         )}
+    </form>
+    }
+    </div>
+
+    )}
+ 
   </div>)
   }
 
