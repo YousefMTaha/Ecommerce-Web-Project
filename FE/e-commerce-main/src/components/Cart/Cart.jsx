@@ -60,7 +60,7 @@ export default function Cart() {
     }
   }
 
-  console.log({dataFrom:data});
+  console.log({ dataFrom: data });
 
   return (
     <>
@@ -79,16 +79,8 @@ export default function Cart() {
             <h4 className="text-main">
               Number Of Items : {data?.data.cart.noProduct}
             </h4>
-            {/* <h5 className="text-main">
-              Total Cart Price: {data?.data.data.totalCartPrice} EGP
-            </h5> */}
+
             <div className="d-flex justify-content-between align-items-center">
-              <button
-                onClick={() => clearAllCart()}
-                className="btn btn-sm bg-main text-white my-2"
-              >
-                <i className="fas fa-trash me-2"></i>Clear Cart
-              </button>
               <NavLink
                 to={"/checkout"}
                 className="btn btn-sm bg-main text-white my-2"
@@ -98,7 +90,7 @@ export default function Cart() {
             </div>
             <div className="items">
               {data?.data.cart.products.map((product) => {
-                console.log({product});
+                console.log({ product });
                 return (
                   <div className="row py-3 border-bottom" key={product._id}>
                     <div className="col-9">
@@ -117,7 +109,7 @@ export default function Cart() {
                           </p>
                           <button
                             onClick={() => {
-                              console.log({idFromReomve:product.id._id});
+                              console.log({ idFromReomve: product.id._id });
                               removeCartItem(product.id._id);
                             }}
                             className="btn btn-sm bg-main text-white"
@@ -141,7 +133,7 @@ export default function Cart() {
                         +
                       </button>
                       <span className="mx-2 d-inline-block">
-                        {product.quantity }
+                        {product.quantity}
                       </span>
                       <button
                         disabled={product.quantity <= 1}

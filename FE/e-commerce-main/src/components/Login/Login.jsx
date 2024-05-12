@@ -122,9 +122,6 @@ export default function Login() {
               <i className="fa-solid fa-spinner fa-spin"></i>
             </button>
           )}
-          <NavLink className="btn text-main" to="/forgetpassword">
-            Forget Password... ?
-          </NavLink>
         </div>
       </form>
     </div>

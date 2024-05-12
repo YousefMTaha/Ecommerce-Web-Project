@@ -3,33 +3,16 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { NavLink } from "react-router-dom";
 import { CartContext } from "../../Context/CartContext";
-import { WishlistContext } from "../../Context/WishlistContext";
+
 import toast from "react-hot-toast";
 import { UserContext } from "../../Context/UserContext";
 
 export default function FeaturedProducts() {
   const { addToCart } = useContext(CartContext);
-  const {
-    addToWishlist,
-    wishlist,
-    getLoggedUserWishlist,
-    removeProductWishlist,
-  } = useContext(WishlistContext);
+
   const { userData } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-
-  async function removeWishlistItem(id) {
-    setLoading(true);
-    const response = await removeProductWishlist(id);
-    setLoading(false);
-
-    if (response.data.status === "success") {
-      toast.success("The item is removed from wishlist.");
-    } else {
-      toast.error("The item is not removed from wishlist.");
-    }
-  }
 
   async function addProductToCart(id) {
     setLoading(true);
@@ -41,10 +24,6 @@ export default function FeaturedProducts() {
       toast.success(response.data.message);
     } else {
       toast.error("Product not added to your cart");
-    }
-
-    if (wishlist.includes(id)) {
-      removeWishlistItem(id);
     }
   }
 
@@ -61,10 +40,6 @@ export default function FeaturedProducts() {
     setPage(num);
     refetch();
   }
-
-  useEffect(() => {
-    getLoggedUserWishlist();
-  }, []);
 
   return (
     <>

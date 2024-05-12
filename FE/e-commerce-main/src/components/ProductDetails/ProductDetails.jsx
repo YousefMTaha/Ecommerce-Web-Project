@@ -6,15 +6,13 @@ import { useQuery } from "react-query";
 import Slider from "react-slick";
 import { CartContext } from "../../Context/CartContext";
 import toast from "react-hot-toast";
-import { WishlistContext } from "../../Context/WishlistContext";
 import { Helmet } from "react-helmet";
 import { UserContext } from "../../Context/UserContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
-  const { addToWishlist, wishlist, removeProductWishlist } =
-    useContext(WishlistContext);
+
   const { userData } = useContext(UserContext);
 
   const [loading, setLoading] = useState(false);
@@ -28,34 +26,6 @@ export default function ProductDetails() {
       toast.success(response.data.message, { position: "top-right" });
     } else {
       toast.error("Product not added successfully to your cart");
-    }
-
-    if (wishlist.includes(id)) {
-      removeWishlistItem(id);
-    }
-  }
-
-  async function removeWishlistItem(id) {
-    setLoading(true);
-    const response = await removeProductWishlist(id);
-    setLoading(false);
-
-    if (response.data.message === "done") {
-      toast.success("The item is removed from wishlist.");
-    } else {
-      toast.error("The item is not removed from wishlist.");
-    }
-  }
-
-  async function addProductToWishlist(id) {
-    setLoading(true);
-    const response = await addToWishlist(id);
-    setLoading(false);
-
-    if (response.data.status === "success") {
-      toast.success(response.data.message);
-    } else {
-      toast.error("Product not added successfully to your wishlist");
     }
   }
 
