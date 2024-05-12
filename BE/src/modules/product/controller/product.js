@@ -74,5 +74,7 @@ export const getAllProducts = asyncHandler(async (req, res, next) => {
 
 export const getUserProducts = asyncHandler(async (req, res, next) => {
   const products = await productModel.find({ createdBy: req.user._id });
-  return res.status(200).json({ message: "done", products });
+  return products.length
+    ? res.status(200).json({ message: "done", products })
+    : next(new ModifyError("no products found", StatusCodes.NOT_FOUND));
 });
