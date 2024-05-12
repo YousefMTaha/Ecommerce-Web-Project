@@ -31,6 +31,7 @@ import Profile from "./components/Profile/Profile";
 import EditProfile from "./components/Profile/EditProfile";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import Addproduct from "./components/AddProduct/Addproduct.jsx";
+import EditProduct from "./components/EditProduct/EditProduct.jsx";
 const queryClient = new QueryClient();
 
 const routes = createHashRouter([
@@ -51,6 +52,14 @@ const routes = createHashRouter([
         element: (
           <ProtectedRoute>
             <Cart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/editproduct/:id",
+        element: (
+          <ProtectedRoute>
+            <EditProduct />
           </ProtectedRoute>
         ),
       },

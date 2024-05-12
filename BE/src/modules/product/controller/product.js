@@ -27,14 +27,14 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
     }
   );
   return res.status(200).json({
-    message: "Product Updated Successfully",
+    message: "done",
     product,
   });
 });
 
 export const removeProduct = asyncHandler(async (req, res, next) => {
   await req.product.deleteOne();
-  return res.status(200).json({ message: "Product Deleted Successfully" });
+  return res.status(200).json({ message: "done" });
 });
 
 // export const removeAllProducts = asyncHandler(async (req, res, next) => {
@@ -51,7 +51,7 @@ export const getProduct = asyncHandler(async (req, res, next) => {
   // modifiedProduct.createdById = product.createdById.name;
   // modifiedProduct.subcategoryId = product.subcategoryId.name;
   return res.status(200).json({
-    message: "Product Returned Successfully",
+    message: "done",
     product: product,
   });
 });
@@ -67,7 +67,7 @@ export const getAllProducts = asyncHandler(async (req, res, next) => {
     category: product.subcategoryId.name,
   }));
   return res.status(200).json({
-    message: "All Products Returned Successfully",
+    message: "done",
     products: modifiedProducts,
   });
 });
