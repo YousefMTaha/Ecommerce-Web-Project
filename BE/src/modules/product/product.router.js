@@ -34,6 +34,11 @@ router
       { name: "images", maxCount: 5 },
       { name: "imageCover", maxCount: 1 },
     ]),
+    (req,res)=>{
+      console.log(req.body);
+      console.log(req.file);
+      console.log(req.files);
+    },
     isExist({
       model: subcategoryModel,
       dataFrom: reqDataForms.body,

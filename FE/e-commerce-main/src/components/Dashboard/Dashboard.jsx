@@ -31,7 +31,6 @@ const Dashboard = () => {
     setLoading(true);
     const response = await addToCart(id);
     setLoading(false);
-
     console.log(response);
 
     if (response.data.message === "done") {
