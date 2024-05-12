@@ -75,7 +75,6 @@ const Dashboard = () => {
                 <NavLink to ={`/editproduct/${product.id}`}>
                 <div className="d-flex gap-3">
                   <button
-                    onClick={() => addProductToCart(product._id)}
                     className="btn bg-main text-white btn-sm"
                   >
                     Edit Product
