@@ -25,7 +25,7 @@ const router = Router();
 
 router.get("/", getAllData(uniqueFields.categoryId));
 router.get(
-  "/catgory/:_id",
+  "/category/:_id",
   isExist(
     {
       model: categoryModel,
