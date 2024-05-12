@@ -59,7 +59,7 @@ router
   .route("/:_id")
   .get(validation(IdValidator), getDataById)
   .delete(
-    auth([userRoles.Seller]),
+    auth(),
     validation(IdValidator),
     isExist({ model: productModel }),
     isOwner(productModel),
@@ -67,7 +67,7 @@ router
     productController.removeProduct
   )
   .put(
-    auth([userRoles.Seller]),
+    auth(),
     fileUpload(fileValidation.image).fields([
       { name: "images", maxCount: 5 },
       { name: "imageCover", maxCount: 1 },
@@ -76,16 +76,6 @@ router
     isExist({ model: productModel }),
     isOwner(productModel),
     isNotExist({ model: productModel, searchData: uniqueFields.name }),
-    isExist({
-      model: subcategoryModel,
-      dataFrom: reqDataForms.body,
-      searchData: uniqueFields.subcategoryId,
-    }),
-    isExist({
-      model: brandModel,
-      dataFrom: reqDataForms.body,
-      searchData: uniqueFields.brandId,
-    }),
     updateImage({ model: productModel, isFields: true }),
     productController.updateProduct
   );

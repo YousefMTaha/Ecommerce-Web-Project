@@ -18,25 +18,17 @@ export const addProduct = asyncHandler(async (req, res, next) => {
 });
 
 export const updateProduct = asyncHandler(async (req, res, next) => {
-  req.body.subcategoryId = !req.subcategory?._id
-    ? req.product.subcategoryId
-    : req.subcategory._id;
-
-  req.body.brandId = req.brand?._id ? req.brand._id : req.product.brandId;
-  req.body.quantity = await validation.validateNumber(
-    "quantity",
-    req.body.quantity
-  );
   // productModel.findOneAndUpdate({},{},{new:true})
-  req.body.price = await validation.validateNumber("price", req.body.price);
-  const product = await req.product.updateOne(req.body);
+  const product = await productModel.findOneAndUpdate(
+    { _id: req.product._id },
+    req.body,
+    {
+      new: true,
+    }
+  );
   return res.status(200).json({
     message: "Product Updated Successfully",
-    modificationData: {
-      acknowledged: product.acknowledged,
-      productsFound: product.matchedCount,
-      productsUpdated: product.modifiedCount,
-    },
+    product,
   });
 });
 
