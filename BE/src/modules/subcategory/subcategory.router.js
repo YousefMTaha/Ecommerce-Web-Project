@@ -32,7 +32,7 @@ router.get(
       dataFrom: reqDataForms.parmas,
       searchData: uniqueFields.id,
     },
-    subcategoryContoller.add
+    subcategoryContoller.getCategorySubcategory
   )
 );
 router.post(
