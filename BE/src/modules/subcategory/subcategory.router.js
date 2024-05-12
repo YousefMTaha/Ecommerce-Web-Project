@@ -26,14 +26,12 @@ const router = Router();
 router.get("/", getAllData(uniqueFields.categoryId));
 router.get(
   "/category/:_id",
-  isExist(
-    {
-      model: categoryModel,
-      dataFrom: reqDataForms.parmas,
-      searchData: uniqueFields.id,
-    },
-    subcategoryContoller.getCategorySubcategory
-  )
+  isExist({
+    model: categoryModel,
+    dataFrom: reqDataForms.parmas,
+    searchData: uniqueFields.id,
+  }),
+  subcategoryContoller.getCategorySubcategory
 );
 router.post(
   "/:categoryId",
