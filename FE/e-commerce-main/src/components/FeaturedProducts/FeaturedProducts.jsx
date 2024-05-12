@@ -53,7 +53,7 @@ export default function FeaturedProducts() {
   }
 
   const { isLoading, isError, data, isFetching, refetch } = useQuery({
-    queryKey: ["featuredProducts", page],
+    queryKey: ["allProducts", page],
     queryFn: () => getFeaturedProducts(page),
   });
 

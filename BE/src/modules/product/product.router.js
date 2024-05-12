@@ -25,7 +25,7 @@ import getAllData, { getDataById } from "../../middleware/getData.js";
 import categoryModel from "../../../DB/model/Category.model.js";
 
 const router = Router();
-
+router.get("/getUserProducts",auth(),productController.getUserProducts)
 router
   .route("/")
   .post(
@@ -90,6 +90,6 @@ router
     productController.updateProduct
   );
 
-  router.get("/getUserProducts",auth(),productController.getUserProducts)
+
 
 export default router;
