@@ -301,15 +301,15 @@ export default function Addproduct() {
           ) : null}
         </div>
         <div className="form-group mb-2">
-        <label htmlFor="image" className="mb-1">
-          image:
+        <label htmlFor="images" className="mb-1">
+          images:
         </label>
         <input
           className="form-control"
           type="file" // Change type to "file" for image input
           id="images"
           name="images"
-          onChange={handleImageChange} // Add onChange event handler
+          onChange={handleImageChange} 
           onBlur={formik.handleBlur}
         />
         {formik.errors.images && formik.touched.images ? (
