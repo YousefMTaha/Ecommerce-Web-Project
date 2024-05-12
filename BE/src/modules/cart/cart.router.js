@@ -13,7 +13,7 @@ const router = Router();
 router.get("/", auth(), get);
 
 // Add product to cart
-router.post(
+router.post("/",
   auth(),
   //validation(validator.add),
   isExist({

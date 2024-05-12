@@ -7,10 +7,9 @@ import { useQuery } from "react-query";
 
 export default function SubCategories() {
   const { id } = useParams();
-
   function getSubCategories(id) {
     return axios.get(
-      `https://ecommerce.routemisr.com/api/v1/categories/${id}/subcategories`
+      `http://localhost:3000/subcategory/category/${id}`
     );
   }
 
@@ -18,7 +17,7 @@ export default function SubCategories() {
     "subCategories",
     () => getSubCategories(id)
   );
-
+  console.log(data)
   return (
     <div className="vh-100 d-flex align-items-center">
       <Helmet>
@@ -31,8 +30,8 @@ export default function SubCategories() {
         </div>
       ) : null}
       <div className="row g-4 w-100">
-        {data?.data.data && data?.data.data.length !== 0 ? (
-          data?.data.data.map((subcategory) => {
+        {data?.data.cagtegories && data?.data.cagtegories.length !== 0 ? (
+          data?.data.cagtegories.map((subcategory) => {
             return (
               <div className="col-md-4" key={subcategory.name}>
                 <div className="subcategory h-100 border rounded-3 overflow-hidden">
