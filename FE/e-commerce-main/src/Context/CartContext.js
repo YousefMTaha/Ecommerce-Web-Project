@@ -50,18 +50,6 @@ export default function CartContextProvider(props) {
       .catch((error) => error);
   }
 
-  function clearCart() {
-    return axios
-      .delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
-        headers: { token: "yousef_" + localStorage.getItem("token") },
-      })
-      .then((response) => {
-        setCartNum(0);
-        return response;
-      })
-      .catch((error) => error);
-  }
-
   function updateQuantity(id, quantity) {
     return axios
       .put(
@@ -100,7 +88,6 @@ export default function CartContextProvider(props) {
         cartNum,
         payOnline,
         setCartNum,
-        clearCart,
         cartId,
         setCartId,
       }}
