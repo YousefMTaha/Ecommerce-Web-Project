@@ -2,7 +2,7 @@ import { Router } from "express";
 import auth from "../../middleware/auth.js";
 import { isNotExist } from "../../middleware/isNotExist.js";
 import brandModel from "../../../DB/model/Brand.model.js";
-import { fileValidation, uniqueFields } from "../../utils/systemConstants.js";
+import { fileValidation, uniqueFields, userRoles } from "../../utils/systemConstants.js";
 import * as brandController from "./brand.controller.js";
 import * as validator from "./brand.validation.js";
 import {

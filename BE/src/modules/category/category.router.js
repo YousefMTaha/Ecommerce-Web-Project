@@ -12,7 +12,7 @@ import {
   updateImage,
   uploadImage,
 } from "../../middleware/uploadImage.js";
-import { fileValidation, uniqueFields } from "../../utils/systemConstants.js";
+import { fileValidation, uniqueFields, userRoles } from "../../utils/systemConstants.js";
 import { IdValidator, validation } from "../../middleware/validation.js";
 import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
