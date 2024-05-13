@@ -16,7 +16,7 @@ import { isOwner } from "../../middleware/isOwner.js";
 import { IdValidator, validation } from "../../middleware/validation.js";
 import getAllData, { getDataById } from "../../middleware/getData.js";
 const router = Router();
-
+//brand 
 router
   .route("/")
   .get(getAllData())
