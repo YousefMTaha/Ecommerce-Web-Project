@@ -60,6 +60,21 @@ Start the server
 ```bash
   npm run Start
 ```
+
+## BE Features
+
+- User Registration and Authentication: Provide users with the ability to create accounts and log in securely and update his info.
+- Product Catalog Management: Ability to add, update and remove products with details like name, description, price, and images.
+- Category,Subcategory Catalog Management: Ability to add, update, and remove category , Subcategory with details like name  and images.
+- Brand Catalog Management: Ability to add, update, and remove Brands with details like name and images.
+- Coupon Catalog Management: Ability to add, update, and remove Coupons with details like code , expire date , no of uses per user(the no of times that allow user to use the copoun ) and the total user (max user can use this copoun).
+- Shopping Cart: Allow users to add items to their cart, view the cart, manage the quantity of the product, delete product from cart , and proceed to checkout.
+- Checkout Process: Smooth and secure checkout process with various payment options ("Cash" - "Card (Stripe Gateway)").
+- Order Management: Ability to view and manage orders, update order status, send order confirmations, and issue refunds (using stripe) if necessary.
+- Inventory Management: Track product availability, manage stock levels, and provide alerts for low stock.
+- Customer Reviews and Ratings: Enable customers to leave reviews and ratings for products, helping other users make informed purchase decisions.
+- Promotions and Discounts: Ability to run promotional campaigns, apply discounts, offer coupons, and track their effectiveness.
+
 ## FE Features
 
 - Dashboard:
@@ -83,20 +98,6 @@ Start the server
 - Error Handling:
   * Implement basic error handling to display informative error messages to users when something goes wrong.
   * Handle common error scenarios like network failures, invalid inputs, or server errors gracefully.
-
-## BE Features
-
-- User Registration and Authentication: Provide users with the ability to create accounts and log in securely and update his info.
-- Product Catalog Management: Ability to add, update and remove products with details like name, description, price, and images.
-- Category,Subcategory Catalog Management: Ability to add, update, and remove category , Subcategory with details like name  and images.
-- Brand Catalog Management: Ability to add, update, and remove Brands with details like name and images.
-- Coupon Catalog Management: Ability to add, update, and remove Coupons with details like code , expire date , no of uses per user(the no of times that allow user to use the copoun ) and the total user (max user can use this copoun).
-- Shopping Cart: Allow users to add items to their cart, view the cart, manage the quantity of the product, delete product from cart , and proceed to checkout.
-- Checkout Process: Smooth and secure checkout process with various payment options ("Cash" - "Card (Stripe Gateway)").
-- Order Management: Ability to view and manage orders, update order status, send order confirmations, and issue refunds (using stripe) if necessary.
-- Inventory Management: Track product availability, manage stock levels, and provide alerts for low stock.
-- Customer Reviews and Ratings: Enable customers to leave reviews and ratings for products, helping other users make informed purchase decisions.
-- Promotions and Discounts: Ability to run promotional campaigns, apply discounts, offer coupons, and track their effectiveness.
 
 
 
@@ -155,4 +156,5 @@ To run this project, you will need to add the following environment variables to
 ## DB Schema
 
 [DB-Schema](https://drive.google.com/file/d/11ZOzy5yzcDbpqIv3HzjLu3N8TzRDy5nb/view?usp=sharing) (Download it for better resolution)
+
 
