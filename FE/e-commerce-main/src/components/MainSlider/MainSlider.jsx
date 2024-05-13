@@ -1,11 +1,11 @@
 import React from "react";
 import Style from "./MainSlider.module.scss";
 import Slider from "react-slick";
-import slider1 from "../../Assets/images/slider-image-1.jpeg";
-import slider2 from "../../Assets/images/slider-image-2.jpeg";
-import slider3 from "../../Assets/images/slider-image-3.jpeg";
-import grocery1 from "../../Assets/images/grocery-banner.png";
-import grocery2 from "../../Assets/images/grocery-banner-2.jpeg";
+import slider1 from "../../Assets/images/slider-image-1.jpg";
+import slider2 from "../../Assets/images/slider-image-2.jpg";
+import slider3 from "../../Assets/images/slider-image-3.jpg";
+import banner1 from "../../Assets/images/banner1.jpg";
+import banner2 from "../../Assets/images/banner2.jpg";
 
 export default function MainSlider() {
   const settings = {
@@ -29,8 +29,8 @@ export default function MainSlider() {
         </Slider>
       </div>
       <div className="col-md-3">
-        <img className="w-100 small-img" src={grocery1} alt="grocery 1" />
-        <img className="w-100 small-img" src={grocery2} alt="grocery 2" />
+        <img className="w-100 small-img" src={banner1} alt="grocery 1" />
+        <img className="w-100 small-img" src={banner2} alt="grocery 2" />
       </div>
     </div>
   );
