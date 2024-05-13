@@ -86,7 +86,7 @@ Start the server
     * Components structured logically, with clear separation of concerns.
 - Responsive Design:
     * The app layout is responsive and works well on various screen sizes,including mobile devices.
-    * We Use CSS frameworks Bootstrap to facilitate responsiveness.
+    * We Use CSS frameworks Bootstrap (SASS) to facilitate responsiveness.
 - Routing
     * Implement client-side routing by building a SPA with React Router.
     * Routes are defined logically, with appropriate handling of nested routes and redirects.
