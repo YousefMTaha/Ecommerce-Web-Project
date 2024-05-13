@@ -65,7 +65,7 @@ Start the server
 - Dashboard:
   * Create a dashboard page where authenticated users can view basic information or perform actions related to the app's purpose.
 - Profile Management:
-  * Allow users to view and edit their profile information Include basic fields like name, email, and profile picture.
+  * Allow users to view and edit their profile information Include basic fields like name and email.
 -  Component Architecture:
     * Components are appropriately modularized and reusable.
     * Components structured logically, with clear separation of concerns.
