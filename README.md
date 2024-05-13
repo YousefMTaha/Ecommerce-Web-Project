@@ -62,7 +62,29 @@ Start the server
 ```bash
   npm run Start
 ```
+## FE Features
 
+- Dashboard:
+  * Create a dashboard page where authenticated users can view basic information or perform actions related to the app's purpose.
+- Profile Management:
+  * Allow users to view and edit their profile information Include basic fields like name, email, and profile picture.
+-  Component Architecture:
+    * Components are appropriately modularized and reusable.
+    * Components structured logically, with clear separation of concerns.
+- Responsive Design:
+    * The app layout is responsive and works well on various screen sizes,including mobile devices.
+    * We Use CSS frameworks Bootstrap to facilitate responsiveness.
+- Routing
+    * Implement client-side routing by building a SPA with React Router.
+    * Routes are defined logically, with appropriate handling of nested routes and redirects.
+- Forms Handling
+  * We work with Forms and user inputs with Formik.
+  * Validate form's inputs properly, with error messages displayed as needed.
+- State Management:
+  * Utilize React's built-in state management for managing local component state.
+- Error Handling:
+  * Implement basic error handling to display informative error messages to users when something goes wrong.
+  * Handle common error scenarios like network failures, invalid inputs, or server errors gracefully.
 
 ## BE Features
 
