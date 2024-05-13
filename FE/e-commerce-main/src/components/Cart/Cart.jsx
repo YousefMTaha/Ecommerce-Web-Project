@@ -81,12 +81,18 @@ export default function Cart() {
             </h4>
 
             <div className="d-flex justify-content-between align-items-center">
-              <NavLink
-                to={"/checkout"}
-                className="btn btn-sm bg-main text-white my-2"
-              >
-                <i className="fa-brands fa-cc-visa me-2"></i>Buy Online
-              </NavLink>
+              {data?.data.cart.products.length !== 0 ? (
+                <NavLink
+                  to={"/checkout"}
+                  className="btn btn-sm bg-main text-white my-2"
+                >
+                  <i className="fa-brands fa-cc-visa me-2"></i>Buy Online
+                </NavLink>
+              ) : (
+                <button className="btn btn-sm bg-main text-white my-2" disabled>
+                  <i className="fa-brands fa-cc-visa me-2"></i>Buy Online
+                </button>
+              )}
             </div>
             <div className="items">
               {data?.data.cart.products.map((product) => {

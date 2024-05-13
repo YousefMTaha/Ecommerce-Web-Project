@@ -13,13 +13,6 @@ export default function Navbar() {
 
   const navigate = useNavigate();
 
-  let isAdmin = false;
-  let info = null;
-
-  if (userToken !== null) {
-    info = jwtDecode(localStorage.getItem("token"));
-  }
-
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("hostname");
@@ -33,7 +26,7 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-md navbar-light bg-main-light fixed-top">
       <div className="container">
         <NavLink className="navbar-brand" to="/">
-          <img src={Logo} alt="fresh cart" />
+          <img src={Logo} alt="Online Shop" />
         </NavLink>
         <button
           className="navbar-toggler d-lg-none"
