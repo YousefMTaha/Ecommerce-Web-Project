@@ -21,18 +21,18 @@ router
   .route("/")
   .get(getAllData())
   .post(
-    auth(),
+    auth([userRoles.Admin]),
     fileUpload(fileValidation.image).single("img"),
     validation(validator.add),
     isNotExist({ model: brandModel, searchData: uniqueFields.name }),
     brandController.add,
-    uploadImage({model:brandModel})
+    uploadImage({ model: brandModel })
   );
 
 router
   .route("/:_id")
   .put(
-    auth(),
+    auth([userRoles.Admin]),
     fileUpload(fileValidation.image).single("img"),
     validation(validator.update),
     isExist({
@@ -40,11 +40,11 @@ router
     }),
     isOwner(brandModel),
     isNotExist({ model: brandModel, searchData: uniqueFields.name }),
-    updateImage({model:brandModel}),
+    updateImage({ model: brandModel }),
     brandController.update
   )
   .delete(
-    auth(),
+    auth([userRoles.Admin]),
     validation(IdValidator),
     isExist({ model: brandModel }),
     isOwner(brandModel),

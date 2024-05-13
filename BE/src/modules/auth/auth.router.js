@@ -8,7 +8,6 @@ router.get("/", (req, res) => res.json({ mesasge: `${req.originalUrl} Page` }));
 
 router.post(
   "/signup",
-
   //   validation(validator.signup),
   userController.signup
 );

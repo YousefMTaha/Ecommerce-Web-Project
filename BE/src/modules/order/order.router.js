@@ -42,7 +42,7 @@ router.get("/", auth(), async (req, res, next) => {
 */
 router.post(
   '/',
-  auth(),
+  auth([userRoles.User]),
   isCartEmpty,
   isExist({
     model: couponModel,
@@ -64,7 +64,7 @@ router.post("/webhook", orderController.webhook);
 // if user want to cancel the order
 router.put(
   "/:_id",
-  auth(),
+  auth([userRoles.User]),
   isExist({ model: orderModel,dataFrom : reqDataForms.parmas,searchData : uniqueFields.id }),
   isOwner(orderModel),
   orderMiddleware.refund,

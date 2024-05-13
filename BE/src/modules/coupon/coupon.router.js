@@ -28,7 +28,7 @@ router
   .route("/")
   .get(auth(), couponContoller.getAllCoupons)
   .post(
-    auth(),
+    auth([userRoles.Admin]),
     validation(validator.add),
     isNotExist({ model: couponModel, searchData: uniqueFields.couponCode }),
     couponContoller.addCoupon
@@ -37,7 +37,7 @@ router
 router
   .route("/:_id")
   .put(
-    auth(),
+    auth([userRoles.Admin]),
     validation(validator.update),
     isExist({
       model: couponModel,
@@ -49,7 +49,7 @@ router
     couponContoller.updateCoupon
   )
   .delete(
-    auth(),
+    auth([userRoles.Admin]),
     validation(IdValidator),
     isExist({
       model: couponModel,

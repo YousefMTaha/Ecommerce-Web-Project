@@ -20,7 +20,7 @@ router
   .route("/")
   .get(getAllData())
   .post(
-    auth(),
+    auth([userRoles.Admin]),
     fileUpload(fileValidation.image).single("img"),
     validation(validator.add),
     isNotExist({ model: categoryModel, searchData: uniqueFields.name }),
@@ -32,7 +32,7 @@ router
   .route("/:_id")
   .get(validation(IdValidator), getDataById)
   .put(
-    auth(),
+    auth([userRoles.Admin]),
     fileUpload(fileValidation.image).single("img"),
     validation(validator.update),
     isExist({ model: categoryModel }),
@@ -42,7 +42,7 @@ router
     categoryController.update
   )
   .delete(
-    auth(),
+    auth([userRoles.Admin]),
     validation(IdValidator),
     isExist({ model: categoryModel }),
     isOwner(categoryModel),

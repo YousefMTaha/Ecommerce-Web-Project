@@ -3,7 +3,11 @@ import auth from "../../middleware/auth.js";
 import { add, get, remove, update } from "./cart.controller.js";
 import { isExist } from "../../middleware/isExist.js";
 import productModel from "../../../DB/model/Product.model.js";
-import { reqDataForms, uniqueFields } from "../../utils/systemConstants.js";
+import {
+  reqDataForms,
+  uniqueFields,
+  userRoles,
+} from "../../utils/systemConstants.js";
 import { checkQuantity, isProductExistInCart } from "./cart.middleware.js";
 import { validation } from "../../middleware/validation.js";
 import * as validator from "./cart.validation.js";
@@ -13,8 +17,9 @@ const router = Router();
 router.get("/", auth(), get);
 
 // Add product to cart
-router.post("/",
-  auth(),
+router.post(
+  "/",
+  auth([userRoles.User]),
   //validation(validator.add),
   isExist({
     model: productModel,
@@ -28,7 +33,7 @@ router.post("/",
 // update product quantity
 router.put(
   "/:productId",
-  auth(),
+  auth([userRoles.User]),
   validation(validator.update),
   isExist({
     model: productModel,
@@ -42,7 +47,7 @@ router.put(
 // delete product from cart
 router.delete(
   "/",
-  auth(),
+  auth([userRoles.User]),
   // validation(validator.remove),
   isExist({
     model: productModel,

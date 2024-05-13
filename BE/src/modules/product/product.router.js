@@ -25,11 +25,15 @@ import getAllData, { getDataById } from "../../middleware/getData.js";
 import categoryModel from "../../../DB/model/Category.model.js";
 
 const router = Router();
-router.get("/getUserProducts", auth(), productController.getUserProducts);
+router.get(
+  "/getUserProducts",
+  auth([userRoles.Admin]),
+  productController.getUserProducts
+);
 router
   .route("/")
   .post(
-    auth(),
+    auth([userRoles.Admin]),
     fileUpload(fileValidation.image).fields([
       { name: "images", maxCount: 5 },
       { name: "imageCover", maxCount: 1 },
@@ -60,7 +64,7 @@ router
   .route("/:_id")
   .get(validation(IdValidator), getDataById)
   .delete(
-    auth(),
+    auth([userRoles.Admin]),
     validation(IdValidator),
     isExist({ model: productModel }),
     isOwner(productModel),
@@ -68,7 +72,7 @@ router
     productController.removeProduct
   )
   .put(
-    auth(),
+    auth([userRoles.Admin]),
     fileUpload(fileValidation.image).fields([
       { name: "images", maxCount: 5 },
       { name: "imageCover", maxCount: 1 },
