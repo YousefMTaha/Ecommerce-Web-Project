@@ -56,13 +56,11 @@ export default function EditProduct() {
     fetchData();
   }, []);
   async function editProduct(values) {
-    
-    const newobject={"images":image,"imageCover":imageCover,...values}
-    const {id,...edited}=newobject
-    console.log(edited)
+    const {id,...edited}=values
+    console.log(values)
     const formData = new FormData();
-    Object.entries(newobject).forEach(([key, newobject]) => {
-      formData.append(key, newobject);
+    Object.entries(values).forEach(([key, values]) => {
+      formData.append(key, values);
     });
     setIsLoading(true);
     const { data } = await axios
