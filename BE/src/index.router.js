@@ -20,6 +20,10 @@ const initApp = (app, express) => {
       express.json()(req, res, next);
     }
   });
+
+  // home page
+  app.get("/", (req, res, next) => res.send("home page"));
+
   //Setup API Routing
   app.use(`/auth`, authRouter);
   app.use(`/user`, userRouter);
@@ -32,9 +36,9 @@ const initApp = (app, express) => {
   app.use(`/order`, orderRouter);
   app.use(`/brand`, branRouter);
 
-  app.all("*", (req, res, next) => {
-    res.send("In-valid Routing Plz check url  or  method");
-  });
+  app.all("*", (req, res, next) =>
+    res.send("In-valid Routing Plz check url  or  method")
+  );
   app.use(globalErrorHandling);
   connect;
 };
