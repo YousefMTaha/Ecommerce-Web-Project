@@ -12,7 +12,53 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
   * Express middleware is used to handle requests, routes
   * Mongoose schemas to model the application data
   * React for displaying UI components
- 
+
+
+## BE Features
+
+- User Registration and Authentication: Provide users with the ability to create accounts log in securely and update their info.
+- Product Catalog Management: Ability to add, update, and remove products with details like name, description, price, and images.
+- Category, Subcategory Catalog Management: Ability to add, update, and remove category, Subcategory with details like name and images.
+- Brand Catalog Management: Ability to add, update, and remove Brands with details like name and images.
+- Coupon Catalog Management: Ability to add, update, and remove Coupons with details like code, expiration date, no of uses per user(the no of times that allow the user to use the coupon), and the total user (max user can use this coupon).
+- Shopping Cart: Allow users to add items to their cart, view the cart, manage the quantity of the product, delete the product from the cart, and proceed to checkout.
+- Checkout Process: Smooth and secure checkout process with various payment options ("Cash" - "Card (Stripe Gateway)").
+- Order Management: Ability to view and manage orders, update order status, send order confirmations, and issue refunds (using Stripe) if necessary.
+- Inventory Management: Track product availability, manage stock levels, and provide alerts for low stock.
+- Customer Reviews and Ratings: Enable customers to leave reviews and ratings for products, helping other users make informed purchase decisions.
+- Promotions and Discounts: Ability to run promotional campaigns, apply discounts, offer coupons, and track their effectiveness.
+- Coupon Catalog Management: Ability to add, update, and remove Coupons with details like code, expiration date, no of uses per user(the no of times that allow the user to use the coupon), and the total user (max user can use this coupon).
+
+- Deployed on [Render](https://ecommerce-web-project-2.onrender.com)
+  
+## FE Features
+
+- Dashboard:
+  * Create a dashboard page where authenticated users can view basic information or perform actions related to the app's purpose.
+- Profile Management:
+  * Allow users to view and edit their profile information Include basic fields like name and email.
+-  Component Architecture:
+    * Components are appropriately modularized and reusable.
+    * Components structured logically, with clear separation of concerns.
+- Responsive Design:
+    * The app layout is responsive and works well on various screen sizes,including mobile devices.
+    * We Use CSS frameworks Bootstrap (SASS) to facilitate responsiveness.
+- Routing
+    * Implement client-side routing by building a SPA with React Router.
+    * Routes are defined logically, with appropriate handling of nested routes and redirects.
+- Forms Handling
+  * We work with Forms and user inputs with Formik.
+  * Validate form's inputs properly, with error messages displayed as needed.
+- State Management:
+  * Utilize React's built-in state management for managing local component state.
+- Error Handling:
+  * Implement basic error handling to display informative error messages to users when something goes wrong.
+  * Handle common error scenarios like network failures, invalid inputs, or server errors gracefully.
+
+
+
+
+
 ## Run Locally For BE
 
 Clone the project
@@ -60,45 +106,6 @@ Start the server
 ```bash
   npm run Start
 ```
-
-## BE Features
-
-- User Registration and Authentication: Provide users with the ability to create accounts and log in securely and update his info.
-- Product Catalog Management: Ability to add, update and remove products with details like name, description, price, and images.
-- Category,Subcategory Catalog Management: Ability to add, update, and remove category , Subcategory with details like name  and images.
-- Brand Catalog Management: Ability to add, update, and remove Brands with details like name and images.
-- Coupon Catalog Management: Ability to add, update, and remove Coupons with details like code , expire date , no of uses per user(the no of times that allow user to use the copoun ) and the total user (max user can use this copoun).
-- Shopping Cart: Allow users to add items to their cart, view the cart, manage the quantity of the product, delete product from cart , and proceed to checkout.
-- Checkout Process: Smooth and secure checkout process with various payment options ("Cash" - "Card (Stripe Gateway)").
-- Order Management: Ability to view and manage orders, update order status, send order confirmations, and issue refunds (using stripe) if necessary.
-- Inventory Management: Track product availability, manage stock levels, and provide alerts for low stock.
-- Customer Reviews and Ratings: Enable customers to leave reviews and ratings for products, helping other users make informed purchase decisions.
-- Promotions and Discounts: Ability to run promotional campaigns, apply discounts, offer coupons, and track their effectiveness.
-
-## FE Features
-
-- Dashboard:
-  * Create a dashboard page where authenticated users can view basic information or perform actions related to the app's purpose.
-- Profile Management:
-  * Allow users to view and edit their profile information Include basic fields like name and email.
--  Component Architecture:
-    * Components are appropriately modularized and reusable.
-    * Components structured logically, with clear separation of concerns.
-- Responsive Design:
-    * The app layout is responsive and works well on various screen sizes,including mobile devices.
-    * We Use CSS frameworks Bootstrap (SASS) to facilitate responsiveness.
-- Routing
-    * Implement client-side routing by building a SPA with React Router.
-    * Routes are defined logically, with appropriate handling of nested routes and redirects.
-- Forms Handling
-  * We work with Forms and user inputs with Formik.
-  * Validate form's inputs properly, with error messages displayed as needed.
-- State Management:
-  * Utilize React's built-in state management for managing local component state.
-- Error Handling:
-  * Implement basic error handling to display informative error messages to users when something goes wrong.
-  * Handle common error scenarios like network failures, invalid inputs, or server errors gracefully.
-
 
 
 ## Environment Variables
