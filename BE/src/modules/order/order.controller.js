@@ -61,10 +61,9 @@ export const webhook = asyncHandler(async (request, response) => {
         { _id: metadata.orderId },
         {
           paymentIntent,
-          status: orderStatus.chipping,
+          status: orderStatus.Shipping,
         }
       );
-
       break;
     case "charge.refunded":
       const refundCreated = event.data.object;
