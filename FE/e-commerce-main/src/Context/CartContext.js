@@ -73,7 +73,6 @@ export default function CartContextProvider(props) {
       .catch((error) => error.response.data.message);
   }
 
-
   useEffect(() => {
     getLoggedUserCart();
   }, [cartId]);
