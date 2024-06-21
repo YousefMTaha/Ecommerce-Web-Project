@@ -16,6 +16,7 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
 
 ## BE Features
 
+- Deployed on [Render](https://ecommerce-web-project-2.onrender.com)
 - User Registration and Authentication: Provide users with the ability to create accounts log in securely and update their info.
 - Product Catalog Management: Ability to add, update, and remove products with details like name, description, price, and images.
 - Category, Subcategory Catalog Management: Ability to add, update, and remove category, Subcategory with details like name and images.
@@ -29,7 +30,6 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
 - Promotions and Discounts: Ability to run promotional campaigns, apply discounts, offer coupons, and track their effectiveness.
 - Coupon Catalog Management: Ability to add, update, and remove Coupons with details like code, expiration date, no of uses per user(the no of times that allow the user to use the coupon), and the total user (max user can use this coupon).
 
-- Deployed on [Render](https://ecommerce-web-project-2.onrender.com)
   
 ## FE Features
 
